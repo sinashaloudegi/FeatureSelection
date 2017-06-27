@@ -1,17 +1,11 @@
 package KFST.featureSelection.wrapper.GeneticAlgorithm;
 
-import KFST.classifier.WekaClassifier;
-import KFST.dataset.DatasetInfo;
-import weka.classifiers.Evaluation;
-import weka.classifiers.lazy.IBk;
 import weka.core.Instances;
 import weka.core.converters.CSVLoader;
 import weka.filters.Filter;
 import weka.filters.unsupervised.attribute.Remove;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
 
 /**
@@ -19,19 +13,25 @@ import java.io.IOException;
  */
 public class FitnessCalculator {
 
+    String pathTestData;
     String path;
     Instances train;
+    Instances test;
     int numFeatures;
     String classifier;
 
 
-    public FitnessCalculator(String classifier,String path) throws IOException {
+    public FitnessCalculator(String classifier, String path, String pathTestData) throws IOException {
         this.classifier = classifier;
-        this.path=path;
-        CSVLoader csvLoader=new CSVLoader();
-        File f=new File(path);
-        csvLoader.setSource(f);
+        this.path = path;
+        this.pathTestData = pathTestData;
+        CSVLoader csvLoader = new CSVLoader();
+        File data = new File(path);
+        csvLoader.setSource(data);
         this.train = csvLoader.getDataSet();
+
+        System.out.println("train:" + path);
+        System.out.println("test:" + pathTestData);
         this.numFeatures = train.numAttributes();
     }
 
@@ -62,17 +62,6 @@ public class FitnessCalculator {
     }
 
     private double buildAndEval(Instances train) throws Exception {
-
-    /*    double result;
-        if (classifier.equals("Support Vector Machine (SVM)")) {
-            result = WekaClassifier.SVM(path, pathTestData, "");
-        } else if (classifier.equals("Naive Bayes (NB)")) {
-            result = WekaClassifier.naiveBayes(path, pathTestData);
-
-        } else if (classifier.equals("Decision Tree (C4.5)")) {
-            result = WekaClassifier.dTree(path, pathTestData, 0, 0);
-
-        }*/
 
         return 0.5;
     }

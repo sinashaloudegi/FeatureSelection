@@ -113,7 +113,7 @@ public class MainPanel extends JPanel {
     private double initPheromone, evRate, alpha, beta, q0; //ACO_based methods
 
     private double pCrossover, pMutation; //GA_based methods
-    private int numPopulation, numGeneration; //GA-based methods
+    private int numPopulation, numGeneration; //GA_based methods
 
     DatasetInfo data;
     WekaFileFormat arff;
@@ -3171,7 +3171,7 @@ public class MainPanel extends JPanel {
                     long startTime = System.currentTimeMillis();
 
 
-                    GeneticAlgorithmMain method = new GeneticAlgorithmMain(numSelectedSubsets[j],numPopulation,numGeneration,pCrossover,pMutation,cb_classifier.getSelectedItem().toString());
+                    GeneticAlgorithmMain method = new GeneticAlgorithmMain(numSelectedSubsets[j], numPopulation, numGeneration, pCrossover, pMutation, cb_classifier.getSelectedItem().toString());
 //                    System.out.println("MGSACO...   initPheromone = " + initPheromone
 //                            + "   numIteration = " + numIteration
 //                            + "   newNumAnts = " + newNumAnts
@@ -3182,6 +3182,7 @@ public class MainPanel extends JPanel {
                     method.initialize();
                     method.start();
                     method.evaluateFeatures();
+
 
                     long endTime = System.currentTimeMillis();
                     times[i][j] = (endTime - startTime) / 1000.0;
@@ -3204,7 +3205,7 @@ public class MainPanel extends JPanel {
                     System.out.println(arff);
                     if (cb_classifier.getSelectedItem().equals("Support Vector Machine (SVM)")) {
                         accuracies[i][j] = WekaClassifier.SVM(nameTrainDataARFF, nameTestDataARFF, typeKernel);
-                        } else if (cb_classifier.getSelectedItem().equals("Naive Bayes (NB)")) {
+                    } else if (cb_classifier.getSelectedItem().equals("Naive Bayes (NB)")) {
                         accuracies[i][j] = WekaClassifier.naiveBayes(nameTrainDataARFF, nameTestDataARFF);
                     } else if (cb_classifier.getSelectedItem().equals("Decision Tree (C4.5)")) {
                         accuracies[i][j] = WekaClassifier.dTree(nameTrainDataARFF, nameTestDataARFF, confidence, minNum);
@@ -3523,70 +3524,69 @@ public class MainPanel extends JPanel {
         f.setVisible(true);
     }
 
-/**
- * This class is used to create a thread
- */
-class Counter implements Runnable {
-
     /**
-     * This method takes any action whatsoever.
+     * This class is used to create a thread
      */
-    @Override
-    public void run() {
+    class Counter implements Runnable {
 
-        if (runCode == 0) {
-            if (cb_supervised.getSelectedItem().equals("Information gain")) {
-                infoGainPerform();
-            } else if (cb_supervised.getSelectedItem().equals("Gain ratio")) {
-                gainRatioPerform();
-            } else if (cb_supervised.getSelectedItem().equals("Symmetrical uncertainty")) {
-                symmetricalUncertaintyPerform();
-            } else if (cb_supervised.getSelectedItem().equals("Fisher score")) {
-                fisherScorePerform();
-            } else if (cb_supervised.getSelectedItem().equals("Gini index")) {
-                giniIndexPerform();
-            } else if (cb_supervised.getSelectedItem().equals("Laplacian score")) {
-                laplacianScoreSupPerform();
-            } else if (cb_supervised.getSelectedItem().equals("Minimal redundancy maximal relevance (MRMR)")) {
-                MRMRPerform();
-            } else if (cb_supervised.getSelectedItem().equals("Relevance-redundancy feature selection (RRFS)")) {
-                RRFSSupPerform();
-            } else if (cb_unsupervised.getSelectedItem().equals("Term variance")) {
-                termVariancePerform();
-            } else if (cb_unsupervised.getSelectedItem().equals("Laplacian score")) {
-                laplacianScoreUnsupPerform();
-            } else if (cb_unsupervised.getSelectedItem().equals("Mutual correlation")) {
-                mutualCorrelationPerform();
-            } else if (cb_unsupervised.getSelectedItem().equals("Random subspace method (RSM)")) {
-                RSMPerform();
-            } else if (cb_unsupervised.getSelectedItem().equals("Relevance-redundancy feature selection (RRFS)")) {
-                RRFSUnsupPerform();
-            } else if (cb_unsupervised.getSelectedItem().equals("UFSACO")) {
-                UFSACOPerform();
-            } else if (cb_unsupervised.getSelectedItem().equals("RRFSACO_1")) {
-                RRFSACO_1Perform();
-            } else if (cb_unsupervised.getSelectedItem().equals("RRFSACO_2")) {
-                RRFSACO_2Perform();
-            } else if (cb_unsupervised.getSelectedItem().equals("IRRFSACO_1")) {
-                IRRFSACO_1Perform();
-            } else if (cb_unsupervised.getSelectedItem().equals("IRRFSACO_2")) {
-                IRRFSACO_2Perform();
-            } else if (cb_unsupervised.getSelectedItem().equals("MGSACO")) {
-                MGSACOPerform();
-            }else if (cb_wrapper.getSelectedItem().equals("GeneticAlgorithm")) {
-                try {
-                    geneticAlgorithmPerform();
-                } catch (Exception e) {
-                    e.printStackTrace();
+        /**
+         * This method takes any action whatsoever.
+         */
+        @Override
+        public void run() {
+
+            if (runCode == 0) {
+                if (cb_supervised.getSelectedItem().equals("Information gain")) {
+                    infoGainPerform();
+                } else if (cb_supervised.getSelectedItem().equals("Gain ratio")) {
+                    gainRatioPerform();
+                } else if (cb_supervised.getSelectedItem().equals("Symmetrical uncertainty")) {
+                    symmetricalUncertaintyPerform();
+                } else if (cb_supervised.getSelectedItem().equals("Fisher score")) {
+                    fisherScorePerform();
+                } else if (cb_supervised.getSelectedItem().equals("Gini index")) {
+                    giniIndexPerform();
+                } else if (cb_supervised.getSelectedItem().equals("Laplacian score")) {
+                    laplacianScoreSupPerform();
+                } else if (cb_supervised.getSelectedItem().equals("Minimal redundancy maximal relevance (MRMR)")) {
+                    MRMRPerform();
+                } else if (cb_supervised.getSelectedItem().equals("Relevance-redundancy feature selection (RRFS)")) {
+                    RRFSSupPerform();
+                } else if (cb_unsupervised.getSelectedItem().equals("Term variance")) {
+                    termVariancePerform();
+                } else if (cb_unsupervised.getSelectedItem().equals("Laplacian score")) {
+                    laplacianScoreUnsupPerform();
+                } else if (cb_unsupervised.getSelectedItem().equals("Mutual correlation")) {
+                    mutualCorrelationPerform();
+                } else if (cb_unsupervised.getSelectedItem().equals("Random subspace method (RSM)")) {
+                    RSMPerform();
+                } else if (cb_unsupervised.getSelectedItem().equals("Relevance-redundancy feature selection (RRFS)")) {
+                    RRFSUnsupPerform();
+                } else if (cb_unsupervised.getSelectedItem().equals("UFSACO")) {
+                    UFSACOPerform();
+                } else if (cb_unsupervised.getSelectedItem().equals("RRFSACO_1")) {
+                    RRFSACO_1Perform();
+                } else if (cb_unsupervised.getSelectedItem().equals("RRFSACO_2")) {
+                    RRFSACO_2Perform();
+                } else if (cb_unsupervised.getSelectedItem().equals("IRRFSACO_1")) {
+                    IRRFSACO_1Perform();
+                } else if (cb_unsupervised.getSelectedItem().equals("IRRFSACO_2")) {
+                    IRRFSACO_2Perform();
+                } else if (cb_unsupervised.getSelectedItem().equals("MGSACO")) {
+                    MGSACOPerform();
+                } else if (cb_wrapper.getSelectedItem().equals("GeneticAlgorithm")) {
+                    try {
+                        geneticAlgorithmPerform();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
+
+
             }
-
-
-
         }
-    }
 
-}
+    }
 
 /*
     public static void main(String[] args) {
