@@ -581,6 +581,22 @@ public class DatasetInfo {
         }
     }
 
+    public String getPathData() {
+        return pathData;
+    }
+
+    public void setPathData(String pathData) {
+        this.pathData = pathData;
+    }
+
+    public String getPathTestSet() {
+        return pathTestSet;
+    }
+
+    public void setPathTestSet(String pathTestSet) {
+        this.pathTestSet = pathTestSet;
+    }
+
     /**
      * This method creates a CSV (Comma delimited) file of the input data
      *

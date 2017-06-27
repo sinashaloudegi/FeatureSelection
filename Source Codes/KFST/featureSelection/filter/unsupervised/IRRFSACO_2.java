@@ -37,7 +37,7 @@ import java.util.Random;
  *
  * @author Sina Tabakhi
  */
-public class IRRFSACO_2 implements FilterApproach {
+public class    IRRFSACO_2 implements FilterApproach {
 
     private double[][] trainSet;
     private int numFeatures;
