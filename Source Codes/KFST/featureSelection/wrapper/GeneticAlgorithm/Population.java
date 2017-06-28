@@ -69,7 +69,7 @@ public class Population {
             int j = 0;
             int len = this.individuals[i].gene.length - 1;
             while (temp != ones) {
-                if (this.individuals[i].gene[j] == 0 & j != this.individuals[i].gene[len]) {
+                if (this.individuals[i].gene[j] == 0 & j != len) {
                     this.individuals[i].gene[j] = 1;
                     temp--;
                 }
