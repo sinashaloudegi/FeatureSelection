@@ -103,6 +103,7 @@ public class FitnessCalculator {
         Evaluation eval = new Evaluation(train);
         eval.evaluateModel(knn, test);
         return (1 - eval.errorRate());
+
     }
 
     public int getNumFeatures() {

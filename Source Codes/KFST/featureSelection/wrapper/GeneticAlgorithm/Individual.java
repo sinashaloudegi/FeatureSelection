@@ -45,7 +45,7 @@ public class Individual {
 
 
     public Individual randomIndividual(int numFeatures) {
-        byte[] b= randomByte(numFeatures);
+        byte[] b = randomByte(numFeatures);
         this.setGene(b);
 
         return this;
@@ -55,7 +55,7 @@ public class Individual {
         byte[] temp = new byte[numFeatures];
         for (int i = 0; i < numFeatures; i++) {
             double rand = Math.random();
-            if (rand > 0.5) {
+            if (rand > 0.5 & i != numFeatures - 1) {
                 temp[i] = 1;
             } else {
                 temp[i] = 0;

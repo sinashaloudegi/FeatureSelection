@@ -67,8 +67,9 @@ public class Population {
         } else if (ones < numSelectedFeatures) {
             int temp = numSelectedFeatures;
             int j = 0;
+            int len = this.individuals[i].gene.length - 1;
             while (temp != ones) {
-                if (this.individuals[i].gene[j] == 0) {
+                if (this.individuals[i].gene[j] == 0 & j != this.individuals[i].gene[len]) {
                     this.individuals[i].gene[j] = 1;
                     temp--;
                 }
