@@ -1,5 +1,7 @@
 package KFST.featureSelection.wrapper.GeneticAlgorithm;
 
+import weka.classifiers.Evaluation;
+import weka.classifiers.lazy.IBk;
 import weka.core.Instances;
 import weka.core.converters.CSVLoader;
 import weka.filters.Filter;
@@ -7,6 +9,7 @@ import weka.filters.unsupervised.attribute.Remove;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
 
 /**
  * Created by sina on 6/2/2017.
@@ -19,6 +22,7 @@ public class FitnessCalculator {
     Instances test;
     int numFeatures;
     String classifier;
+    Random rand = new Random(1);
 
 
     public FitnessCalculator(String classifier, String path, String pathTestData) throws IOException {
@@ -29,15 +33,15 @@ public class FitnessCalculator {
         File data = new File(path);
         csvLoader.setSource(data);
         this.train = csvLoader.getDataSet();
+        train.setClassIndex(train.numAttributes() - 1);
 
-        System.out.println("train:" + path);
-        System.out.println("test:" + pathTestData);
 
         if (pathTestData != null) {
-            File test = new File(pathTestData);
-            csvLoader.setSource(test);
-            this.test
-                    = csvLoader.getDataSet();
+            File testData = new File(pathTestData);
+            csvLoader.setSource(testData);
+            this.test = csvLoader.getDataSet();
+            test.setClassIndex(test.numAttributes() - 1);
+
         }
         this.numFeatures = train.numAttributes();
     }
@@ -59,14 +63,15 @@ public class FitnessCalculator {
 
     private double remove(String s) throws Exception {
         Instances tempData = train;
+
         Remove removeData = new Remove();
         removeData.setInvertSelection(false);
         removeData.setAttributeIndices(s);
         removeData.setInputFormat(tempData);
         Instances instNewData = Filter.useFilter(tempData, removeData);
-        instNewData.setClassIndex(instNewData.numAttributes() - 1);
 
         if (pathTestData == null) {
+
             return buildAndEval(instNewData);
 
         } else {
@@ -76,20 +81,28 @@ public class FitnessCalculator {
             removeTest.setAttributeIndices(s);
             removeTest.setInputFormat(tempTest);
             Instances instNewTest = Filter.useFilter(tempTest, removeTest);
-            instNewTest.setClassIndex(instNewTest.numAttributes() - 1);
             return buildAndEval(instNewData, instNewTest);
 
         }
     }
 
     private double buildAndEval(Instances train) throws Exception {
-
-        return 0.5;
+        Random rand = new Random(1);
+        IBk knn = new IBk();
+        knn.setKNN(3);
+        knn.buildClassifier(train);
+        Evaluation eval = new Evaluation(train);
+        eval.crossValidateModel(knn, train, 10, rand);
+        return (1 - eval.errorRate());
     }
 
     private double buildAndEval(Instances train, Instances test) throws Exception {
-
-        return 0.5;
+        IBk knn = new IBk();
+        knn.setKNN(3);
+        knn.buildClassifier(train);
+        Evaluation eval = new Evaluation(train);
+        eval.evaluateModel(knn, test);
+        return (1 - eval.errorRate());
     }
 
     public int getNumFeatures() {

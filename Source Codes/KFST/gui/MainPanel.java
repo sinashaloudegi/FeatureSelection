@@ -3201,9 +3201,9 @@ public class MainPanel extends JPanel {
                     data.createCSVFile(data.getTrainSet(), subset, nameTrainDataCSV);
 
                     data.createCSVFile(data.getTestSet(), subset, nameTestDataCSV);
+
                     arff.convertCSVtoARFF(nameTrainDataCSV, nameTrainDataARFF, pathProject, subset.length, data);
                     arff.convertCSVtoARFF(nameTestDataCSV, nameTestDataARFF, pathProject, subset.length, data);
-                    System.out.println(arff);
                     if (cb_classifier.getSelectedItem().equals("Support Vector Machine (SVM)")) {
                         accuracies[i][j] = WekaClassifier.SVM(nameTrainDataARFF, nameTestDataARFF, typeKernel);
                     } else if (cb_classifier.getSelectedItem().equals("Naive Bayes (NB)")) {
