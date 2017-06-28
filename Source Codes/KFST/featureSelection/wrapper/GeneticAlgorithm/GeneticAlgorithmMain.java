@@ -38,7 +38,6 @@ public class GeneticAlgorithmMain implements WrapperApproach {
         this.pMutation = pMutation;
         this.classifier = classifier;
 
-
         r = (float) 0.5; //a portion of the  population that need to be selected
 
     }
@@ -252,7 +251,6 @@ public class GeneticAlgorithmMain implements WrapperApproach {
         numFeatures = ob.getNumFeature();
         numClass = ob.getNumClass();
         pathData = ob.getPathData();
-
         pathTestData = ob.getPathTestSet();
     }
 

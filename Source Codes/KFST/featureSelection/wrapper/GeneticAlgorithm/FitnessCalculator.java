@@ -32,6 +32,13 @@ public class FitnessCalculator {
 
         System.out.println("train:" + path);
         System.out.println("test:" + pathTestData);
+
+        if (pathTestData != null) {
+            File test = new File(pathTestData);
+            csvLoader.setSource(test);
+            this.test
+                    = csvLoader.getDataSet();
+        }
         this.numFeatures = train.numAttributes();
     }
 
@@ -51,17 +58,36 @@ public class FitnessCalculator {
     }
 
     private double remove(String s) throws Exception {
-        Instances temp = train;
-        Remove remove = new Remove();
-        remove.setInvertSelection(false);
-        remove.setAttributeIndices(s);
-        remove.setInputFormat(temp);
-        Instances instNew = Filter.useFilter(temp, remove);
-        instNew.setClassIndex(instNew.numAttributes() - 1);
-        return buildAndEval(instNew);
+        Instances tempData = train;
+        Remove removeData = new Remove();
+        removeData.setInvertSelection(false);
+        removeData.setAttributeIndices(s);
+        removeData.setInputFormat(tempData);
+        Instances instNewData = Filter.useFilter(tempData, removeData);
+        instNewData.setClassIndex(instNewData.numAttributes() - 1);
+
+        if (pathTestData == null) {
+            return buildAndEval(instNewData);
+
+        } else {
+            Instances tempTest = test;
+            Remove removeTest = new Remove();
+            removeTest.setInvertSelection(false);
+            removeTest.setAttributeIndices(s);
+            removeTest.setInputFormat(tempTest);
+            Instances instNewTest = Filter.useFilter(tempTest, removeTest);
+            instNewTest.setClassIndex(instNewTest.numAttributes() - 1);
+            return buildAndEval(instNewData, instNewTest);
+
+        }
     }
 
     private double buildAndEval(Instances train) throws Exception {
+
+        return 0.5;
+    }
+
+    private double buildAndEval(Instances train, Instances test) throws Exception {
 
         return 0.5;
     }

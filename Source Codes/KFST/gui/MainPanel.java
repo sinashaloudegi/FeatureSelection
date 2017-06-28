@@ -3199,6 +3199,7 @@ public class MainPanel extends JPanel {
                     String nameTestDataARFF = pathDataARFF + "testSet[" + (i + 1) + "-" + numSelectedSubsets[j] + "].arff";
 
                     data.createCSVFile(data.getTrainSet(), subset, nameTrainDataCSV);
+
                     data.createCSVFile(data.getTestSet(), subset, nameTestDataCSV);
                     arff.convertCSVtoARFF(nameTrainDataCSV, nameTrainDataARFF, pathProject, subset.length, data);
                     arff.convertCSVtoARFF(nameTestDataCSV, nameTestDataARFF, pathProject, subset.length, data);
