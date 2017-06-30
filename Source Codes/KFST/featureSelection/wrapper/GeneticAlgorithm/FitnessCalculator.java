@@ -63,13 +63,11 @@ public class FitnessCalculator {
 
     private double remove(String s) throws Exception {
         Instances tempData = train;
-
         Remove removeData = new Remove();
         removeData.setInvertSelection(false);
         removeData.setAttributeIndices(s);
         removeData.setInputFormat(tempData);
         Instances instNewData = Filter.useFilter(tempData, removeData);
-
         if (pathTestData == null) {
 
             return buildAndEval(instNewData);

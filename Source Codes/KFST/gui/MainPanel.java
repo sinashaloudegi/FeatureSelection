@@ -3172,12 +3172,10 @@ public class MainPanel extends JPanel {
 
 
                     GeneticAlgorithmMain method = new GeneticAlgorithmMain(numSelectedSubsets[j], numPopulation, numGeneration, pCrossover, pMutation, cb_classifier.getSelectedItem().toString());
-//                    System.out.println("MGSACO...   initPheromone = " + initPheromone
-//                            + "   numIteration = " + numIteration
-//                            + "   newNumAnts = " + newNumAnts
-//                            + "   evRate = " + evRate
-//                            + "   beta = " + beta
-//                            + "   q0 = " + q0);
+                  /*  System.out.println("GeneticAlgorithm...   numPopulation = " + numPopulation
+                            + "   numGeneration = " + numGeneration
+                            + "   pCrossover = " + pCrossover
+                            + "   pMutation = " + pMutation);*/
                     method.loadDataSet(data);
                     method.initialize();
                     method.start();
@@ -3188,6 +3186,8 @@ public class MainPanel extends JPanel {
                     times[i][j] = (endTime - startTime) / 1000.0;
 
                     int[] subset = method.getSelectedFeatureSubset();
+
+
                     //shows new results in the panel of results
                     resPanel.setMessage(addTextToPanel(subset));
 

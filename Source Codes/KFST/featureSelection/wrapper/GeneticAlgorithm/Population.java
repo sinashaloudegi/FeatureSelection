@@ -34,6 +34,7 @@ public class Population {
             this.individuals[i] = insInstance.randomIndividual(numFeatures);
 
         }
+
         refineNumOfOnes(numSelectedFeature);
 
     }
@@ -43,7 +44,6 @@ public class Population {
         for (int i = 0; i < individuals.length; i++) {
             int ones = numOfOnes(this.individuals[i].getGene());
             if (ones != numSelectedFeature) {
-
                 refine(i, numSelectedFeature, ones);
 
             }
@@ -67,15 +67,15 @@ public class Population {
         } else if (ones < numSelectedFeatures) {
             int temp = numSelectedFeatures;
             int j = 0;
-            int len = this.individuals[i].gene.length - 1;
             while (temp != ones) {
-                if (this.individuals[i].gene[j] == 0 & j != len) {
+                if (this.individuals[i].gene[j] == 0) {
                     this.individuals[i].gene[j] = 1;
                     temp--;
                 }
                 j++;
             }
         }
+
     }
 
     private int numOfOnes(byte[] gene) {

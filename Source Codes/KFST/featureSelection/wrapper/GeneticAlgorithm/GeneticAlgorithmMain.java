@@ -48,6 +48,7 @@ public class GeneticAlgorithmMain implements WrapperApproach {
         fitnessCalculator = new FitnessCalculator(classifier, pathData,pathTestData);
         fitnessCalculator.fitness(p);
 
+
     }
 
     public void start() throws Exception {
@@ -75,14 +76,21 @@ public class GeneticAlgorithmMain implements WrapperApproach {
         }
 
         selectedFeatureSubset = result(p.best());
+
+        for (int i = 0; i < selectedFeatureSubset.length; i++) {
+            System.out.print(selectedFeatureSubset[i]+"");
+        }
+        System.out.println();
     }
 
     private int[] result(Individual best) {
         byte b[] = best.getGene();
+
+
         String res = "";
         for (int i = 0; i < b.length; i++) {
             if (b[i] == 1) {
-                res += (i + 1) + ",";
+                res += (i) + ",";
             }
 
         }
