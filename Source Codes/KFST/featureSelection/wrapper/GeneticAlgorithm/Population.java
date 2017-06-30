@@ -1,5 +1,7 @@
 package KFST.featureSelection.wrapper.GeneticAlgorithm;
 
+import java.util.Random;
+
 /**
  * Created by sina on 6/2/2017.
  */
@@ -37,6 +39,7 @@ public class Population {
 
         refineNumOfOnes(numSelectedFeature);
 
+
     }
 
     public void refineNumOfOnes(int numSelectedFeature) {
@@ -50,29 +53,36 @@ public class Population {
         }
     }
 
+
     // matchs ones to number of ones
     private void refine(int i, int numSelectedFeatures, int ones) {
 
         if (ones > numSelectedFeatures) {
+
+
             int temp = ones;
-            int j = 0;
             while (temp != numSelectedFeatures) {
-                if (this.individuals[i].gene[j] == 1) {
-                    this.individuals[i].gene[j] = 0;
+                Random rand = new Random();
+                int rnd = rand.nextInt(numFeatures);
+                System.out.println("rand ; " + rnd);
+                if (this.individuals[i].gene[rnd] == 1) {
+                    System.out.println("yes");
+                    this.individuals[i].gene[rnd] = 0;
                     temp--;
                 }
-                j++;
+
             }
 
         } else if (ones < numSelectedFeatures) {
             int temp = numSelectedFeatures;
-            int j = 0;
             while (temp != ones) {
-                if (this.individuals[i].gene[j] == 0) {
-                    this.individuals[i].gene[j] = 1;
+                Random rand = new Random();
+                int rnd = rand.nextInt(numFeatures);
+                if (this.individuals[i].gene[rnd] == 0) {
+                    this.individuals[i].gene[rnd] = 1;
                     temp--;
                 }
-                j++;
+
             }
         }
 

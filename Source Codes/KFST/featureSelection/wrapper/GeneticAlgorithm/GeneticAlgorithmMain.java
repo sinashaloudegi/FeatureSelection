@@ -30,6 +30,7 @@ public class GeneticAlgorithmMain implements WrapperApproach {
     String pathData;
     String pathTestData;
     FitnessCalculator fitnessCalculator;
+
     public GeneticAlgorithmMain(int sizeSelectedFeatureSubset, int numPopulation, int numGeneration, double pCrossover, double pMutation, String classifier) throws Exception {
         this.sizeSelectedFeatureSubset = sizeSelectedFeatureSubset;
         this.numPopulation = numPopulation;
@@ -45,7 +46,7 @@ public class GeneticAlgorithmMain implements WrapperApproach {
     public void initialize() throws Exception {
         p = new Population(numPopulation, numFeatures);
         p.init(sizeSelectedFeatureSubset);
-        fitnessCalculator = new FitnessCalculator(classifier, pathData,pathTestData);
+        fitnessCalculator = new FitnessCalculator(classifier, pathData, pathTestData);
         fitnessCalculator.fitness(p);
 
 
@@ -77,10 +78,7 @@ public class GeneticAlgorithmMain implements WrapperApproach {
 
         selectedFeatureSubset = result(p.best());
 
-        for (int i = 0; i < selectedFeatureSubset.length; i++) {
-            System.out.print(selectedFeatureSubset[i]+"");
-        }
-        System.out.println();
+
     }
 
     private int[] result(Individual best) {
@@ -173,23 +171,6 @@ public class GeneticAlgorithmMain implements WrapperApproach {
         }
         result.setGene(geneResult);
 
-        /*
-        System.out.println();
-        System.out.print("a: ");
-        for (int i=0;i<geneA.length;i++) {
-            System.out.print(","+geneA[i]);
-        }
-        System.out.println();
-        System.out.print("b: ");
-        for (int i=0;i<geneA.length;i++) {
-            System.out.print(","+geneB[i]);
-        }
-        System.out.println();
-        System.out.print("r: ");
-        for (int i=0;i<geneA.length;i++) {
-            System.out.print(","+geneResult[i]);
-        }
-        System.out.println("----------");*/
         return result;
     }
 
