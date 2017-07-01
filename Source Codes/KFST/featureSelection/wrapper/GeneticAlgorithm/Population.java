@@ -64,9 +64,7 @@ public class Population {
             while (temp != numSelectedFeatures) {
                 Random rand = new Random();
                 int rnd = rand.nextInt(numFeatures);
-                System.out.println("rand ; " + rnd);
                 if (this.individuals[i].gene[rnd] == 1) {
-                    System.out.println("yes");
                     this.individuals[i].gene[rnd] = 0;
                     temp--;
                 }

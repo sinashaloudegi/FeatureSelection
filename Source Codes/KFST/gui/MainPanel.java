@@ -1321,12 +1321,12 @@ public class MainPanel extends JPanel {
             cb_hybrid.setSelectedItem("none");
             if (cb_wrapper.getSelectedItem().equals("GeneticAlgorithm")) {
 
-                GeneticPanel mgsacoPanel = new GeneticPanel();
-                mgsacoPanel.setDefaultValue();
-                numPopulation = mgsacoPanel.getNumPopulation();
-                numGeneration = mgsacoPanel.getNumGeneration();
-                pCrossover = mgsacoPanel.getpCrossover();
-                pMutation = mgsacoPanel.getpMutation();
+                GeneticPanel geneticPanel = new GeneticPanel();
+                geneticPanel.setDefaultValue();
+                numPopulation = geneticPanel.getNumPopulation();
+                numGeneration = geneticPanel.getNumGeneration();
+                pCrossover = geneticPanel.getpCrossover();
+                pMutation = geneticPanel.getpMutation();
                 btn_moreOpWrapper.setEnabled(true);
             } else {
                 btn_moreOpWrapper.setEnabled(false);
@@ -3149,8 +3149,8 @@ public class MainPanel extends JPanel {
      * @see KFST.featureSelection.wrapper.GeneticAlgorithm
      */
     private void geneticAlgorithmPerform() throws Exception {
-        if (false) {
-            JOptionPane.showMessageDialog(null, "genetic algorithm parameter error", "Error", JOptionPane.ERROR_MESSAGE);
+        if (numPopulation == 0) {
+            JOptionPane.showMessageDialog(null, "Number Of Population in Genetic Algorithm Can't be 0", "Error", JOptionPane.ERROR_MESSAGE);
 
         } else {
 

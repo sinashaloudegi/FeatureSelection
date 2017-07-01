@@ -443,21 +443,4 @@ public class GeneticPanel extends JDialog
 
     }
 
-//    public static void main(String[] arg) {
-//        try {
-//            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-//        } catch (Exception e) {
-//            System.out.println("Error setting native LAF: " + e);
-//        }
-//
-//        MGSACOPanel dtpanel = new MGSACOPanel();
-//        Dialog dlg = new Dialog(dtpanel);
-//        dtpanel.setVisible(true);
-//        System.out.println("Init pheromone = " + dtpanel.getInitPheromone());
-//        System.out.println("num iteration = " + dtpanel.getNumIteration());
-//        System.out.println("num ants = " + dtpanel.getNumAnts());
-//        System.out.println("evaporation rate = " + dtpanel.getEvRate());
-//        System.out.println("beta = " + dtpanel.getBeta());
-//        System.out.println("parameter q0 = " + dtpanel.getQ0());
-//    }
 }
