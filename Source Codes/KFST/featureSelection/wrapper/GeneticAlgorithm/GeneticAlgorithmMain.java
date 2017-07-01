@@ -261,6 +261,12 @@ public class GeneticAlgorithmMain implements WrapperApproach {
      */
     @Override
     public void evaluateFeatures() {
+        try {
+            initialize();
+            start();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 

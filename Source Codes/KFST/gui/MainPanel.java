@@ -3177,8 +3177,7 @@ public class MainPanel extends JPanel {
                             + "   pCrossover = " + pCrossover
                             + "   pMutation = " + pMutation);*/
                     method.loadDataSet(data);
-                    method.initialize();
-                    method.start();
+
                     method.evaluateFeatures();
 
 
