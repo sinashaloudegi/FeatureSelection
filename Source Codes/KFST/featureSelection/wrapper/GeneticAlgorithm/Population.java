@@ -64,6 +64,38 @@ public class Population {
 
     private void refine(int i, int numSelectedFeatures, int ones) {
 
+        if (ones > numSelectedFeatures) {
+
+
+            int temp = ones;
+            while (temp != numSelectedFeatures) {
+                Random rand = new Random();
+                int rnd = rand.nextInt(numFeatures);
+                if (this.individuals[i].gene[rnd] == 1) {
+                    this.individuals[i].gene[rnd] = 0;
+                    temp--;
+                }
+
+            }
+
+        } else if (ones < numSelectedFeatures) {
+            int temp = numSelectedFeatures;
+            while (temp != ones) {
+                Random rand = new Random();
+                int rnd = rand.nextInt(numFeatures);
+                if (this.individuals[i].gene[rnd] == 0) {
+                    this.individuals[i].gene[rnd] = 1;
+                    temp--;
+                }
+
+            }
+        }
+
+
+    }
+
+    private void refineHGAFS(int i, int numSelectedFeatures, int ones) {
+//TODO HGAFS for refine
         int j=0 , k=0;
         if (ones > numSelectedFeatures & j<S.length) {
 
@@ -121,18 +153,6 @@ public class Population {
 
             }
         }
-
-    }
-
-    private void refineHGAFS(int i, int numSelectedFeatures, int ones) {
-//TODO HGAFS for refine
-        if (ones > numSelectedFeatures) {
-
-
-        } else if (ones < numSelectedFeatures) {
-
-        }
-
     }
 
 
