@@ -15,14 +15,19 @@ public class Population {
     Instances data;
     int[] S;
     int[] D;
+    String type;
 
-    public Population(int numPopulation, int numFeatures, int[] S, int[] D) {
+    public Population(int numPopulation, int numFeatures, int[] S, int[] D, String type) {
 
         this.numPopulation = numPopulation;
         individuals = new Individual[numPopulation];
         this.numFeatures = numFeatures;
-        this.S = S;
-        this.D = D;
+        this.type = type;
+        if (type.equals("HGAFS")) {
+            this.S = S;
+            this.D = D;
+        }
+
 
     }
 
@@ -55,7 +60,13 @@ public class Population {
         for (int i = 0; i < individuals.length; i++) {
             int ones = numOfOnes(this.individuals[i].getGene());
             if (ones != numSelectedFeature) {
-                refineHGAFS(i, numSelectedFeature, ones);
+                if (type.equals("HGAFS")) {
+                    refineHGAFS(i, numSelectedFeature, ones);
+
+                } else {
+                    refine(i, numSelectedFeature, ones);
+
+                }
 
             }
         }
