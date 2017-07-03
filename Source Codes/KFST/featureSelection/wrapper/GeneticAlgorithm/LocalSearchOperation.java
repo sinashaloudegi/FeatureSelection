@@ -22,7 +22,7 @@ public class LocalSearchOperation {
     public LocalSearchOperation(Instances data) {
         this.data = data;
         convertToArray();
-        means = new double[data.numAttributes()];
+        means = new double[data.numAttributes()-1];
         calcMean();
 
     }
@@ -87,7 +87,7 @@ public class LocalSearchOperation {
 
     private void calcMean() {
         double sum = 0;
-        for (int i = 0; i < data.numAttributes(); i++) {
+        for (int i = 0; i < data.numAttributes()-1; i++) {
             for (int j = 0; j < data.numInstances(); j++) {
                 sum += arrayData[j][i];
             }
