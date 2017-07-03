@@ -3,7 +3,6 @@ package KFST.featureSelection.wrapper.GeneticAlgorithm;
 import weka.core.Instances;
 
 import java.util.Arrays;
-import java.util.Comparator;
 
 /**
  * Created by sina on 7/1/2017.
@@ -12,8 +11,8 @@ public class LocalSearchOperation {
 
     Instances data;
     double arrayData[][];
-    double[] S;
-    double[] D;
+    int[] S;
+    int[] D;
     double[][] C;
 
     double means[];
@@ -29,24 +28,30 @@ public class LocalSearchOperation {
 
     public void computeCorrelation() {
         computeC();
-        Cor = new double[2][data.numAttributes()];
+        Cor = new double[data.numAttributes()][2];
         for (int i = 0; i < data.numAttributes(); i++) {
             double sum = 0;
             for (int j = 0; j < data.numAttributes(); j++) {
-                sum += C[i][j];
+                sum += Math.abs(C[i][j]);
             }
-            Cor[0][i] = sum / (data.numAttributes() - 1);
-            Cor[1][i] = i;
+            Cor[i][0] = sum / (data.numAttributes() - 1);
+            Cor[i][1] = i;
         }
-        Arrays.sort(Cor, Comparator.comparingDouble(a -> a[0]));
-        D = new double[data.numAttributes() / 2];
-        S = new double[data.numAttributes() / 2];
+
+
+        System.out.println(Arrays.deepToString(Cor));
+        Arrays.sort(Cor, (double[] a, double[] b) -> Double.compare(a[0], b[0]));
+        System.out.println("Sorted");
+        System.out.println(Arrays.deepToString(Cor));
+
+        D = new int[data.numAttributes() / 2];
+        S = new int[data.numAttributes() / 2];
         for (int i = 0; i < data.numAttributes() / 2; i++) {
-            D[i] = Cor[0][i];
+            D[i] = (int) Cor[i][0];
         }
         int k = 0;
         for (int i = data.numAttributes() / 2; i < data.numAttributes(); i++) {
-            S[k] = Cor[0][i];
+            S[k] = (int) (Cor[i][0]);
             k++;
         }
         System.out.println("s");
