@@ -50,6 +50,7 @@ public class FitnessCalculator {
         lso.computeCorrelation();
         this.S = lso.getS();
         this.D = lso.getD();
+        System.out.println(S.length);
     }
 
     public int[] getS() {

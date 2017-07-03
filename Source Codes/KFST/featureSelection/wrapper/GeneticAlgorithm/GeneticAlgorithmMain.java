@@ -47,12 +47,13 @@ public class GeneticAlgorithmMain implements WrapperApproach {
     }
 
     public void initialize() throws Exception {
-        p = new Population(numPopulation, numFeatures, S, D);
-        p.init(sizeSelectedFeatureSubset);
         fitnessCalculator = new FitnessCalculator(classifier, pathData, pathTestData);
-        fitnessCalculator.fitness(p);
         this.S = fitnessCalculator.getS();
         this.D = fitnessCalculator.getD();
+        p = new Population(numPopulation, numFeatures, S, D);
+        p.init(sizeSelectedFeatureSubset);
+        fitnessCalculator.fitness(p);
+
     }
 
     public void start() throws Exception {
