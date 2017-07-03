@@ -64,29 +64,60 @@ public class Population {
 
     private void refine(int i, int numSelectedFeatures, int ones) {
 
-        if (ones > numSelectedFeatures) {
+        int j=0 , k=0;
+        if (ones > numSelectedFeatures & j<S.length) {
 
 
             int temp = ones;
-            while (temp != numSelectedFeatures) {
-                Random rand = new Random();
-                int rnd = rand.nextInt(numFeatures);
-                if (this.individuals[i].gene[rnd] == 1) {
-                    this.individuals[i].gene[rnd] = 0;
+
+            while (temp != numSelectedFeatures & j< S.length) {
+
+                if (this.individuals[i].gene[j] == 1) {
+                    this.individuals[i].gene[j] = 0;
                     temp--;
+
                 }
+                j++;
 
             }
 
-        } else if (ones < numSelectedFeatures) {
+        } else if (ones < numSelectedFeatures & k < D.length) {
             int temp = numSelectedFeatures;
-            while (temp != ones) {
-                Random rand = new Random();
-                int rnd = rand.nextInt(numFeatures);
-                if (this.individuals[i].gene[rnd] == 0) {
-                    this.individuals[i].gene[rnd] = 1;
+            while (temp != ones & k<D.length) {
+
+                if (this.individuals[i].gene[k] == 0) {
+                    this.individuals[i].gene[k] = 1;
                     temp--;
                 }
+                k++;
+
+            }
+        }else if (ones > numSelectedFeatures & j>=S.length) {
+
+
+            int temp = ones;
+            int m=0;
+            while (temp != numSelectedFeatures) {
+
+                if (this.individuals[i].gene[m] == 1) {
+                    this.individuals[i].gene[m] = 0;
+                    temp--;
+
+                }
+                m++;
+
+            }
+
+        } else if (ones < numSelectedFeatures & k >= D.length) {
+            int temp = numSelectedFeatures;
+            int n=0;
+            while (temp != ones) {
+
+                if (this.individuals[i].gene[n] == 0) {
+                    this.individuals[i].gene[n] = 1;
+                    temp--;
+                }
+                n++;
 
             }
         }
