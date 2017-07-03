@@ -124,7 +124,9 @@ public class Population {
                 k++;
 
             }
-        } else if (ones > numSelectedFeatures & j >= S.length) {
+        }
+
+        if (ones > numSelectedFeatures & j >= S.length) {
 
 
             int temp = ones;
