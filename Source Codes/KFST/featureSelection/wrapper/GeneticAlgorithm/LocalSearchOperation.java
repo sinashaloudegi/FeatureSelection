@@ -22,7 +22,7 @@ public class LocalSearchOperation {
     public LocalSearchOperation(Instances data) {
         this.data = data;
         convertToArray();
-        means = new double[data.numInstances()];
+        means = new double[data.numAttributes()];
         calcMean();
 
     }
@@ -65,15 +65,15 @@ public class LocalSearchOperation {
                 double xj = 0;
 
                 for (int k = 0; k < data.numInstances(); k++) {
-                    xi = (arrayData[i][k] - means[k]);
-                    xj = (arrayData[j][k] - means[k]);
+                    xi = (arrayData[i][k] - means[i]);
+                    xj = (arrayData[j][k] - means[j]);
                     sum += xi * xj;
                 }
                 xj = 0;
                 xi = 0;
                 for (int k = 0; k < data.numInstances(); k++) {
-                    xi += Math.pow((arrayData[i][k] - means[k]), 2);
-                    xj += Math.pow((arrayData[j][k] - means[k]), 2);
+                    xi += Math.pow((arrayData[i][k] - means[i]), 2);
+                    xj += Math.pow((arrayData[j][k] - means[j]), 2);
                 }
                 double denominator = Math.sqrt(xi) * Math.sqrt(xj);
                 C[i][j] = sum / denominator;
@@ -86,7 +86,7 @@ public class LocalSearchOperation {
 
 
     private void calcMean() {
-        int sum = 0;
+        double sum = 0;
         for (int i = 0; i < data.numAttributes(); i++) {
             for (int j = 0; j < data.numInstances(); j++) {
                 sum += arrayData[j][i];
@@ -95,6 +95,11 @@ public class LocalSearchOperation {
             means[i] = sum;
         }
 
+        System.out.println("Means : ");
+        for (int i = 0; i < means.length; i++) {
+            System.out.print(means[i] + ", ");
+
+        }
     }
 
 
