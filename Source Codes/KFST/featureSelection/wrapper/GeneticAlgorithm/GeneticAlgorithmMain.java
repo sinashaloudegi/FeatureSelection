@@ -33,15 +33,16 @@ public class GeneticAlgorithmMain implements WrapperApproach {
     String pathData;
     String pathTestData;
     FitnessCalculator fitnessCalculator;
+    String type;
 
-    public GeneticAlgorithmMain(int sizeSelectedFeatureSubset, int numPopulation, int numGeneration, double pCrossover, double pMutation, String classifier) throws Exception {
+    public GeneticAlgorithmMain(int sizeSelectedFeatureSubset, int numPopulation, int numGeneration, double pCrossover, double pMutation, String classifier, String type) throws Exception {
         this.sizeSelectedFeatureSubset = sizeSelectedFeatureSubset;
         this.numPopulation = numPopulation;
         this.numGeneration = numGeneration;
         this.pCrossover = pCrossover;
         this.pMutation = pMutation;
         this.classifier = classifier;
-
+        this.type = type;
         r = (float) 0.5; //a portion of the  population that need to be selected
 
     }
@@ -50,7 +51,7 @@ public class GeneticAlgorithmMain implements WrapperApproach {
         fitnessCalculator = new FitnessCalculator(classifier, pathData, pathTestData);
         this.S = fitnessCalculator.getS();
         this.D = fitnessCalculator.getD();
-        p = new Population(numPopulation, numFeatures, S, D);
+        p = new Population(numPopulation, numFeatures, S, D, type);
         p.init(sizeSelectedFeatureSubset);
         fitnessCalculator.fitness(p);
 
@@ -60,7 +61,7 @@ public class GeneticAlgorithmMain implements WrapperApproach {
         int n = (int) ((1 - r) * numPopulation);
 
         for (int i = 0; i < numGeneration; i++) {
-            Population ps = new Population(numPopulation, numFeatures, S, D);
+            Population ps = new Population(numPopulation, numFeatures, S, D, type);
 
 
             ps.setIndividuals(select(n, p));
@@ -154,7 +155,7 @@ public class GeneticAlgorithmMain implements WrapperApproach {
         System.arraycopy(real_child, 0, result, 0, result.length);
 
 
-        Population temp = new Population(numPopulation + numCrossOver, numFeatures, S, D);
+        Population temp = new Population(numPopulation + numCrossOver, numFeatures, S, D,type);
         temp.setIndividuals(result);
 
         temp.refineNumOfOnes(sizeSelectedFeatureSubset);
@@ -200,7 +201,7 @@ public class GeneticAlgorithmMain implements WrapperApproach {
         System.arraycopy(real_child, 0, result, 0, result.length);
 
 
-        Population temp = new Population(numPopulation + numCrossOver, numFeatures, S, D);
+        Population temp = new Population(numPopulation + numCrossOver, numFeatures, S, D,type);
         temp.setIndividuals(result);
 
         temp.refineNumOfOnes(sizeSelectedFeatureSubset);

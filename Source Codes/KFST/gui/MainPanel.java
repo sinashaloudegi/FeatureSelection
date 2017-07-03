@@ -307,7 +307,7 @@ public class MainPanel extends JPanel {
 
         cb_wrapper = new JComboBox();
         cb_wrapper.setModel(new DefaultComboBoxModel(new String[]{"none",
-                "GeneticAlgorithm"}));
+                "GeneticAlgorithm", "HGAFS"}));
         cb_wrapper.setBounds(90, 35, 280, 22);
         cb_wrapper.addItemListener(eh);
 
@@ -963,6 +963,15 @@ public class MainPanel extends JPanel {
             pCrossover = geneticPanel.getpCrossover();
             pMutation = geneticPanel.getpMutation();
 
+        } else if (cb_wrapper.getSelectedItem().equals("HGAFS")) {
+            GeneticPanel geneticPanel = new GeneticPanel();
+            Dialog geneticDialog = new Dialog(geneticPanel);
+            geneticPanel.setUserValue(numPopulation, numGeneration, pCrossover, pMutation);
+            geneticPanel.setVisible(true);
+            numPopulation = geneticPanel.getNumPopulation();
+            numGeneration = geneticPanel.getNumGeneration();
+            pCrossover = geneticPanel.getpCrossover();
+            pMutation = geneticPanel.getpMutation();
         }
         System.out.println("More option Wrapper");
     }
@@ -1321,6 +1330,14 @@ public class MainPanel extends JPanel {
             cb_hybrid.setSelectedItem("none");
             if (cb_wrapper.getSelectedItem().equals("GeneticAlgorithm")) {
 
+                GeneticPanel geneticPanel = new GeneticPanel();
+                geneticPanel.setDefaultValue();
+                numPopulation = geneticPanel.getNumPopulation();
+                numGeneration = geneticPanel.getNumGeneration();
+                pCrossover = geneticPanel.getpCrossover();
+                pMutation = geneticPanel.getpMutation();
+                btn_moreOpWrapper.setEnabled(true);
+            } else if (cb_wrapper.getSelectedItem().equals("HGAFS")) {
                 GeneticPanel geneticPanel = new GeneticPanel();
                 geneticPanel.setDefaultValue();
                 numPopulation = geneticPanel.getNumPopulation();
@@ -3171,7 +3188,7 @@ public class MainPanel extends JPanel {
                     long startTime = System.currentTimeMillis();
 
 
-                    GeneticAlgorithmMain method = new GeneticAlgorithmMain(numSelectedSubsets[j], numPopulation, numGeneration, pCrossover, pMutation, cb_classifier.getSelectedItem().toString());
+                    GeneticAlgorithmMain method = new GeneticAlgorithmMain(numSelectedSubsets[j], numPopulation, numGeneration, pCrossover, pMutation, cb_classifier.getSelectedItem().toString(), "standard");
                   /*  System.out.println("GeneticAlgorithm...   numPopulation = " + numPopulation
                             + "   numGeneration = " + numGeneration
                             + "   pCrossover = " + pCrossover
@@ -3237,6 +3254,94 @@ public class MainPanel extends JPanel {
         }
     }
 
+    private void HGAFSPerform() throws Exception {
+        if (numPopulation == 0) {
+            JOptionPane.showMessageDialog(null, "Number Of Population in HGAFS Can't be 0", "Error", JOptionPane.ERROR_MESSAGE);
+
+        } else {
+
+            progressValue = 1;
+            repaint();
+            ResultPanel resPanel = new ResultPanel(pathProject);
+            //save initial information of the dataset
+            resPanel.setMessage(addTextToPanel());
+            int numRuns = Integer.parseInt(cb_start.getSelectedItem().toString());
+            accuracies = new double[numRuns][numSelectedSubsets.length];
+            times = new double[numRuns][numSelectedSubsets.length];
+            String[][] Results = new String[numRuns][numSelectedSubsets.length];
+            double totalValuesProgress = numRuns * numSelectedSubsets.length;
+            for (int i = 0; i < numRuns; i++) {
+                resPanel.setMessage("  Iteration (" + (i + 1) + "):\n");
+                for (int j = 0; j < numSelectedSubsets.length; j++) {
+                    resPanel.setMessage("    " + numSelectedSubsets[j] + " feature selected:\n");
+                    long startTime = System.currentTimeMillis();
+
+
+                    GeneticAlgorithmMain method = new GeneticAlgorithmMain(numSelectedSubsets[j], numPopulation, numGeneration, pCrossover, pMutation, cb_classifier.getSelectedItem().toString(), "HGAFS");
+                  /*  System.out.println("GeneticAlgorithm...   numPopulation = " + numPopulation
+                            + "   numGeneration = " + numGeneration
+                            + "   pCrossover = " + pCrossover
+                            + "   pMutation = " + pMutation);*/
+                    method.loadDataSet(data);
+
+                    method.evaluateFeatures();
+
+
+                    long endTime = System.currentTimeMillis();
+                    times[i][j] = (endTime - startTime) / 1000.0;
+
+                    int[] subset = method.getSelectedFeatureSubset();
+
+
+                    //shows new results in the panel of results
+                    resPanel.setMessage(addTextToPanel(subset));
+
+                    Results[i][j] = data.createFeatNames(subset);
+
+                    String nameTrainDataCSV = pathDataCSV + "trainSet[" + (i + 1) + "-" + numSelectedSubsets[j] + "].csv";
+                    String nameTrainDataARFF = pathDataARFF + "trainSet[" + (i + 1) + "-" + numSelectedSubsets[j] + "].arff";
+                    String nameTestDataCSV = pathDataCSV + "testSet[" + (i + 1) + "-" + numSelectedSubsets[j] + "].csv";
+                    String nameTestDataARFF = pathDataARFF + "testSet[" + (i + 1) + "-" + numSelectedSubsets[j] + "].arff";
+
+                    data.createCSVFile(data.getTrainSet(), subset, nameTrainDataCSV);
+
+                    data.createCSVFile(data.getTestSet(), subset, nameTestDataCSV);
+
+                    arff.convertCSVtoARFF(nameTrainDataCSV, nameTrainDataARFF, pathProject, subset.length, data);
+                    arff.convertCSVtoARFF(nameTestDataCSV, nameTestDataARFF, pathProject, subset.length, data);
+                    if (cb_classifier.getSelectedItem().equals("Support Vector Machine (SVM)")) {
+                        accuracies[i][j] = WekaClassifier.SVM(nameTrainDataARFF, nameTestDataARFF, typeKernel);
+                    } else if (cb_classifier.getSelectedItem().equals("Naive Bayes (NB)")) {
+                        accuracies[i][j] = WekaClassifier.naiveBayes(nameTrainDataARFF, nameTestDataARFF);
+                    } else if (cb_classifier.getSelectedItem().equals("Decision Tree (C4.5)")) {
+                        accuracies[i][j] = WekaClassifier.dTree(nameTrainDataARFF, nameTestDataARFF, confidence, minNum);
+                    }
+
+                    //updates the value of progress bar
+                    progressValue = (int) ((upProgValue(numSelectedSubsets.length, i, j) / totalValuesProgress) * 100);
+                    repaint();
+                }
+                if (rd_randSet.isSelected()) {
+                    data.preProcessing(txt_inputdst.getText(), txt_classLbl.getText());
+                }
+            }
+            createFeatureFiles(Results, pathProject);
+            errorRates = MathFunc.computeErrorRate(accuracies);
+            averageAccuracies = MathFunc.computeAverageArray(accuracies);
+            averageErrorRates = MathFunc.computeErrorRate(averageAccuracies);
+            averageTimes = MathFunc.computeAverageArray(times);
+
+            //show the result values in the panel of result
+            resPanel.setMessage(addTextToPanel(Results, "Subsets of selected features in each iteration"));
+            resPanel.setMessage(addTextToPanel(accuracies, "Classification accuracies"));
+            resPanel.setMessage(addTextToPanel(averageAccuracies, "Average classification accuracies", true));
+            resPanel.setMessage(addTextToPanel(times, "Execution times"));
+            resPanel.setMessage(addTextToPanel(averageTimes, "Average execution times", true));
+            resPanel.setEnabledButton();
+            setEnabledItem();
+
+        }
+    }
 
     /**
      * enables the status of diagrams menu item
@@ -3580,6 +3685,13 @@ public class MainPanel extends JPanel {
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
+                } else if (cb_wrapper.getSelectedItem().equals("HGAFS")) {
+                    try {
+                        HGAFSPerform();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
                 }
 
 
