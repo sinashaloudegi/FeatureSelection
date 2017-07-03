@@ -46,6 +46,7 @@ public class FitnessCalculator {
         this.numFeatures = train.numAttributes();
         LocalSearchOperation lso = new LocalSearchOperation(train);
         lso.computeCorrelation();
+        System.out.println("Finiash ");
     }
 
     public Population fitness(Population p) throws Exception {
