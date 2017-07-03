@@ -177,6 +177,52 @@ public class GeneticAlgorithmMain implements WrapperApproach {
 
         return result;
     }
+    //cross 2 point
+    private Population crossOver2(Population p) {
+        int numCrossOver = 0;
+        Individual[] real = p.getIndividuals();
+        Individual[] real_child = new Individual[real.length * 2];
+        System.arraycopy(real, 0, real_child, 0, real.length);
+        for (int i = 0, j = real.length; i < real.length - 1; i += 2) {
+            double rand = Math.random();
+            if (rand < pCrossover) {
+                numCrossOver += 2;
+                int a = randomPosition();
+                int b = randomPosition();
+                int x=Math.min(a,b);
+                int y=Math.max(a,b);
+                real_child[j] = crossing2(real[i], real[i + 1], x, y);
+                real_child[j + 1] = crossing2(real[i + 1], real[i], x, y);
+                j += 2;
+            }
+        }
+        Individual[] result = new Individual[real.length + numCrossOver];
+        System.arraycopy(real_child, 0, result, 0, result.length);
+
+
+        Population temp = new Population(numPopulation + numCrossOver, numFeatures, S, D);
+        temp.setIndividuals(result);
+
+        temp.refineNumOfOnes(sizeSelectedFeatureSubset);
+        return temp;
+    }
+
+    private Individual crossing2(Individual a, Individual b, int x,int y) {
+        Individual result = new Individual();
+        byte[] geneA = a.getGene();
+        byte[] geneB = b.getGene();
+        byte[] geneResult = new byte[geneA.length];
+        for (int i = 0; i < geneResult.length; i++) {
+            if (i < x | i>y) {
+                geneResult[i] = geneA[i];
+            } else {
+                geneResult[i] = geneB[i];
+            }
+        }
+        result.setGene(geneResult);
+
+        return result;
+    }
 
     //Select n distinct Individuals from p using
     private Individual[] select(int n, Population p) {
