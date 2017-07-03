@@ -18,40 +18,40 @@ public class LocalSearchOperation {
     double means[];
     double Cor[][];
 
+    int numAttributes;
     public LocalSearchOperation(Instances data) {
         this.data = data;
+        numAttributes=data.numAttributes()-1;
         convertToArray();
-        means = new double[data.numAttributes() - 1];
+        means = new double[numAttributes];
         calcMean();
 
     }
 
     public void computeCorrelation() {
         computeC();
-        Cor = new double[data.numAttributes()][2];
-        for (int i = 0; i < data.numAttributes(); i++) {
+        Cor = new double[numAttributes][2];
+        for (int i = 0; i <numAttributes; i++) {
             double sum = 0;
-            for (int j = 0; j < data.numAttributes(); j++) {
+            for (int j = 0; j < numAttributes; j++) {
                 sum += Math.abs(C[i][j]);
             }
-            Cor[i][0] = sum / (data.numAttributes() - 1);
+            Cor[i][0] = sum / (numAttributes);
             Cor[i][1] = i;
         }
 
 
-        System.out.println(Arrays.deepToString(Cor));
         Arrays.sort(Cor, (double[] a, double[] b) -> Double.compare(a[0], b[0]));
         System.out.println("Sorted");
-        System.out.println(Arrays.deepToString(Cor));
 
-        D = new int[data.numAttributes() / 2];
-        S = new int[data.numAttributes() / 2];
-        for (int i = 0; i < data.numAttributes() / 2; i++) {
-            D[i] = (int) Cor[i][0];
+        D = new int[numAttributes / 2];
+        S = new int[numAttributes / 2];
+        for (int i = 0; i < numAttributes / 2; i++) {
+            D[i] = (int) Cor[i][1];
         }
         int k = 0;
-        for (int i = data.numAttributes() / 2; i < data.numAttributes(); i++) {
-            S[k] = (int) (Cor[i][0]);
+        for (int i =(numAttributes+1) / 2; i < numAttributes; i++) {
+            S[k] = (int) (Cor[i][1]);
             k++;
         }
         System.out.println("s");
@@ -67,9 +67,9 @@ public class LocalSearchOperation {
 
 
     private void computeC() {
-        C = new double[data.numAttributes()][data.numAttributes()];
-        for (int i = 0; i < data.numAttributes() - 1; i++) {
-            for (int j = 0; j < data.numAttributes() - 1; j++) {
+        C = new double[numAttributes][numAttributes];
+        for (int i = 0; i <numAttributes; i++) {
+            for (int j = 0; j < numAttributes; j++) {
                 double sum = 0;
                 double xi = 0;
                 double xj = 0;
@@ -97,7 +97,7 @@ public class LocalSearchOperation {
 
     private void calcMean() {
         double sum = 0;
-        for (int i = 0; i < data.numAttributes() - 1; i++) {
+        for (int i = 0; i < numAttributes; i++) {
             for (int j = 0; j < data.numInstances(); j++) {
                 sum += arrayData[j][i];
             }
@@ -108,14 +108,20 @@ public class LocalSearchOperation {
 
     }
 
-
     private void convertToArray() {
-        arrayData = new double[data.numInstances()][data.numAttributes()];
+        arrayData = new double[data.numInstances()][numAttributes];
         for (int i = 0; i < data.numInstances(); i++) {
-            for (int j = 0; j < data.numAttributes(); j++) {
+            for (int j = 0; j < numAttributes; j++) {
                 arrayData[i][j] = data.instance(i).value(j);
             }
         }
     }
 
+    public int[] getS() {
+        return S;
+    }
+
+    public int[] getD() {
+        return D;
+    }
 }

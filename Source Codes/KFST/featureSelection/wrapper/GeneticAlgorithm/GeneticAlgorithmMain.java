@@ -26,6 +26,9 @@ public class GeneticAlgorithmMain implements WrapperApproach {
     double pMutation;
     float r;
 
+    int S[];
+    int D[];
+
 
     String pathData;
     String pathTestData;
@@ -44,18 +47,19 @@ public class GeneticAlgorithmMain implements WrapperApproach {
     }
 
     public void initialize() throws Exception {
-        p = new Population(numPopulation, numFeatures);
+        p = new Population(numPopulation, numFeatures, S, D);
         p.init(sizeSelectedFeatureSubset);
         fitnessCalculator = new FitnessCalculator(classifier, pathData, pathTestData);
         fitnessCalculator.fitness(p);
-
+        this.S = fitnessCalculator.getS();
+        this.D = fitnessCalculator.getD();
     }
 
     public void start() throws Exception {
         int n = (int) ((1 - r) * numPopulation);
 
         for (int i = 0; i < numGeneration; i++) {
-            Population ps = new Population(numPopulation, numFeatures);
+            Population ps = new Population(numPopulation, numFeatures, S, D);
 
 
             ps.setIndividuals(select(n, p));
@@ -149,7 +153,7 @@ public class GeneticAlgorithmMain implements WrapperApproach {
         System.arraycopy(real_child, 0, result, 0, result.length);
 
 
-        Population temp = new Population(numPopulation + numCrossOver, numFeatures);
+        Population temp = new Population(numPopulation + numCrossOver, numFeatures, S, D);
         temp.setIndividuals(result);
 
         temp.refineNumOfOnes(sizeSelectedFeatureSubset);

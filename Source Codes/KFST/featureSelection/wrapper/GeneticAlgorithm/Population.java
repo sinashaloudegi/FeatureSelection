@@ -1,5 +1,7 @@
 package KFST.featureSelection.wrapper.GeneticAlgorithm;
 
+import weka.core.Instances;
+
 import java.util.Random;
 
 /**
@@ -10,14 +12,20 @@ public class Population {
     Individual individuals[];
     int numPopulation;
     private int numFeatures;
+    Instances data;
+    int[] S;
+    int[] D;
 
-    public Population(int numPopulation, int numFeatures) {
+    public Population(int numPopulation, int numFeatures, int[] S, int[] D) {
 
         this.numPopulation = numPopulation;
         individuals = new Individual[numPopulation];
         this.numFeatures = numFeatures;
+        this.S = S;
+        this.D = D;
 
     }
+
 
     public Individual[] getIndividuals() {
         return individuals;
@@ -54,7 +62,6 @@ public class Population {
     }
 
 
-    // matchs ones to number of ones
     private void refine(int i, int numSelectedFeatures, int ones) {
 
         if (ones > numSelectedFeatures) {
@@ -85,6 +92,18 @@ public class Population {
         }
 
     }
+
+    private void refineHGAFS(int i, int numSelectedFeatures, int ones) {
+//TODO HGAFS for refine
+        if (ones > numSelectedFeatures) {
+
+
+        } else if (ones < numSelectedFeatures) {
+
+        }
+
+    }
+
 
     private int numOfOnes(byte[] gene) {
         int counter = 0;

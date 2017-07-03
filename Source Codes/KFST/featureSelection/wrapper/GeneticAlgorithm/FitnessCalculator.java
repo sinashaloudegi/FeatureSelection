@@ -23,6 +23,8 @@ public class FitnessCalculator {
     int numFeatures;
     String classifier;
     Random rand = new Random(1);
+    int[] S;
+    int[] D;
 
 
     public FitnessCalculator(String classifier, String path, String pathTestData) throws IOException {
@@ -46,7 +48,16 @@ public class FitnessCalculator {
         this.numFeatures = train.numAttributes();
         LocalSearchOperation lso = new LocalSearchOperation(train);
         lso.computeCorrelation();
-        System.out.println("Finiash ");
+        this.S = lso.getS();
+        this.D = lso.getD();
+    }
+
+    public int[] getS() {
+        return S;
+    }
+
+    public int[] getD() {
+        return D;
     }
 
     public Population fitness(Population p) throws Exception {
