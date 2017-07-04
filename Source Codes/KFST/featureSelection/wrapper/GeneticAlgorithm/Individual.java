@@ -43,6 +43,18 @@ public class Individual {
         return s;
     }
 
+    private int[] findOnes(int ones) {
+
+        int[] result = new int[ones];
+        int j = 0;
+        for (int i = 0; i < gene.length; i++) {
+            if (gene[i] == 1) {
+                result[j] = i;
+            }
+            j++;
+        }
+        return result;
+    }
 
     public Individual randomIndividual(int numFeatures) {
         byte[] b = randomByte(numFeatures);
