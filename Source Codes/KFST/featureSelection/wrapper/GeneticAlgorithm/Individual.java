@@ -50,9 +50,15 @@ public class Individual {
         for (int i = 0; i < gene.length; i++) {
             if (gene[i] == 1) {
                 result[j] = i;
+                j++;
             }
-            j++;
+
         }
+        System.out.println("findONES:::");
+        for (int i = 0; i < result.length; i++) {
+            System.out.print(result[i]+",");
+        }
+        System.out.println();
         return result;
     }
 
