@@ -106,7 +106,6 @@ public class Population {
     }
 
     private void refineHGAFS(int i, int numSelectedFeatures, int ones) {
-//TODO HGAFS for refine
         int j = 0, k = 0;
         if (ones > numSelectedFeatures & j < S.length) {
 
@@ -136,6 +135,7 @@ public class Population {
 
             }
         }
+        ones = numOfOnes(this.individuals[i].getGene());
 
         if (ones > numSelectedFeatures & j >= S.length) {
 
@@ -143,7 +143,6 @@ public class Population {
             int temp = ones;
             int m = 0;
             while (temp != numSelectedFeatures) {
-
                 if (this.individuals[i].gene[m] == 1) {
                     this.individuals[i].gene[m] = 0;
                     temp--;

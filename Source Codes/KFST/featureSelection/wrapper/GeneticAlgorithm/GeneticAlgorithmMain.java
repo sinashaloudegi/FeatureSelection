@@ -67,7 +67,7 @@ public class GeneticAlgorithmMain implements WrapperApproach {
             ps.setIndividuals(select(n, p));
 
             //crossover
-            ps = crossOver(ps);
+            ps = crossOver2(ps);
 
             //mutation
             ps = mutation(ps);
