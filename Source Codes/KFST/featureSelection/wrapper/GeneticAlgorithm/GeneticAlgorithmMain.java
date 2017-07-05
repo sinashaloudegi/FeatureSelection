@@ -26,16 +26,13 @@ public class GeneticAlgorithmMain implements WrapperApproach {
     double pMutation;
     float r;
 
-    int S[];
-    int D[];
-
 
     String pathData;
     String pathTestData;
     FitnessCalculator fitnessCalculator;
     String type;
 
-    public GeneticAlgorithmMain(int sizeSelectedFeatureSubset, int numPopulation, int numGeneration, double pCrossover, double pMutation, String classifier, String type) throws Exception {
+    public GeneticAlgorithmMain(int sizeSelectedFeatureSubset, int numPopulation, int numGeneration, double pCrossover, double pMutation, String classifier) throws Exception {
         this.sizeSelectedFeatureSubset = sizeSelectedFeatureSubset;
         this.numPopulation = numPopulation;
         this.numGeneration = numGeneration;
@@ -49,9 +46,7 @@ public class GeneticAlgorithmMain implements WrapperApproach {
 
     public void initialize() throws Exception {
         fitnessCalculator = new FitnessCalculator(classifier, pathData, pathTestData);
-        this.S = fitnessCalculator.getS();
-        this.D = fitnessCalculator.getD();
-        p = new Population(numPopulation, numFeatures, S, D, type);
+        p = new Population(numPopulation, numFeatures);
         p.init(sizeSelectedFeatureSubset);
         fitnessCalculator.fitness(p);
 
@@ -61,13 +56,13 @@ public class GeneticAlgorithmMain implements WrapperApproach {
         int n = (int) ((1 - r) * numPopulation);
 
         for (int i = 0; i < numGeneration; i++) {
-            Population ps = new Population(numPopulation, numFeatures, S, D, type);
+            Population ps = new Population(numPopulation, numFeatures);
 
 
             ps.setIndividuals(select(n, p));
 
             //crossover
-            ps = crossOver2(ps);
+            ps = crossOver(ps);
 
             //mutation
             ps = mutation(ps);
@@ -155,7 +150,7 @@ public class GeneticAlgorithmMain implements WrapperApproach {
         System.arraycopy(real_child, 0, result, 0, result.length);
 
 
-        Population temp = new Population(numPopulation + numCrossOver, numFeatures, S, D,type);
+        Population temp = new Population(numPopulation + numCrossOver, numFeatures);
         temp.setIndividuals(result);
 
         temp.refineNumOfOnes(sizeSelectedFeatureSubset);
@@ -169,52 +164,6 @@ public class GeneticAlgorithmMain implements WrapperApproach {
         byte[] geneResult = new byte[geneA.length];
         for (int i = 0; i < geneResult.length; i++) {
             if (i < x) {
-                geneResult[i] = geneA[i];
-            } else {
-                geneResult[i] = geneB[i];
-            }
-        }
-        result.setGene(geneResult);
-
-        return result;
-    }
-    //cross 2 point
-    private Population crossOver2(Population p) {
-        int numCrossOver = 0;
-        Individual[] real = p.getIndividuals();
-        Individual[] real_child = new Individual[real.length * 2];
-        System.arraycopy(real, 0, real_child, 0, real.length);
-        for (int i = 0, j = real.length; i < real.length - 1; i += 2) {
-            double rand = Math.random();
-            if (rand < pCrossover) {
-                numCrossOver += 2;
-                int a = randomPosition();
-                int b = randomPosition();
-                int x=Math.min(a,b);
-                int y=Math.max(a,b);
-                real_child[j] = crossing2(real[i], real[i + 1], x, y);
-                real_child[j + 1] = crossing2(real[i + 1], real[i], x, y);
-                j += 2;
-            }
-        }
-        Individual[] result = new Individual[real.length + numCrossOver];
-        System.arraycopy(real_child, 0, result, 0, result.length);
-
-
-        Population temp = new Population(numPopulation + numCrossOver, numFeatures, S, D,type);
-        temp.setIndividuals(result);
-
-        temp.refineNumOfOnes(sizeSelectedFeatureSubset);
-        return temp;
-    }
-
-    private Individual crossing2(Individual a, Individual b, int x,int y) {
-        Individual result = new Individual();
-        byte[] geneA = a.getGene();
-        byte[] geneB = b.getGene();
-        byte[] geneResult = new byte[geneA.length];
-        for (int i = 0; i < geneResult.length; i++) {
-            if (i < x | i>y) {
                 geneResult[i] = geneA[i];
             } else {
                 geneResult[i] = geneB[i];

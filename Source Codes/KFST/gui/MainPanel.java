@@ -3188,7 +3188,7 @@ public class MainPanel extends JPanel {
                     long startTime = System.currentTimeMillis();
 
 
-                    GeneticAlgorithmMain method = new GeneticAlgorithmMain(numSelectedSubsets[j], numPopulation, numGeneration, pCrossover, pMutation, cb_classifier.getSelectedItem().toString(), "standard");
+                    GeneticAlgorithmMain method = new GeneticAlgorithmMain(numSelectedSubsets[j], numPopulation, numGeneration, pCrossover, pMutation, cb_classifier.getSelectedItem().toString());
                   /*  System.out.println("GeneticAlgorithm...   numPopulation = " + numPopulation
                             + "   numGeneration = " + numGeneration
                             + "   pCrossover = " + pCrossover
@@ -3254,6 +3254,7 @@ public class MainPanel extends JPanel {
         }
     }
 
+/*
     private void HGAFSPerform() throws Exception {
         if (numPopulation == 0) {
             JOptionPane.showMessageDialog(null, "Number Of Population in HGAFS Can't be 0", "Error", JOptionPane.ERROR_MESSAGE);
@@ -3277,20 +3278,26 @@ public class MainPanel extends JPanel {
                     long startTime = System.currentTimeMillis();
 
 
-                    GeneticAlgorithmMain method = new GeneticAlgorithmMain(numSelectedSubsets[j], numPopulation, numGeneration, pCrossover, pMutation, cb_classifier.getSelectedItem().toString(), "HGAFS");
-                  /*  System.out.println("GeneticAlgorithm...   numPopulation = " + numPopulation
+          */
+/*          HGAFSMain method = new HGAFSMain(numSelectedSubsets[j], numPopulation, numGeneration, pCrossover, pMutation, cb_classifier.getSelectedItem().toString());
+                  *//*
+*/
+/*  System.out.println("GeneticAlgorithm...   numPopulation = " + numPopulation
                             + "   numGeneration = " + numGeneration
                             + "   pCrossover = " + pCrossover
-                            + "   pMutation = " + pMutation);*/
+                            + "   pMutation = " + pMutation);*//*
+*/
+/*
                     method.loadDataSet(data);
 
                     method.evaluateFeatures();
+*//*
 
 
                     long endTime = System.currentTimeMillis();
                     times[i][j] = (endTime - startTime) / 1000.0;
 
-                    int[] subset = method.getSelectedFeatureSubset();
+                  //  int[] subset = method.getSelectedFeatureSubset();
 
 
                     //shows new results in the panel of results
@@ -3342,6 +3349,7 @@ public class MainPanel extends JPanel {
 
         }
     }
+*/
 
     /**
      * enables the status of diagrams menu item
@@ -3687,7 +3695,7 @@ public class MainPanel extends JPanel {
                     }
                 } else if (cb_wrapper.getSelectedItem().equals("HGAFS")) {
                     try {
-                        HGAFSPerform();
+                        //HGAFSPerform();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

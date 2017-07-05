@@ -1,4 +1,4 @@
-package KFST.featureSelection.wrapper.GeneticAlgorithm;
+package KFST.featureSelection.wrapper.HGAFS;
 
 import weka.core.Instances;
 
@@ -18,6 +18,7 @@ public class LocalSearchOperation {
     double means[];
     double Cor[][];
 
+    double alpha;
     int numAttributes;
     public LocalSearchOperation(Instances data) {
         this.data = data;
@@ -123,5 +124,13 @@ public class LocalSearchOperation {
 
     public int[] getD() {
         return D;
+    }
+
+    public double getAlpha() {
+        int sum=0;
+        for (int i = 0; i <C.length ; i++) {
+
+        }
+        return alpha;
     }
 }

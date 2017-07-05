@@ -1,5 +1,6 @@
 package KFST.featureSelection.wrapper.GeneticAlgorithm;
 
+import KFST.featureSelection.wrapper.HGAFS.LocalSearchOperation;
 import weka.classifiers.Evaluation;
 import weka.classifiers.lazy.IBk;
 import weka.core.Instances;
@@ -22,9 +23,6 @@ public class FitnessCalculator {
     Instances test;
     int numFeatures;
     String classifier;
-    Random rand = new Random(1);
-    int[] S;
-    int[] D;
 
 
     public FitnessCalculator(String classifier, String path, String pathTestData) throws IOException {
@@ -48,17 +46,7 @@ public class FitnessCalculator {
         this.numFeatures = train.numAttributes();
         LocalSearchOperation lso = new LocalSearchOperation(train);
         lso.computeCorrelation();
-        this.S = lso.getS();
-        this.D = lso.getD();
-        System.out.println(S.length);
-    }
 
-    public int[] getS() {
-        return S;
-    }
-
-    public int[] getD() {
-        return D;
     }
 
     public Population fitness(Population p) throws Exception {
