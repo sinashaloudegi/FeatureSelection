@@ -77,7 +77,7 @@ public class HGAFSMain implements WrapperApproach {
         int counter = 20;
         FitCalculator fitCalculator = new FitCalculator(pathData, pathTestData);
         data = fitCalculator.getTrain();
-        LocalSearchOperation localSearchOperation = new LocalSearchOperation(data);
+        LocalSearchOperation localSearchOperation = new LocalSearchOperation(data,miu,numSelectedFeatures);
 
         while (counter > 0) {
 

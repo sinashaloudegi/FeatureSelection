@@ -4,7 +4,6 @@ import weka.core.Instances;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by sina on 7/1/2017.
@@ -17,6 +16,8 @@ public class LocalSearchOperation {
     int[] D;
     double[][] C;
 
+    double delta, zi, miu;
+
     double means[];
     double Cor[][];
 
@@ -25,8 +26,12 @@ public class LocalSearchOperation {
 
     Strings offSpring;
 
-    public LocalSearchOperation(Instances data) {
+    public LocalSearchOperation(Instances data, double miu, int numSelectedFeature) {
         this.data = data;
+        this.miu = miu;
+        delta = miu * numSelectedFeature;
+        zi = (1 - miu) * numSelectedFeature;
+
         numAttributes = data.numAttributes() - 1;
         convertToArray();
         means = new double[numAttributes];
@@ -35,27 +40,53 @@ public class LocalSearchOperation {
     }
 
     public Strings lso(Strings offSpring) {
-        int[] X=offSpring.getOnes();
+        int[] X = offSpring.getOnes();
         ArrayList<Integer> list = new ArrayList<Integer>();
-        for (int i=0;i<D.length;i++){
-            for (int j=0;j<X.length;j++){
-                if(D[i]==X[j]){
+        for (int i = 0; i < D.length; i++) {
+            for (int j = 0; j < X.length; j++) {
+                if (D[i] == X[j]) {
                     list.add(D[i]);
                 }
             }
         }
-        Integer[] Xd=new Integer[list.size()];
+        Integer[] Xd = new Integer[list.size()];
         Xd = list.toArray(Xd);
         list.clear();
-        for (int i=0;i<S.length;i++){
-            for (int j=0;j<X.length;j++){
-                if(S[i]==X[j]){
+        for (int i = 0; i < S.length; i++) {
+            for (int j = 0; j < X.length; j++) {
+                if (S[i] == X[j]) {
                     list.add(S[i]);
                 }
             }
         }
-        Integer[] Xs=new Integer[list.size()];
+        Integer[] Xs = new Integer[list.size()];
         Xs = list.toArray(Xs);
+
+        if (delta > Xd.length) {
+            for (int i = 0; i < delta - Xd.length; i++) {
+                addToXd();
+            }
+        }
+
+        if (delta < Xd.length) {
+            for (int i = 0; i < Xd.length - delta; i++) {
+                delFromXd();
+            }
+        }
+
+        if (zi > Xs.length) {
+            for (int i = 0; i < delta - Xs.length; i++) {
+                addtoXs();
+            }
+        }
+
+        if (zi < Xd.length) {
+            for (int i = 0; i < Xd.length - delta; i++) {
+                delFromXs();
+            }
+        }
+
+
         return offSpring;
 
     }
