@@ -1,12 +1,13 @@
 package KFST.featureSelection.wrapper.HGAFS;
 
+import java.util.Random;
+
 /**
  * Created by sina on 7/5/2017.
  */
 public class Strings {
     double fitness;
     byte[] gene;
-
 
 
     public double getFitness() {
@@ -25,10 +26,25 @@ public class Strings {
         this.gene = gene;
     }
 
-    public void randomInit(int numFeatures,int numSelecteFeatures) {
-        gene=new byte[numFeatures];
-        for (int i = 0; i < gene.length; i++) {
-
+    public void randomInit(int numFeatures, int numSelectedFeatures) {
+        gene = new byte[numFeatures];
+        int temp = 0;
+        while (temp != numSelectedFeatures) {
+            temp = 0;
+            for (int i = 0; i < gene.length; i++) {
+                if (randomGene() < numSelectedFeatures / numFeatures) {
+                    gene[i] = 1;
+                    temp++;
+                } else {
+                    gene[i] = 0;
+                }
+            }
         }
+    }
+
+    private double randomGene() {
+        Random rand = new Random();
+
+        return rand.nextDouble();
     }
 }

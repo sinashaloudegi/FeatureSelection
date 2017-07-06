@@ -43,7 +43,7 @@ public class Population {
     public void initPopulation() {
         Strings[] strings = new Strings[numFeatures];
         for (int i = 0; i < strings.length; i++) {
-            strings[i].randomInit(numSelectedFeatures);
+            strings[i].randomInit(numFeatures,numSelectedFeatures);
 
         }
     }
