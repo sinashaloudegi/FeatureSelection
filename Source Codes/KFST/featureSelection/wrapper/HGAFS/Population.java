@@ -65,7 +65,7 @@ public class Population {
             double max=0;
             int maxStrings=0;
             for (int i=0;i<temp.size();i++){
-                if(temp.get(i).fitness>max){
+                if(temp.get(i).fitness >= max){
                     max=temp.get(i).fitness;
                     maxStrings=i;
                 }
