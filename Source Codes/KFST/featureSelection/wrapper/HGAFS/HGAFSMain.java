@@ -7,6 +7,7 @@ import KFST.util.ArraysFunc;
 import weka.core.Instances;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Random;
 
 /**
@@ -83,6 +84,7 @@ public class HGAFSMain implements WrapperApproach {
 
             p = fitCalculator.fit(p);
             Strings[] parent = p.getStrings();
+            ArrayList<Strings> childList = new ArrayList<Strings>();
             for (int i = 0; i < parent.length - 1; i += 2) {
                 double rand = Math.random();
                 if (rand < pCrossover) {
@@ -105,8 +107,11 @@ public class HGAFSMain implements WrapperApproach {
 
                     offspring1 = localSearchOperation.lso(offspring1);
                     offspring2 = localSearchOperation.lso(offspring2);
+                    childList.add(offspring1);
+                    childList.add(offspring2);
                 }
             }
+
             counter--;
 
         }
