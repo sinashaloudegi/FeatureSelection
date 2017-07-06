@@ -6,6 +6,7 @@ import KFST.featureSelection.wrapper.WrapperApproach;
 import KFST.util.ArraysFunc;
 import weka.core.Instances;
 
+import java.io.IOException;
 import java.util.Random;
 
 /**
@@ -64,18 +65,22 @@ public class HGAFSMain implements WrapperApproach {
     @Override
     public void evaluateFeatures() {
         init();
-        start();
+        try {
+            start();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
     }
 
-    public void start() {
+    public void start() throws IOException {
         int counter = 20;
-
+        FitCalculator fitCalculator = new FitCalculator(pathData, pathTestData);
+        data = fitCalculator.getTrain();
         LocalSearchOperation localSearchOperation = new LocalSearchOperation(data);
 
         while (counter > 0) {
 
-            FitCalculator fitCalculator = new FitCalculator(p);
             p = fitCalculator.fit(p);
             Strings[] parent = p.getStrings();
             for (int i = 0; i < parent.length - 1; i += 2) {

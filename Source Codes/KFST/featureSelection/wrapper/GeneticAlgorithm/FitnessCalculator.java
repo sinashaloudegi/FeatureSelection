@@ -25,7 +25,7 @@ public class FitnessCalculator {
     String classifier;
 
 
-    public FitnessCalculator(String classifier, String path, String pathTestData) throws IOException {
+        public FitnessCalculator(String classifier, String path, String pathTestData) throws IOException {
         this.classifier = classifier;
         this.path = path;
         this.pathTestData = pathTestData;
@@ -46,6 +46,10 @@ public class FitnessCalculator {
         this.numFeatures = train.numAttributes();
 
 
+    }
+
+    public Instances getTrain() {
+        return train;
     }
 
     public Population fitness(Population p) throws Exception {
