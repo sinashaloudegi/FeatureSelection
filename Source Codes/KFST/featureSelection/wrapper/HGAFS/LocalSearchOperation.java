@@ -20,19 +20,28 @@ public class LocalSearchOperation {
 
     double alpha;
     int numAttributes;
+
+    Strings offSpring;
+
     public LocalSearchOperation(Instances data) {
         this.data = data;
-        numAttributes=data.numAttributes()-1;
+        numAttributes = data.numAttributes() - 1;
         convertToArray();
         means = new double[numAttributes];
         calcMean();
 
     }
 
+    public Strings lso(Strings offSpring) {
+
+        return offSpring;
+
+    }
+
     public void computeCorrelation() {
         computeC();
         Cor = new double[numAttributes][2];
-        for (int i = 0; i <numAttributes; i++) {
+        for (int i = 0; i < numAttributes; i++) {
             double sum = 0;
             for (int j = 0; j < numAttributes; j++) {
                 sum += Math.abs(C[i][j]);
@@ -51,7 +60,7 @@ public class LocalSearchOperation {
             D[i] = (int) Cor[i][1];
         }
         int k = 0;
-        for (int i =(numAttributes+1) / 2; i < numAttributes; i++) {
+        for (int i = (numAttributes + 1) / 2; i < numAttributes; i++) {
             S[k] = (int) (Cor[i][1]);
             k++;
         }
@@ -69,7 +78,7 @@ public class LocalSearchOperation {
 
     private void computeC() {
         C = new double[numAttributes][numAttributes];
-        for (int i = 0; i <numAttributes; i++) {
+        for (int i = 0; i < numAttributes; i++) {
             for (int j = 0; j < numAttributes; j++) {
                 double sum = 0;
                 double xi = 0;
@@ -127,8 +136,8 @@ public class LocalSearchOperation {
     }
 
     public double getAlpha() {
-        int sum=0;
-        for (int i = 0; i <C.length ; i++) {
+        int sum = 0;
+        for (int i = 0; i < C.length; i++) {
 
         }
         return alpha;

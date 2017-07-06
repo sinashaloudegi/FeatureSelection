@@ -4,6 +4,7 @@ import KFST.dataset.DatasetInfo;
 import KFST.featureSelection.wrapper.GeneticAlgorithm.FitnessCalculator;
 import KFST.featureSelection.wrapper.WrapperApproach;
 import KFST.util.ArraysFunc;
+import weka.core.Instances;
 
 import java.util.Random;
 
@@ -25,7 +26,7 @@ public class HGAFSMain implements WrapperApproach {
     double pMutation;
     int numPopulation;
     double miu;
-
+    Instances data;
     String pathData;
     String pathTestData;
     FitnessCalculator fitnessCalculator;
@@ -69,6 +70,9 @@ public class HGAFSMain implements WrapperApproach {
 
     public void start() {
         int counter = 20;
+
+        LocalSearchOperation localSearchOperation = new LocalSearchOperation(data);
+
         while (counter > 0) {
 
             FitCalculator fitCalculator = new FitCalculator(p);
@@ -93,6 +97,9 @@ public class HGAFSMain implements WrapperApproach {
 
                     offspring1 = mutation(offspring1);
                     offspring2 = mutation(offspring2);
+
+                    offspring1 = localSearchOperation.lso(offspring1);
+                    offspring2 = localSearchOperation.lso(offspring2);
                 }
             }
             counter--;
