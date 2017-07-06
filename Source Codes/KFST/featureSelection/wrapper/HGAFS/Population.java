@@ -45,38 +45,35 @@ public class Population {
     public void initPopulation() {
         Strings[] strings = new Strings[numFeatures];
         for (int i = 0; i < strings.length; i++) {
-            strings[i].randomInit(numFeatures,numSelectedFeatures);
+            strings[i].randomInit(numFeatures, numSelectedFeatures);
 
         }
     }
 
     public void replacement(ArrayList<Strings> childList) {
-        
+
     }
 
     public void sort() {
-        Strings[] p=this.getStrings();
-        ArrayList<Strings> temp=  new ArrayList<Strings>();
-        ArrayList<Strings> res=  new ArrayList<Strings>();
-        for (int i=0;i<p.length;i++){
+        Strings[] p = this.getStrings();
+        ArrayList<Strings> temp = new ArrayList<Strings>();
+        ArrayList<Strings> res = new ArrayList<Strings>();
+        for (int i = 0; i < p.length; i++) {
             temp.add(p[i]);
         }
-        while (!temp.isEmpty()){
-            double max=0;
-            int maxStrings=0;
-            for (int i=0;i<temp.size();i++){
-                if(temp.get(i).fitness >= max){
-                    max=temp.get(i).fitness;
-                    maxStrings=i;
+        while (!temp.isEmpty()) {
+            double max = 0;
+            int maxStrings = 0;
+            for (int i = 0; i < temp.size(); i++) {
+                if (temp.get(i).fitness >= max) {
+                    max = temp.get(i).fitness;
+                    maxStrings = i;
                 }
             }
             res.add(temp.get(maxStrings));
             temp.remove(maxStrings);
         }
 
-        p=res.toArray(p);
-
-        this.setStrings(p);
-
+        p = res.toArray(p);
     }
 }
