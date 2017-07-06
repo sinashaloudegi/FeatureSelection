@@ -176,7 +176,7 @@ public class SVMClassifierPanel extends JDialog implements ActionListener {
         cb_kernel.setSelectedItem(typeKernel);
     }
 
-//    public static void main(String[] arg) {
+//    public static void main(Strings[] arg) {
 //        try {
 //            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 //        } catch (Exception e) {

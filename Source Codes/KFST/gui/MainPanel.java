@@ -31,6 +31,7 @@ import KFST.featureSelection.filter.supervised.LaplacianScore;
 import KFST.featureSelection.filter.supervised.RRFS;
 import KFST.featureSelection.filter.unsupervised.*;
 import KFST.featureSelection.wrapper.GeneticAlgorithm.GeneticAlgorithmMain;
+import KFST.featureSelection.wrapper.HGAFS.HGAFSMain;
 import KFST.gui.classifier.DTClassifierPanel;
 import KFST.gui.classifier.SVMClassifierPanel;
 import KFST.gui.featureSelection.*;
@@ -112,7 +113,7 @@ public class MainPanel extends JPanel {
     private int numIteration, numAnts, numFeatOfAnt; //ACO-based methods
     private double initPheromone, evRate, alpha, beta, q0; //ACO_based methods
 
-    private double pCrossover, pMutation; //GA_based methods
+    private double pCrossover, pMutation, miu; //GA_based methods
     private int numPopulation, numGeneration; //GA_based methods
 
     DatasetInfo data;
@@ -964,14 +965,15 @@ public class MainPanel extends JPanel {
             pMutation = geneticPanel.getpMutation();
 
         } else if (cb_wrapper.getSelectedItem().equals("HGAFS")) {
-            GeneticPanel geneticPanel = new GeneticPanel();
-            Dialog geneticDialog = new Dialog(geneticPanel);
-            geneticPanel.setUserValue(numPopulation, numGeneration, pCrossover, pMutation);
-            geneticPanel.setVisible(true);
-            numPopulation = geneticPanel.getNumPopulation();
-            numGeneration = geneticPanel.getNumGeneration();
-            pCrossover = geneticPanel.getpCrossover();
-            pMutation = geneticPanel.getpMutation();
+            HGAFSPanel hgafsPanel = new HGAFSPanel();
+            Dialog geneticDialog = new Dialog(hgafsPanel);
+            hgafsPanel.setUserValue(numPopulation, numGeneration, pCrossover, pMutation, miu);
+            hgafsPanel.setVisible(true);
+            numPopulation = hgafsPanel.getNumPopulation();
+            numGeneration = hgafsPanel.getNumGeneration();
+            pCrossover = hgafsPanel.getpCrossover();
+            pMutation = hgafsPanel.getpMutation();
+            miu = hgafsPanel.getMiu();
         }
         System.out.println("More option Wrapper");
     }
@@ -1338,12 +1340,13 @@ public class MainPanel extends JPanel {
                 pMutation = geneticPanel.getpMutation();
                 btn_moreOpWrapper.setEnabled(true);
             } else if (cb_wrapper.getSelectedItem().equals("HGAFS")) {
-                GeneticPanel geneticPanel = new GeneticPanel();
-                geneticPanel.setDefaultValue();
-                numPopulation = geneticPanel.getNumPopulation();
-                numGeneration = geneticPanel.getNumGeneration();
-                pCrossover = geneticPanel.getpCrossover();
-                pMutation = geneticPanel.getpMutation();
+                HGAFSPanel hgafsPanel = new HGAFSPanel();
+                hgafsPanel.setDefaultValue();
+                numPopulation = hgafsPanel.getNumPopulation();
+                numGeneration = hgafsPanel.getNumGeneration();
+                pCrossover = hgafsPanel.getpCrossover();
+                pMutation = hgafsPanel.getpMutation();
+                miu = hgafsPanel.getMiu();
                 btn_moreOpWrapper.setEnabled(true);
             } else {
                 btn_moreOpWrapper.setEnabled(false);
@@ -3254,7 +3257,6 @@ public class MainPanel extends JPanel {
         }
     }
 
-/*
     private void HGAFSPerform() throws Exception {
         if (numPopulation == 0) {
             JOptionPane.showMessageDialog(null, "Number Of Population in HGAFS Can't be 0", "Error", JOptionPane.ERROR_MESSAGE);
@@ -3278,26 +3280,21 @@ public class MainPanel extends JPanel {
                     long startTime = System.currentTimeMillis();
 
 
-          */
-/*          HGAFSMain method = new HGAFSMain(numSelectedSubsets[j], numPopulation, numGeneration, pCrossover, pMutation, cb_classifier.getSelectedItem().toString());
-                  *//*
-*/
-/*  System.out.println("GeneticAlgorithm...   numPopulation = " + numPopulation
+                    HGAFSMain method = new HGAFSMain(numSelectedSubsets[j], numPopulation, numGeneration, pCrossover, pMutation, miu);
+
+                    System.out.println("GeneticAlgorithm...   numPopulation = " + numPopulation
                             + "   numGeneration = " + numGeneration
                             + "   pCrossover = " + pCrossover
-                            + "   pMutation = " + pMutation);*//*
-*/
-/*
+                            + "   pMutation = " + pMutation);
                     method.loadDataSet(data);
 
                     method.evaluateFeatures();
-*//*
 
 
                     long endTime = System.currentTimeMillis();
                     times[i][j] = (endTime - startTime) / 1000.0;
 
-                  //  int[] subset = method.getSelectedFeatureSubset();
+                    int[] subset = method.getSelectedFeatureSubset();
 
 
                     //shows new results in the panel of results
@@ -3349,7 +3346,6 @@ public class MainPanel extends JPanel {
 
         }
     }
-*/
 
     /**
      * enables the status of diagrams menu item
@@ -3695,7 +3691,7 @@ public class MainPanel extends JPanel {
                     }
                 } else if (cb_wrapper.getSelectedItem().equals("HGAFS")) {
                     try {
-                        //HGAFSPerform();
+                        HGAFSPerform();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -3709,7 +3705,7 @@ public class MainPanel extends JPanel {
     }
 
 /*
-    public static void main(String[] args) {
+    public static void main(Strings[] args) {
         try {
             UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
         } catch (Exception e) {

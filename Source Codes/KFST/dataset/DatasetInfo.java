@@ -305,9 +305,9 @@ public class DatasetInfo {
     }
 
     /**
-     * This method converts the String name of class labels to the integer value
+     * This method converts the Strings name of class labels to the integer value
      *
-     * @param nameClass the name of the class labels as String
+     * @param nameClass the name of the class labels as Strings
      * 
      * @return the index of the class
      */

@@ -331,7 +331,7 @@ public class DTClassifierPanel extends JDialog
         txt_minNum.setText(String.valueOf(minNum));
     }
 
-//    public static void main(String[] arg) {
+//    public static void main(Strings[] arg) {
 //        try {
 //            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 //        } catch (Exception e) {

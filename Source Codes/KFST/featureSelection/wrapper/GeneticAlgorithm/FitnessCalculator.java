@@ -44,8 +44,7 @@ public class FitnessCalculator {
 
         }
         this.numFeatures = train.numAttributes();
-        LocalSearchOperation lso = new LocalSearchOperation(train);
-        lso.computeCorrelation();
+
 
     }
 

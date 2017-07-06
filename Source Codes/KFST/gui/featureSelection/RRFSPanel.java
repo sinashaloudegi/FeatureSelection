@@ -275,7 +275,7 @@ public class RRFSPanel extends JDialog
         txt_similarity.setText(String.valueOf(similarity));
     }
 
-//    public static void main(String[] arg) {
+//    public static void main(Strings[] arg) {
 //        try {
 //            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 //        } catch (Exception e) {

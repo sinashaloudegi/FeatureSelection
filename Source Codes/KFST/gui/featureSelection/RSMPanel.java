@@ -470,7 +470,7 @@ public class RSMPanel extends JDialog
         cb_multivalMethod.setSelectedItem(multMethodName);
     }
 
-//    public static void main(String[] arg) {
+//    public static void main(Strings[] arg) {
 //        try {
 //            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 //        } catch (Exception e) {

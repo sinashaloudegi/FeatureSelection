@@ -354,11 +354,11 @@ public class DiagramPanel extends JPanel implements ActionListener, MouseMotionL
         g2d.setColor(Color.black);
         g2d.drawLine(xDStartLegend, yDimensionStart, xDStartLegend + widthLegend + 5, yDimensionStart); //draw up horizontal line(-)
 
-        //draw String title
+        //draw Strings title
         g2d.setFont(new Font("Tahoma", Font.PLAIN, 12));
         int height = 20;
         for (int i = 0; i < listIteration.length; i++) {
-            g2d.drawString(nameLgendLabel + "(" + (i + 1) + ")", xDStartLegend + 35, yDStartLegeng + (height * i) + 4); //draw String
+            g2d.drawString(nameLgendLabel + "(" + (i + 1) + ")", xDStartLegend + 35, yDStartLegeng + (height * i) + 4); //draw Strings
         }
 
         //draw sign and square
@@ -468,7 +468,7 @@ public class DiagramPanel extends JPanel implements ActionListener, MouseMotionL
         Point res = point.get(axisValues);
         if (res != null) {
             txt_info.setBounds(e.getX() + 6, e.getY() - 30, 80, 22);
-            //txt_info.setText("Value: " + String.valueOf(listIteration[res.x][res.y]));
+            //txt_info.setText("Value: " + Strings.valueOf(listIteration[res.x][res.y]));
             txt_info.setText("Value: " + MathFunc.roundDouble(listIteration[res.x][res.y], 3));
             txt_info.setVisible(true);
         } else {
@@ -555,7 +555,7 @@ public class DiagramPanel extends JPanel implements ActionListener, MouseMotionL
         }
     }
 
-//    public static void main(String[] args) {
+//    public static void main(Strings[] args) {
 //        try {
 //            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 //        } catch (Exception e) {

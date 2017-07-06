@@ -1,7 +1,5 @@
 package KFST.featureSelection.wrapper.GeneticAlgorithm;
 
-import weka.core.Instances;
-
 import java.util.Random;
 
 /**
@@ -12,7 +10,6 @@ public class Population {
     Individual individuals[];
     int numPopulation;
     private int numFeatures;
-    Instances data;
 
 
     public Population(int numPopulation, int numFeatures) {
@@ -103,14 +100,6 @@ public class Population {
         }
         return counter;
 
-    }
-
-    public int getNumPopulation() {
-        return numPopulation;
-    }
-
-    public void setNumPopulation(int numPopulation) {
-        this.numPopulation = numPopulation;
     }
 
     public int getNumFeatures() {

@@ -680,7 +680,7 @@ public class UFSACOPanel extends JDialog
         txt_q0.setText(String.valueOf(q0));
     }
 
-//    public static void main(String[] arg) {
+//    public static void main(Strings[] arg) {
 //        try {
 //            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 //        } catch (Exception e) {

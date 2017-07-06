@@ -140,7 +140,7 @@ public class SelectModePanel extends JDialog implements ActionListener {
         this.nameMode = nameMode;
     }
 
-//    public static void main(String[] args) {
+//    public static void main(Strings[] args) {
 //        try {
 //            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 //        } catch (Exception e) {

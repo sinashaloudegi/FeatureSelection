@@ -358,7 +358,7 @@ public class LaplacianScorePanel extends JDialog
         txt_constParam.setText(String.valueOf(constParam));
     }
 
-//    public static void main(String[] arg) {
+//    public static void main(Strings[] arg) {
 //        try {
 //            UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 //        } catch (Exception e) {

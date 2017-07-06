@@ -30,19 +30,17 @@ public class GeneticAlgorithmMain implements WrapperApproach {
     String pathData;
     String pathTestData;
     FitnessCalculator fitnessCalculator;
-    String type;
 
-    public GeneticAlgorithmMain(int sizeSelectedFeatureSubset, int numPopulation, int numGeneration, double pCrossover, double pMutation, String classifier) throws Exception {
-        this.sizeSelectedFeatureSubset = sizeSelectedFeatureSubset;
-        this.numPopulation = numPopulation;
-        this.numGeneration = numGeneration;
-        this.pCrossover = pCrossover;
-        this.pMutation = pMutation;
-        this.classifier = classifier;
-        this.type = type;
-        r = (float) 0.5; //a portion of the  population that need to be selected
+        public GeneticAlgorithmMain(int sizeSelectedFeatureSubset, int numPopulation, int numGeneration, double pCrossover, double pMutation, String classifier) throws Exception {
+            this.sizeSelectedFeatureSubset = sizeSelectedFeatureSubset;
+            this.numPopulation = numPopulation;
+            this.numGeneration = numGeneration;
+            this.pCrossover = pCrossover;
+            this.pMutation = pMutation;
+            this.classifier = classifier;
+            r = (float) 0.5; //a portion of the  population that need to be selected
 
-    }
+        }
 
     public void initialize() throws Exception {
         fitnessCalculator = new FitnessCalculator(classifier, pathData, pathTestData);
