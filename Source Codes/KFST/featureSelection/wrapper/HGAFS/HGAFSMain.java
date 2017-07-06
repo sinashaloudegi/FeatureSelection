@@ -5,6 +5,8 @@ import KFST.featureSelection.wrapper.GeneticAlgorithm.FitnessCalculator;
 import KFST.featureSelection.wrapper.WrapperApproach;
 import KFST.util.ArraysFunc;
 
+import java.util.Random;
+
 /**
  * Created by sina on 7/5/2017.
  */
@@ -61,7 +63,7 @@ public class HGAFSMain implements WrapperApproach {
     @Override
     public void evaluateFeatures() {
         init();
-
+        start();
 
     }
 
@@ -71,30 +73,44 @@ public class HGAFSMain implements WrapperApproach {
 
             FitCalculator fitCalculator = new FitCalculator(p);
             p = fitCalculator.fit(p);
-            Strings[] parent=p.getStrings();
-            for (int i = 0 ; i < parent.length - 1; i += 2) {
+            Strings[] parent = p.getStrings();
+            for (int i = 0; i < parent.length - 1; i += 2) {
                 double rand = Math.random();
                 if (rand < pCrossover) {
-                    Strings offspring1 , offspring2;
-                    if(numFeatures<10){
+                    Strings offspring1 = null, offspring2 = null;
+                    if (numFeatures < 10) {
                         int x = randomPosition();
-                        offspring1=crossing(parent[i], parent[i + 1], x);
-                        offspring2=crossing(parent[i+1], parent[i], x);
-                    }else if(numFeatures>=10){
-                        int a=randomPosition();
-                        int b=randomPosition();
-                        int x=Math.min(a,b);
-                        int y=Math.max(a,b);
-                        offspring1=crossing2(parent[i], parent[i + 1], x,y);
-                        offspring2=crossing2(parent[i+1], parent[i], x,y);
+                        offspring1 = crossing(parent[i], parent[i + 1], x);
+                        offspring2 = crossing(parent[i + 1], parent[i], x);
+                    } else if (numFeatures >= 10) {
+                        int a = randomPosition();
+                        int b = randomPosition();
+                        int x = Math.min(a, b);
+                        int y = Math.max(a, b);
+                        offspring1 = crossing2(parent[i], parent[i + 1], x, y);
+                        offspring2 = crossing2(parent[i + 1], parent[i], x, y);
                     }
 
-
+                    offspring1 = mutation(offspring1);
+                    offspring2 = mutation(offspring2);
                 }
             }
             counter--;
 
         }
+    }
+
+    private Strings mutation(Strings s) {
+        byte[] genes = s.getGene();
+        Random random = new Random();
+        for (int i = 0; i < genes.length; i++) {
+            double rnd = random.nextDouble();
+            if (rnd <= pMutation) {
+                genes[i] = (byte) (1 - genes[i]);
+            }
+        }
+        s.setGene(genes);
+        return s;
     }
 
     private Strings crossing(Strings a, Strings b, int x) {
@@ -113,13 +129,14 @@ public class HGAFSMain implements WrapperApproach {
 
         return result;
     }
-    private Strings crossing2(Strings a, Strings b, int x,int y) {
+
+    private Strings crossing2(Strings a, Strings b, int x, int y) {
         Strings result = new Strings();
         byte[] geneA = a.getGene();
         byte[] geneB = b.getGene();
         byte[] geneResult = new byte[geneA.length];
         for (int i = 0; i < geneResult.length; i++) {
-            if (i < x | i>y) {
+            if (i < x | i > y) {
                 geneResult[i] = geneA[i];
             } else {
                 geneResult[i] = geneB[i];
@@ -129,12 +146,14 @@ public class HGAFSMain implements WrapperApproach {
 
         return result;
     }
+
     private int randomPosition() {
         double rand = Math.random();
         rand *= 100;
         rand %= numFeatures;
         return (int) rand;
     }
+
     @Override
     public int[] getSelectedFeatureSubset() {
         return selectedFeatureSubset;
