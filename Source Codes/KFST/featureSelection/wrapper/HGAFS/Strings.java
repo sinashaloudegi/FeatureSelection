@@ -46,6 +46,30 @@ public class Strings {
         }
     }
 
+    public int[] getOnes() {
+        int[] temp = new int[numOfOnes()];
+        int j = 0;
+        for (int i = 0; i < gene.length; i++) {
+            if (gene[i] == 1) {
+                temp[j] = i;
+                j++;
+            }
+
+        }
+        return temp;
+    }
+
+    private int numOfOnes() {
+        int counter = 0;
+        for (int i = 0; i < gene.length; i++) {
+            if (gene[i] == 1) {
+                counter++;
+            }
+        }
+        return counter;
+
+    }
+
     private double randomGene() {
         Random rand = new Random();
 
