@@ -76,5 +76,7 @@ public class Population {
 
         p=res.toArray(p);
 
+        this.setStrings(p);
+
     }
 }
