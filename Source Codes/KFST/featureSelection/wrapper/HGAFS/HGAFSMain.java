@@ -37,8 +37,9 @@ public class HGAFSMain implements WrapperApproach {
     }
 
     private void init() {
-        Population p = new Population(numPopulation, numFeatures,numSelectedFeatures);
+        Population p = new Population(numPopulation, numFeatures, numSelectedFeatures);
         p.initPopulation();
+
     }
 
     @Override
@@ -59,7 +60,22 @@ public class HGAFSMain implements WrapperApproach {
 
     @Override
     public void evaluateFeatures() {
+        init();
 
+
+    }
+
+    public void start() {
+        int counter = 20;
+        while (counter > 0) {
+
+            FitCalculator fitCalculator = new FitCalculator(p);
+            p = fitCalculator.fit(p);
+
+
+            counter--;
+
+        }
     }
 
     @Override
