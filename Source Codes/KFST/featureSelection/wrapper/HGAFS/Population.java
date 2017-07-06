@@ -45,35 +45,46 @@ public class Population {
     public void initPopulation() {
         Strings[] strings = new Strings[numFeatures];
         for (int i = 0; i < strings.length; i++) {
-            strings[i].randomInit(numFeatures, numSelectedFeatures);
+            strings[i].randomInit(numFeatures,numSelectedFeatures);
 
         }
     }
 
     public void replacement(ArrayList<Strings> childList) {
+        Strings[] p=this.getStrings();
+        int rep=p.length - childList.size();
+        for (int i=0;i<rep;i++){
+            childList.add(p[i]);
+        }
+        p=childList.toArray(p);
 
+        this.setStrings(p);
+        
     }
 
     public void sort() {
-        Strings[] p = this.getStrings();
-        ArrayList<Strings> temp = new ArrayList<Strings>();
-        ArrayList<Strings> res = new ArrayList<Strings>();
-        for (int i = 0; i < p.length; i++) {
+        Strings[] p=this.getStrings();
+        ArrayList<Strings> temp=  new ArrayList<Strings>();
+        ArrayList<Strings> res=  new ArrayList<Strings>();
+        for (int i=0;i<p.length;i++){
             temp.add(p[i]);
         }
-        while (!temp.isEmpty()) {
-            double max = 0;
-            int maxStrings = 0;
-            for (int i = 0; i < temp.size(); i++) {
-                if (temp.get(i).fitness >= max) {
-                    max = temp.get(i).fitness;
-                    maxStrings = i;
+        while (!temp.isEmpty()){
+            double max=0;
+            int maxStrings=0;
+            for (int i=0;i<temp.size();i++){
+                if(temp.get(i).fitness >= max){
+                    max=temp.get(i).fitness;
+                    maxStrings=i;
                 }
             }
             res.add(temp.get(maxStrings));
             temp.remove(maxStrings);
         }
 
-        p = res.toArray(p);
+        p=res.toArray(p);
+
+        this.setStrings(p);
+
     }
 }
