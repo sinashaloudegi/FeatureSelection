@@ -51,6 +51,14 @@ public class Population {
     }
 
     public void replacement(ArrayList<Strings> childList) {
+        Strings[] p=this.getStrings();
+        int rep=p.length - childList.size();
+        for (int i=0;i<rep;i++){
+            childList.add(p[i]);
+        }
+        p=childList.toArray(p);
+
+        this.setStrings(p);
         
     }
 
