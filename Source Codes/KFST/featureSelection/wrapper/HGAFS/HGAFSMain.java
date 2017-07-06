@@ -78,11 +78,12 @@ public class HGAFSMain implements WrapperApproach {
         int counter = 20;
         FitCalculator fitCalculator = new FitCalculator(pathData, pathTestData);
         data = fitCalculator.getTrain();
-        LocalSearchOperation localSearchOperation = new LocalSearchOperation(data,miu,numSelectedFeatures);
+        LocalSearchOperation localSearchOperation = new LocalSearchOperation(data, miu, numSelectedFeatures);
 
         while (counter > 0) {
 
             p = fitCalculator.fit(p);
+            p.sort();
             Strings[] parent = p.getStrings();
             ArrayList<Strings> childList = new ArrayList<Strings>();
             for (int i = 0; i < parent.length - 1; i += 2) {
@@ -109,8 +110,11 @@ public class HGAFSMain implements WrapperApproach {
                     offspring2 = localSearchOperation.lso(offspring2);
                     childList.add(offspring1);
                     childList.add(offspring2);
+
+
                 }
             }
+            p.replacement(childList);
 
             counter--;
 

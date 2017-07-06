@@ -1,5 +1,7 @@
 package KFST.featureSelection.wrapper.HGAFS;
 
+import java.util.ArrayList;
+
 /**
  * Created by sina on 7/5/2017.
  */
@@ -46,5 +48,13 @@ public class Population {
             strings[i].randomInit(numFeatures,numSelectedFeatures);
 
         }
+    }
+
+    public void replacement(ArrayList<Strings> childList) {
+        
+    }
+
+    public void sort() {
+
     }
 }
