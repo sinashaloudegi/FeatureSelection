@@ -108,8 +108,17 @@ public class LocalSearchOperation {
             }
         }
 
-
-
+        byte[] b = new byte[offSpring.gene.length];
+        for (int i=0 ; i<b.length ; i++){
+            b[i]=0;
+        }
+        for (int i=0 ; i<Xd.size() ; i++){
+            b[Xd.get(i)]=1;
+        }
+        for (int i=0 ; i<Xs.size() ; i++){
+            b[Xs.get(i)]=1;
+        }
+        offSpring.setGene(b);
         return offSpring;
 
     }
