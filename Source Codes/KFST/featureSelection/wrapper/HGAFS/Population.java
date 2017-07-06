@@ -5,13 +5,15 @@ package KFST.featureSelection.wrapper.HGAFS;
  */
 public class Population {
     private Strings strings[];
-    private int p;
-    private int f;
+    private int numPopulation;
+    private int numFeatures;
+    private int numSelectedFeatures;
 
-    public Population(Strings[] strings, int p, int f) {
-        this.strings = strings;
-        this.p = p;
-        this.f = f;
+    public Population(int numPopulation, int numFeatures, int numSelectedFeatures) {
+        this.numPopulation = numPopulation;
+        this.numFeatures = numFeatures;
+        this.numSelectedFeatures = numSelectedFeatures;
+
     }
 
     public Strings[] getStrings() {
@@ -22,19 +24,27 @@ public class Population {
         this.strings = strings;
     }
 
-    public int getP() {
-        return p;
+    public int getNumPopulation() {
+        return numPopulation;
     }
 
-    public void setP(int p) {
-        this.p = p;
+    public void setNumPopulation(int numPopulation) {
+        this.numPopulation = numPopulation;
     }
 
-    public int getF() {
-        return f;
+    public int getNumFeatures() {
+        return numFeatures;
     }
 
-    public void setF(int f) {
-        this.f = f;
+    public void setNumFeatures(int numFeatures) {
+        this.numFeatures = numFeatures;
+    }
+
+    public void initPopulation() {
+        Strings[] strings = new Strings[numFeatures];
+        for (int i = 0; i < strings.length; i++) {
+            strings[i].randomInit(numSelectedFeatures);
+
+        }
     }
 }

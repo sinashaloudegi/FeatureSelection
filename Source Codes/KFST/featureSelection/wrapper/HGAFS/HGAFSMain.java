@@ -18,26 +18,27 @@ public class HGAFSMain implements WrapperApproach {
     Strings classifier;
     Population p;
 
-    int sizeSelectedFeatureSubset;
-    int numPopulation;
-    int numGeneration;
+    int numSelectedFeatures;
     double pCrossover;
     double pMutation;
+    int numPopulation;
     double miu;
-
 
     String pathData;
     String pathTestData;
     FitnessCalculator fitnessCalculator;
 
-    public HGAFSMain(int sizeSelectedFeatureSubset, int numPopulation, int numGeneration, double pCrossover, double pMutation, double miu) throws Exception {
-        this.sizeSelectedFeatureSubset = sizeSelectedFeatureSubset;
+    public HGAFSMain(int numSelectedFeatures, int numPopulation, double pCrossover, double pMutation, double miu) throws Exception {
+        this.numSelectedFeatures = numSelectedFeatures;
         this.numPopulation = numPopulation;
-        this.numGeneration = numGeneration;
         this.pCrossover = pCrossover;
         this.pMutation = pMutation;
         this.miu = miu;
+    }
 
+    private void init() {
+        Population p = new Population(numPopulation, numFeatures,numSelectedFeatures);
+        p.initPopulation();
     }
 
     @Override

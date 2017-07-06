@@ -8,6 +8,7 @@ public class Strings {
     byte[] gene;
 
 
+
     public double getFitness() {
         return fitness;
     }
@@ -22,5 +23,12 @@ public class Strings {
 
     public void setGene(byte[] gene) {
         this.gene = gene;
+    }
+
+    public void randomInit(int numFeatures,int numSelecteFeatures) {
+        gene=new byte[numFeatures];
+        for (int i = 0; i < gene.length; i++) {
+
+        }
     }
 }
