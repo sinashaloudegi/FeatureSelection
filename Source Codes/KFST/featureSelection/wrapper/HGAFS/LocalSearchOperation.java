@@ -2,7 +2,9 @@ package KFST.featureSelection.wrapper.HGAFS;
 
 import weka.core.Instances;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by sina on 7/1/2017.
@@ -33,7 +35,27 @@ public class LocalSearchOperation {
     }
 
     public Strings lso(Strings offSpring) {
-
+        int[] X=offSpring.getOnes();
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        for (int i=0;i<D.length;i++){
+            for (int j=0;j<X.length;j++){
+                if(D[i]==X[j]){
+                    list.add(D[i]);
+                }
+            }
+        }
+        Integer[] Xd=new Integer[list.size()];
+        Xd = list.toArray(Xd);
+        list.clear();
+        for (int i=0;i<S.length;i++){
+            for (int j=0;j<X.length;j++){
+                if(S[i]==X[j]){
+                    list.add(S[i]);
+                }
+            }
+        }
+        Integer[] Xs=new Integer[list.size()];
+        Xs = list.toArray(Xs);
         return offSpring;
 
     }
