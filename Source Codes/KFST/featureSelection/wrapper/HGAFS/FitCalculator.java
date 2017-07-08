@@ -69,7 +69,7 @@ public class FitCalculator {
         Remove removeData = new Remove();
         removeData.setInvertSelection(false);
         removeData.setAttributeIndices(s);
-        System.out.println("s ;"+s);
+        System.out.println("s ;" + s);
         removeData.setInputFormat(tempData);
         Instances instNewData = Filter.useFilter(tempData, removeData);
         if (pathTestData == null) {
@@ -95,7 +95,8 @@ public class FitCalculator {
         nn.buildClassifier(train);
         Evaluation eval = new Evaluation(train);
         eval.crossValidateModel(nn, train, 10, rand);
-        return (1 - eval.errorRate());
+        int sumOfCor = LocalSearchOperation.getSumOfCor();
+        return (double) (1 - eval.errorRate()) / sumOfCor;
     }
 
     private double buildAndEval(Instances train, Instances test) throws Exception {
@@ -103,7 +104,8 @@ public class FitCalculator {
         nn.buildClassifier(train);
         Evaluation eval = new Evaluation(train);
         eval.evaluateModel(nn, test);
-        return (1 - eval.errorRate());
+        int sumOfCor = LocalSearchOperation.getSumOfCor();
+        return (double) (1 - eval.errorRate()) / sumOfCor;
 
     }
 
