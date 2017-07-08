@@ -43,7 +43,6 @@ public class HGAFSMain implements WrapperApproach {
 
     private void init() {
         p = new Population(numPopulation, numFeatures, numSelectedFeatures);
-        System.out.println("init() ");
 
         p.initPopulation();
     }
@@ -88,8 +87,7 @@ public class HGAFSMain implements WrapperApproach {
         LocalSearchOperation localSearchOperation = new LocalSearchOperation(data, miu, numSelectedFeatures);
         localSearchOperation.computeCorrelation();
         while (counter > 0) {
-            System.out.println(counter);
-            System.out.println(p.getStrings().length + " ++++++++++ ");
+
             p = fitCalculator.fit(p);
             p.sort();
             Strings[] parent = p.getStrings();

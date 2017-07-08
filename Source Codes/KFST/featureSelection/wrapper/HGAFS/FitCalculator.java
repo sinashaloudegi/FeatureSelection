@@ -2,7 +2,7 @@ package KFST.featureSelection.wrapper.HGAFS;
 
 
 import weka.classifiers.Evaluation;
-import weka.classifiers.functions.MultilayerPerceptron;
+import weka.classifiers.lazy.IBk;
 import weka.core.Instances;
 import weka.core.converters.CSVLoader;
 import weka.filters.Filter;
@@ -90,21 +90,28 @@ public class FitCalculator {
 
     private double buildAndEval(Instances train) throws Exception {
         Random rand = new Random(1);
+/*
         MultilayerPerceptron nn = new MultilayerPerceptron();
+*/
+        IBk nn = new IBk();
         nn.buildClassifier(train);
         Evaluation eval = new Evaluation(train);
         eval.crossValidateModel(nn, train, 10, rand);
-    //    double sumOfCor = LocalSearchOperation.getSumOfCor();
-        return  (1 - eval.errorRate()) ;
+        double sumOfCor = LocalSearchOperation.getSumOfCor();
+        return (1 - eval.errorRate()) + sumOfCor;
     }
 
     private double buildAndEval(Instances train, Instances test) throws Exception {
+/*
         MultilayerPerceptron nn = new MultilayerPerceptron();
+*/
+        IBk nn = new IBk();
+
         nn.buildClassifier(train);
         Evaluation eval = new Evaluation(train);
         eval.evaluateModel(nn, test);
-    //    double sumOfCor = LocalSearchOperation.getSumOfCor();
-        return  (1 - eval.errorRate()) ;
+        double sumOfCor = LocalSearchOperation.getSumOfCor();
+        return (1 - eval.errorRate()) + sumOfCor;
 
     }
 

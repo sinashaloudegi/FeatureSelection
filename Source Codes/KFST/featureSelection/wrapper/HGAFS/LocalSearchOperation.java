@@ -19,12 +19,11 @@ public class LocalSearchOperation {
     double delta, zi, miu;
 
     double means[];
-    double Cor[][];
+    static double[][] Cor;
 
     double alpha;
-    int numAttributes;
+    static int numAttributes;
 
-    Strings offSpring;
 
     public LocalSearchOperation(Instances data, double miu, int numSelectedFeature) {
         this.data = data;
@@ -137,7 +136,6 @@ public class LocalSearchOperation {
 
 
         Arrays.sort(Cor, (double[] a, double[] b) -> Double.compare(a[0], b[0]));
-        System.out.println("Sorted");
 
         D = new int[numAttributes / 2];
         S = new int[numAttributes / 2];
@@ -149,7 +147,7 @@ public class LocalSearchOperation {
             S[k] = (int) (Cor[i][1]);
             k++;
         }
-        System.out.println("s");
+
         for (int i = 0; i < S.length; i++) {
             System.out.print(S[i] + ",");
         }
@@ -228,12 +226,12 @@ public class LocalSearchOperation {
         return alpha;
     }
 
- /*   public static double getSumOfCor() {
+    public static double getSumOfCor() {
         double sum = 0;
         for (int i = 0; i < numAttributes; i++) {
 
            sum+= Cor[i][0] ;
         }
         return 1/sum;
-    }*/
+    }
 }

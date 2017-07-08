@@ -41,9 +41,7 @@ public class Strings {
                 }
             }
         }
-        for (int i = 0; i < gene.length; i++) {
-            System.out.print(gene[i] + ",");
-        }
+
     }
     @Override
     public String toString() {

@@ -80,7 +80,6 @@ public class Population {
     }
 
     public void sort() {
-        System.out.println("sort");
 
         Strings[] strings = this.getStrings();
         ArrayList<Strings> temp = new ArrayList<Strings>();
@@ -104,7 +103,6 @@ public class Population {
         strings = res.toArray(strings);
 
         this.setStrings(strings);
-        System.out.println("sortrdd");
 
     }
 }
