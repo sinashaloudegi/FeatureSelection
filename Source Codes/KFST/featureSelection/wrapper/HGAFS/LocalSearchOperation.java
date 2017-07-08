@@ -228,8 +228,12 @@ public class LocalSearchOperation {
         return alpha;
     }
 
-    public static int getSumOfCor() {
-        int sum = 0;
+    public double getSumOfCor() {
+        double sum = 0;
+        for (int i = 0; i < numAttributes; i++) {
+
+           sum+= Cor[i][0] ;
+        }
         return sum;
     }
 }
