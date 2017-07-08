@@ -16,8 +16,8 @@ public class LocalSearchOperation {
     int[] D;
     double[][] C;
 
-    double delta, zi, miu;
-
+    double miu;
+    int delta, zi;
     double means[];
     static double[][] Cor;
 
@@ -28,8 +28,8 @@ public class LocalSearchOperation {
     public LocalSearchOperation(Instances data, double miu, int numSelectedFeature) {
         this.data = data;
         this.miu = miu;
-        delta = miu * numSelectedFeature;
-        zi = (1 - miu) * numSelectedFeature;
+        delta = rand(miu * numSelectedFeature);
+        zi = rand((1 - miu) * numSelectedFeature);
 
         numAttributes = data.numAttributes() - 1;
         convertToArray();
@@ -38,7 +38,19 @@ public class LocalSearchOperation {
 
     }
 
+    private int rand(double v) {
+
+        int t1 = (int) v;
+        double t2 = v - t1;
+        if (t2 >= 0.5) {
+            return t1 + 1;
+        } else {
+            return t1;
+        }
+    }
+
     public Strings lso(Strings offSpring) {
+
         int[] X = offSpring.getOnes();
         ArrayList<Integer> Xd = new ArrayList<Integer>();
         for (int i = 0; i < D.length; i++) {
@@ -57,6 +69,7 @@ public class LocalSearchOperation {
                 }
             }
         }
+
         if (delta > Xd.size()) {
             for (int i = 0, j = 0; j < delta - Xd.size() & i < D.length; i++) {
                 //addToXd
@@ -118,6 +131,7 @@ public class LocalSearchOperation {
             b[Xs.get(i)] = 1;
         }
         offSpring.setGene(b);
+
         return offSpring;
 
     }
@@ -230,8 +244,8 @@ public class LocalSearchOperation {
         double sum = 0;
         for (int i = 0; i < numAttributes; i++) {
 
-           sum+= Cor[i][0] ;
+            sum += Cor[i][0];
         }
-        return 1/sum;
+        return 1 / sum;
     }
 }
