@@ -44,14 +44,13 @@ public class Population {
 
     public void initPopulation() {
         Strings[] strings = new Strings[numFeatures];
-        System.out.println("47pOPULATIO");
         for (int i = 0; i < strings.length; i++) {
             strings[i] = new Strings();
             strings[i].randomInit(numFeatures, numSelectedFeatures);
 
         }
         setStrings(strings);
-        System.out.println("54pOPULATIO");
+
 
     }
 

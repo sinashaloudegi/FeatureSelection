@@ -133,7 +133,6 @@ public class HGAFSMain implements WrapperApproach {
     private int[] result(Strings best) {
         byte b[] = best.getGene();
 
-
         String res = "";
         for (int i = 0; i < b.length; i++) {
             if (b[i] == 1) {

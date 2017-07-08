@@ -29,13 +29,10 @@ public class Strings {
     public void randomInit(int numFeatures, int numSelectedFeatures) {
         gene = new byte[numFeatures];
         int temp = 0;
-        System.out.println("num" + numSelectedFeatures + " numfeatures " + numFeatures);
         double threshold = (double) numSelectedFeatures / numFeatures;
         while (temp != numSelectedFeatures) {
-            System.out.println("temp=" + temp + " num " + numSelectedFeatures);
             temp = 0;
             for (int i = 0; i < gene.length; i++) {
-                System.out.println(randomGene() + " <= => " + threshold);
                 if (randomGene() < threshold) {
                     gene[i] = 1;
                     temp++;
