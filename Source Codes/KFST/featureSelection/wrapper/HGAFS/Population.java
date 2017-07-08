@@ -6,7 +6,7 @@ import java.util.ArrayList;
  * Created by sina on 7/5/2017.
  */
 public class Population {
-    private Strings strings[];
+    public Strings strings[];
     private int numPopulation;
     private int numFeatures;
     private int numSelectedFeatures;
@@ -44,47 +44,55 @@ public class Population {
 
     public void initPopulation() {
         Strings[] strings = new Strings[numFeatures];
+        System.out.println("47pOPULATIO");
         for (int i = 0; i < strings.length; i++) {
-            strings[i].randomInit(numFeatures,numSelectedFeatures);
+            strings[i] = new Strings();
+            strings[i].randomInit(numFeatures, numSelectedFeatures);
 
         }
+        setStrings(strings);
+        System.out.println("54pOPULATIO");
+
     }
 
     public void replacement(ArrayList<Strings> childList) {
-        Strings[] p=this.getStrings();
-        int rep=p.length - childList.size();
-        for (int i=0;i<rep;i++){
+        Strings[] p = this.getStrings();
+        int rep = p.length - childList.size();
+        for (int i = 0; i < rep; i++) {
             childList.add(p[i]);
         }
-        p=childList.toArray(p);
+        p = childList.toArray(p);
 
         this.setStrings(p);
-        
+
     }
 
     public void sort() {
-        Strings[] p=this.getStrings();
-        ArrayList<Strings> temp=  new ArrayList<Strings>();
-        ArrayList<Strings> res=  new ArrayList<Strings>();
-        for (int i=0;i<p.length;i++){
-            temp.add(p[i]);
+        System.out.println("sort");
+
+        Strings[] strings = this.getStrings();
+        ArrayList<Strings> temp = new ArrayList<Strings>();
+        ArrayList<Strings> res = new ArrayList<Strings>();
+        for (int i = 0; i < strings.length; i++) {
+            temp.add(strings[i]);
         }
-        while (!temp.isEmpty()){
-            double max=0;
-            int maxStrings=0;
-            for (int i=0;i<temp.size();i++){
-                if(temp.get(i).fitness >= max){
-                    max=temp.get(i).fitness;
-                    maxStrings=i;
+        while (!temp.isEmpty()) {
+            double max = 0;
+            int maxStrings = 0;
+            for (int i = 0; i < temp.size(); i++) {
+                if (temp.get(i).fitness >= max) {
+                    max = temp.get(i).fitness;
+                    maxStrings = i;
                 }
             }
             res.add(temp.get(maxStrings));
             temp.remove(maxStrings);
         }
 
-        p=res.toArray(p);
+        strings = res.toArray(strings);
 
-        this.setStrings(p);
+        this.setStrings(strings);
+        System.out.println("sortrdd");
 
     }
 }

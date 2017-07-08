@@ -3280,7 +3280,7 @@ public class MainPanel extends JPanel {
                     long startTime = System.currentTimeMillis();
 
 
-                    HGAFSMain method = new HGAFSMain(numSelectedSubsets[j], numPopulation, numGeneration, pCrossover, pMutation, miu);
+                    HGAFSMain method = new HGAFSMain(numSelectedSubsets[j], numPopulation, pCrossover, pMutation, miu);
 
                     System.out.println("GeneticAlgorithm...   numPopulation = " + numPopulation
                             + "   numGeneration = " + numGeneration

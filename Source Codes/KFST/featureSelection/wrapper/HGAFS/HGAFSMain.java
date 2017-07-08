@@ -42,9 +42,10 @@ public class HGAFSMain implements WrapperApproach {
     }
 
     private void init() {
-        Population p = new Population(numPopulation, numFeatures, numSelectedFeatures);
-        p.initPopulation();
+         p = new Population(numPopulation, numFeatures, numSelectedFeatures);
+        System.out.println("init() ");
 
+        p.initPopulation();
     }
 
     @Override
@@ -65,23 +66,30 @@ public class HGAFSMain implements WrapperApproach {
 
     @Override
     public void evaluateFeatures() {
+
         init();
+
         try {
             start();
         } catch (IOException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
     }
 
-    public void start() throws IOException {
+    public void start() throws Exception {
+
         int counter = 20;
+
         FitCalculator fitCalculator = new FitCalculator(pathData, pathTestData);
         data = fitCalculator.getTrain();
         LocalSearchOperation localSearchOperation = new LocalSearchOperation(data, miu, numSelectedFeatures);
 
         while (counter > 0) {
-
+            System.out.println(counter);
+            System.out.println(p.getStrings().length+" ++++++++++ ");
             p = fitCalculator.fit(p);
             p.sort();
             Strings[] parent = p.getStrings();
@@ -115,7 +123,6 @@ public class HGAFSMain implements WrapperApproach {
                 }
             }
             p.replacement(childList);
-
             counter--;
 
         }
