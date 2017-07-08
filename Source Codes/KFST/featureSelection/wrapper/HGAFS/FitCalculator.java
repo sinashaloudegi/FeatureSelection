@@ -2,7 +2,7 @@ package KFST.featureSelection.wrapper.HGAFS;
 
 
 import weka.classifiers.Evaluation;
-import weka.classifiers.lazy.IBk;
+import weka.classifiers.functions.MultilayerPerceptron;
 import weka.core.Instances;
 import weka.core.converters.CSVLoader;
 import weka.filters.Filter;
@@ -91,20 +91,18 @@ public class FitCalculator {
 
     private double buildAndEval(Instances train) throws Exception {
         Random rand = new Random(1);
-        IBk knn = new IBk();
-        knn.setKNN(3);
-        knn.buildClassifier(train);
+        MultilayerPerceptron nn = new MultilayerPerceptron();
+        nn.buildClassifier(train);
         Evaluation eval = new Evaluation(train);
-        eval.crossValidateModel(knn, train, 10, rand);
+        eval.crossValidateModel(nn, train, 10, rand);
         return (1 - eval.errorRate());
     }
 
     private double buildAndEval(Instances train, Instances test) throws Exception {
-        IBk knn = new IBk();
-        knn.setKNN(3);
-        knn.buildClassifier(train);
+        MultilayerPerceptron nn = new MultilayerPerceptron();
+        nn.buildClassifier(train);
         Evaluation eval = new Evaluation(train);
-        eval.evaluateModel(knn, test);
+        eval.evaluateModel(nn, test);
         return (1 - eval.errorRate());
 
     }

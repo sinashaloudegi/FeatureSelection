@@ -59,16 +59,16 @@ public class LocalSearchOperation {
             }
         }
         if (delta > Xd.size()) {
-            for (int i = 0 , j=0 ; j < delta - Xd.size() & i< D.length ;i++) {
+            for (int i = 0, j = 0; j < delta - Xd.size() & i < D.length; i++) {
                 //addToXd
-                Boolean exist=false;
-                for (int k = 0 ; k < Xd.size();k++) {
-                   if(D[i]==Xd.get(k)){
-                       exist=true;
-                       break;
-                   }
+                Boolean exist = false;
+                for (int k = 0; k < Xd.size(); k++) {
+                    if (D[i] == Xd.get(k)) {
+                        exist = true;
+                        break;
+                    }
                 }
-                if(!exist){
+                if (!exist) {
                     Xd.add(D[i]);
                     j++;
                 }
@@ -77,23 +77,23 @@ public class LocalSearchOperation {
         }
 
         if (delta < Xd.size()) {
-            for (int i = 0, j=Xd.size()-1;j>0 & i < Xd.size() - delta; j--,i++) {
+            for (int i = 0, j = Xd.size() - 1; j > 0 & i < Xd.size() - delta; j--, i++) {
                 //delFromXd
                 Xd.remove(j);
             }
         }
 
         if (zi > Xs.size()) {
-            for (int i = 0 , j=0 ; j < zi - Xs.size() & i< S.length ;i++) {
+            for (int i = 0, j = 0; j < zi - Xs.size() & i < S.length; i++) {
                 //addToXs
-                Boolean exist=false;
-                for (int k = 0 ; k < Xs.size();k++) {
-                    if(S[i]==Xs.get(k)){
-                        exist=true;
+                Boolean exist = false;
+                for (int k = 0; k < Xs.size(); k++) {
+                    if (S[i] == Xs.get(k)) {
+                        exist = true;
                         break;
                     }
                 }
-                if(!exist){
+                if (!exist) {
                     Xs.add(S[i]);
                     j++;
                 }
@@ -102,21 +102,21 @@ public class LocalSearchOperation {
         }
 
         if (zi < Xs.size()) {
-            for (int i = 0, j=Xs.size()-1;j>0 & i < Xs.size() - zi; j--,i++) {
+            for (int i = 0, j = Xs.size() - 1; j > 0 & i < Xs.size() - zi; j--, i++) {
                 //delFromXs
                 Xs.remove(j);
             }
         }
 
         byte[] b = new byte[offSpring.gene.length];
-        for (int i=0 ; i<b.length ; i++){
-            b[i]=0;
+        for (int i = 0; i < b.length; i++) {
+            b[i] = 0;
         }
-        for (int i=0 ; i<Xd.size() ; i++){
-            b[Xd.get(i)]=1;
+        for (int i = 0; i < Xd.size(); i++) {
+            b[Xd.get(i)] = 1;
         }
-        for (int i=0 ; i<Xs.size() ; i++){
-            b[Xs.get(i)]=1;
+        for (int i = 0; i < Xs.size(); i++) {
+            b[Xs.get(i)] = 1;
         }
         offSpring.setGene(b);
         return offSpring;
@@ -226,5 +226,10 @@ public class LocalSearchOperation {
 
         }
         return alpha;
+    }
+
+    public static int getSumOfCor() {
+        int sum = 0;
+        return sum;
     }
 }
