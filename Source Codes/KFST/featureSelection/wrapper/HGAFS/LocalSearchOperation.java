@@ -28,8 +28,8 @@ public class LocalSearchOperation {
     public LocalSearchOperation(Instances data, double miu, int numSelectedFeature) {
         this.data = data;
         this.miu = miu;
-        delta = rand(miu * numSelectedFeature);
-        zi = rand((1 - miu) * numSelectedFeature);
+        delta = rond(miu * numSelectedFeature);
+        zi = rond((1 - miu) * numSelectedFeature);
 
         numAttributes = data.numAttributes() - 1;
         convertToArray();
@@ -38,7 +38,7 @@ public class LocalSearchOperation {
 
     }
 
-    private int rand(double v) {
+    private int rond(double v) {
 
         int t1 = (int) v;
         double t2 = v - t1;
