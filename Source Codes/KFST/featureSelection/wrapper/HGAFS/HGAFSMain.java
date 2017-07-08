@@ -42,7 +42,7 @@ public class HGAFSMain implements WrapperApproach {
     }
 
     private void init() {
-         p = new Population(numPopulation, numFeatures, numSelectedFeatures);
+        p = new Population(numPopulation, numFeatures, numSelectedFeatures);
         System.out.println("init() ");
 
         p.initPopulation();
@@ -86,10 +86,10 @@ public class HGAFSMain implements WrapperApproach {
         FitCalculator fitCalculator = new FitCalculator(pathData, pathTestData);
         data = fitCalculator.getTrain();
         LocalSearchOperation localSearchOperation = new LocalSearchOperation(data, miu, numSelectedFeatures);
-
+        localSearchOperation.computeCorrelation();
         while (counter > 0) {
             System.out.println(counter);
-            System.out.println(p.getStrings().length+" ++++++++++ ");
+            System.out.println(p.getStrings().length + " ++++++++++ ");
             p = fitCalculator.fit(p);
             p.sort();
             Strings[] parent = p.getStrings();
@@ -126,6 +126,32 @@ public class HGAFSMain implements WrapperApproach {
             counter--;
 
         }
+        selectedFeatureSubset = result(p.best());
+
+    }
+
+    private int[] result(Strings best) {
+        byte b[] = best.getGene();
+
+
+        String res = "";
+        for (int i = 0; i < b.length; i++) {
+            if (b[i] == 1) {
+                res += (i) + ",";
+            }
+
+        }
+        res = res.substring(0, res.length() - 1);
+        return toIntArray(res);
+    }
+
+    private int[] toIntArray(String res) {
+        String temp[] = res.split(",");
+        int result[] = new int[temp.length];
+        for (int i = 0; i < result.length; i++) {
+            result[i] = Integer.valueOf(temp[i]);
+        }
+        return result;
     }
 
     private Strings mutation(Strings s) {

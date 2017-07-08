@@ -3296,7 +3296,7 @@ public class MainPanel extends JPanel {
 
                     int[] subset = method.getSelectedFeatureSubset();
 
-
+                    System.out.println();
                     //shows new results in the panel of results
                     resPanel.setMessage(addTextToPanel(subset));
 

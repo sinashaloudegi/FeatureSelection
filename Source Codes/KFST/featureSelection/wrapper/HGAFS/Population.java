@@ -55,6 +55,19 @@ public class Population {
 
     }
 
+    public Strings best() {
+        double max = Double.MIN_VALUE;
+        Strings best = null;
+        for (int i = 0; i < this.strings.length; i++) {
+            if (this.strings[i].fitness > max) {
+                max = this.strings[i].fitness;
+                best = this.strings[i];
+            }
+
+        }
+        return best;
+    }
+
     public void replacement(ArrayList<Strings> childList) {
         Strings[] p = this.getStrings();
         int rep = p.length - childList.size();
