@@ -36,10 +36,7 @@ public class Swarm {
 
             particles[i].refine();
             particles[i].pBest = particles[i].x;
-            for (int j = 0; j < particles[i].pBest.length; j++) {
-                System.out.println(particles[i].pBest[j]);
 
-            }
         }
     }
 
@@ -70,6 +67,7 @@ public class Swarm {
                 double r2 = rnd2.nextDouble();
                 particles[i].v[j] = particles[i].v[j] + r1 * 2 * (particles[i].x[j] - particles[i].pBest[j]) + r2 * 2 * (particles[i].x[j] - gb[j]);
                 particles[i].x[j] = S(particles[i].v[j]);
+
             }
             particles[i].fit();
             if (particles[i].fitness > fit(particles[i].pBest)) {
@@ -78,6 +76,7 @@ public class Swarm {
             if (particles[i].fitness > fit(gb)) {
                 gb = particles[i].x;
             }
+
         }
 
     }

@@ -54,7 +54,7 @@ public class PSOMain implements WrapperApproach {
     @Override
     public void evaluateFeatures() throws Exception {
         init();
-       // run();
+        run();
     }
 
     @Override
@@ -63,7 +63,28 @@ public class PSOMain implements WrapperApproach {
     }
 
     private int[] toIntArray(int[] gb) {
-        return gb;
+        int numOfOnes = numOfOnes(gb);
+        int temp[] = new int[numOfOnes];
+        int counter = 0;
+        for (int i = 0; i < gb.length; i++) {
+            if (gb[i] == 1) {
+                temp[counter] = i;
+                counter++;
+            }
+
+        }
+        return temp;
+    }
+
+    private int numOfOnes(int[] gb) {
+        int counter = 0;
+        for (int i = 0; i < gb.length; i++) {
+            if (gb[i] == 1) {
+                counter++;
+            }
+
+        }
+        return counter;
     }
 
     @Override

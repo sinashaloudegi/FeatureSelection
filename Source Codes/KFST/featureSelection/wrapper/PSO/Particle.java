@@ -37,7 +37,6 @@ public class Particle {
             }
 
         }
-        System.out.println("numOfOnes: " + counter);
     }
 
     public String toString(int[] particle) {
