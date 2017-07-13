@@ -23,18 +23,23 @@ public class Swarm {
 
     public void initialize() {
         for (int i = 0; i < numSwarmPopultion; i++) {
+            particles[i] = new Particle(numFeatures, psoFitCalculator);
+
             for (int j = 0; j < numFeatures; j++) {
                 Random rand = new Random();
                 double r = rand.nextDouble();
-                particles[i] = new Particle(numFeatures, psoFitCalculator);
 
                 particles[i].v[j] = r;
                 particles[i].x[j] = S(r);
 
             }
+
             particles[i].refine();
             particles[i].pBest = particles[i].x;
+            for (int j = 0; j < particles[i].pBest.length; j++) {
+                System.out.println(particles[i].pBest[j]);
 
+            }
         }
     }
 

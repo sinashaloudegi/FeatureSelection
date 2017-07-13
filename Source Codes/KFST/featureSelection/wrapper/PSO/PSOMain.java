@@ -54,7 +54,7 @@ public class PSOMain implements WrapperApproach {
     @Override
     public void evaluateFeatures() throws Exception {
         init();
-        run();
+       // run();
     }
 
     @Override
