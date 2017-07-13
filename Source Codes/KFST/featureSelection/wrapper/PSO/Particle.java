@@ -1,5 +1,7 @@
 package KFST.featureSelection.wrapper.PSO;
 
+import java.util.Random;
+
 /**
  * Created by sina on 7/11/2017.
  */
@@ -28,8 +30,39 @@ public class Particle {
 
     }
 
-    public void refine() {
-        //TODO refine number of ones using random strategy
+    public void refine(int numSelectedFeatures, int numFeatures) {
+        int ones = numOfOnes();
+
+        if (ones > numSelectedFeatures) {
+
+
+            int temp = ones;
+            while (temp != numSelectedFeatures) {
+                Random rand = new Random();
+                int rnd = rand.nextInt(numFeatures);
+                if (this.x[rnd] == 1) {
+                    this.x[rnd] = 0;
+                    temp--;
+                }
+
+            }
+
+        } else if (ones < numSelectedFeatures) {
+            int temp = numSelectedFeatures;
+            while (temp != ones) {
+                Random rand = new Random();
+                int rnd = rand.nextInt(numFeatures);
+                if (this.x[rnd] == 0) {
+                    this.x[rnd] = 1;
+                    temp--;
+                }
+
+            }
+        }
+    }
+
+    private int numOfOnes() {
+
         int counter = 0;
         for (int i = 0; i < x.length; i++) {
             if (x[i] == 1) {
@@ -37,6 +70,7 @@ public class Particle {
             }
 
         }
+        return counter;
     }
 
     public String toString(int[] particle) {

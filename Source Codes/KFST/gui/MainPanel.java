@@ -3390,9 +3390,6 @@ public class MainPanel extends JPanel {
 
                     PSOMain method = new PSOMain(numSelectedSubsets[j], numSwarmPopulation, numIterates);
 
-                    System.out.println("PSO...   numSwrmPopulation = " + numSwarmPopulation
-                            + "   numIterates = " + numIterates
-                    );
                     method.loadDataSet(data);
 
                     method.evaluateFeatures();

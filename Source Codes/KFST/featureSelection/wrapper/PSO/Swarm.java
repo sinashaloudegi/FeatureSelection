@@ -12,11 +12,13 @@ public class Swarm {
     int numSwarmPopultion;
     int numFeatures;
     PSOFitCalculator psoFitCalculator;
+    int numSelectedFeatures;
 
-    public Swarm(int numFeatures, int numSwarmPopultion, PSOFitCalculator psoFitCalculator) {
+    public Swarm(int numFeatures, int numSwarmPopultion, PSOFitCalculator psoFitCalculator, int numSelectedFeatures) {
         this.numSwarmPopultion = numSwarmPopultion;
         this.numFeatures = numFeatures;
         this.psoFitCalculator = psoFitCalculator;
+        this.numSelectedFeatures = numSelectedFeatures;
         particles = new Particle[numSwarmPopultion];
         gb = new int[numFeatures];
     }
@@ -34,7 +36,7 @@ public class Swarm {
 
             }
 
-            particles[i].refine();
+            particles[i].refine(numSelectedFeatures, numFeatures);
             particles[i].pBest = particles[i].x;
 
         }
@@ -69,6 +71,7 @@ public class Swarm {
                 particles[i].x[j] = S(particles[i].v[j]);
 
             }
+            particles[i].refine(numSelectedFeatures,numFeatures);
             particles[i].fit();
             if (particles[i].fitness > fit(particles[i].pBest)) {
                 particles[i].pBest = particles[i].x;
