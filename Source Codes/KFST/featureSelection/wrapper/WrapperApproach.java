@@ -2,6 +2,8 @@ package KFST.featureSelection.wrapper;
 
 import KFST.dataset.DatasetInfo;
 
+import java.io.IOException;
+
 /**
  * Created by sina on 6/26/2017.
  */
@@ -26,7 +28,7 @@ public interface WrapperApproach {
     /**
      * starts the feature selection process by a given method
      */
-    public void evaluateFeatures();
+    public void evaluateFeatures() throws Exception;
 
     /**
      * return the subset of features selected by a given method.

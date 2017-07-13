@@ -9,25 +9,30 @@ public class Swarm {
 
     Particle[] particles;
     int gb[];
-    int epochs;
+    int numSwarmPopultion;
     int numFeatures;
+    PSOFitCalculator psoFitCalculator;
 
-    public Swarm(int numFeatures, int epochs) {
-        this.epochs = epochs;
+    public Swarm(int numFeatures, int numSwarmPopultion, PSOFitCalculator psoFitCalculator) {
+        this.numSwarmPopultion = numSwarmPopultion;
         this.numFeatures = numFeatures;
+        this.psoFitCalculator = psoFitCalculator;
+        particles = new Particle[numSwarmPopultion];
+        gb = new int[numFeatures];
     }
 
-    public void initialaize() {
-        for (int i = 0; i < epochs; i++) {
+    public void initialize() {
+        for (int i = 0; i < numSwarmPopultion; i++) {
             for (int j = 0; j < numFeatures; j++) {
                 Random rand = new Random();
                 double r = rand.nextDouble();
-                particles[i] = new Particle();
+                particles[i] = new Particle(numFeatures, psoFitCalculator);
 
                 particles[i].v[j] = r;
                 particles[i].x[j] = S(r);
 
             }
+            particles[i].refine();
             particles[i].pBest = particles[i].x;
 
         }
@@ -45,14 +50,14 @@ public class Swarm {
 
     }
 
-    public void calculateFitness() {
-        for (int i = 0; i < epochs; i++) {
+    public void calculateFitness() throws Exception {
+        for (int i = 0; i < numSwarmPopultion; i++) {
             particles[i].fit();
         }
     }
 
-    public void update() {
-        for (int i = 0; i < epochs; i++) {
+    public void update() throws Exception {
+        for (int i = 0; i < numSwarmPopultion; i++) {
             for (int j = 0; j < numFeatures; j++) {
                 Random rnd1 = new Random();
                 Random rnd2 = new Random();
@@ -72,7 +77,9 @@ public class Swarm {
 
     }
 
-    private double fit(int[] pBest) {
-        return 0.2;
+    private double fit(int[] pBest) throws Exception {
+        Particle temp = new Particle(numFeatures, psoFitCalculator);
+        String s = temp.toString(pBest);
+        return psoFitCalculator.remove(s);
     }
 }
