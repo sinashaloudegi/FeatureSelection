@@ -46,6 +46,7 @@ public class HPSOLSMain implements WrapperApproach {
         hpsolsFitCalculator = new HPSOLSFitCalculator(pathData, pathTestData);
         data = hpsolsFitCalculator.getTrain();
         localSearchOperation=new LocalSearchOperation(data,0.6,numSelectedFeatures);
+        localSearchOperation.computeCorrelation();
 
         hpsolsswarm = new HPSOLSSwarm(numFeatures, numSwarmPopulation, hpsolsFitCalculator,numSelectedFeatures,localSearchOperation);
         hpsolsswarm.initialize();

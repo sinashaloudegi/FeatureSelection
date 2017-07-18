@@ -138,7 +138,7 @@ public class LocalSearchOperation {
     }
 
     public int[] lso(int[] x) {
-        HPSOLSMain h=new HPSOLSMain();
+        HPSOLSMain h = new HPSOLSMain();
 
         int[] X = h.toIntArray(x);
         ArrayList<Integer> Xd = new ArrayList<Integer>();
