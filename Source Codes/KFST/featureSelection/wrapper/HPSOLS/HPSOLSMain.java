@@ -2,8 +2,6 @@ package KFST.featureSelection.wrapper.HPSOLS;
 
 import KFST.dataset.DatasetInfo;
 import KFST.featureSelection.wrapper.HGAFS.LocalSearchOperation;
-import KFST.featureSelection.wrapper.PSO.PSOFitCalculator;
-import KFST.featureSelection.wrapper.PSO.Swarm;
 import KFST.featureSelection.wrapper.WrapperApproach;
 import weka.core.Instances;
 
@@ -24,6 +22,10 @@ public class HPSOLSMain implements WrapperApproach {
     HPSOLSFitCalculator hpsolsFitCalculator;
     LocalSearchOperation localSearchOperation;
     Instances data;
+
+    public HPSOLSMain() {
+
+    }
 
     public HPSOLSMain(int numSelectedFeatures, int numItertion, int numSwarmPopulation ) {
         this.numIterates = numItertion;
@@ -73,7 +75,7 @@ public class HPSOLSMain implements WrapperApproach {
         return toIntArray(hpsolsswarm.gb);
     }
 
-    private int[] toIntArray(int[] gb) {
+    public int[] toIntArray(int[] gb) {
         int numOfOnes = numOfOnes(gb);
         int temp[] = new int[numOfOnes];
         int counter = 0;
