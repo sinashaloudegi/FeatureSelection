@@ -1,9 +1,11 @@
 package KFST.featureSelection.wrapper.HPSOLS;
 
 import KFST.dataset.DatasetInfo;
+import KFST.featureSelection.wrapper.HGAFS.LocalSearchOperation;
 import KFST.featureSelection.wrapper.PSO.PSOFitCalculator;
 import KFST.featureSelection.wrapper.PSO.Swarm;
 import KFST.featureSelection.wrapper.WrapperApproach;
+import weka.core.Instances;
 
 import java.io.IOException;
 
@@ -20,6 +22,8 @@ public class HPSOLSMain implements WrapperApproach {
     String pathData;
     String pathTestData;
     HPSOLSFitCalculator hpsolsFitCalculator;
+    LocalSearchOperation localSearchOperation;
+    Instances data;
 
     public HPSOLSMain(int numSelectedFeatures, int numItertion, int numSwarmPopulation ) {
         this.numIterates = numItertion;
@@ -28,6 +32,7 @@ public class HPSOLSMain implements WrapperApproach {
     }
 
     private void run() throws Exception {
+
         for (int i = 0; i < numIterates; i++) {
             hpsolsswarm.calculateFitness();
             hpsolsswarm.update();
@@ -37,8 +42,12 @@ public class HPSOLSMain implements WrapperApproach {
 
     private void init() throws IOException {
         hpsolsFitCalculator = new HPSOLSFitCalculator(pathData, pathTestData);
+        data = hpsolsFitCalculator.getTrain();
+
         hpsolsswarm = new HPSOLSSwarm(numFeatures, numSwarmPopulation, hpsolsFitCalculator,numSelectedFeatures);
         hpsolsswarm.initialize();
+         localSearchOperation=new LocalSearchOperation(data,0.6,numSelectedFeatures);
+
     }
 
     @Override

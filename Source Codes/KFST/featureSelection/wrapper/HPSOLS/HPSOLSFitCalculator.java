@@ -69,6 +69,10 @@ public class HPSOLSFitCalculator {
         }
     }
 
+    public Instances getTrain() {
+        return train;
+    }
+
     private double buildAndEval(Instances train) throws Exception {
         Random rand = new Random(1);
         IBk knn = new IBk();

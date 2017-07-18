@@ -1,5 +1,6 @@
 package KFST.featureSelection.wrapper.HPSOLS;
 
+import KFST.featureSelection.wrapper.HGAFS.LocalSearchOperation;
 import KFST.featureSelection.wrapper.PSO.PSOFitCalculator;
 import KFST.featureSelection.wrapper.PSO.Particle;
 

@@ -1,7 +1,5 @@
 package KFST.featureSelection.wrapper.HPSOLS;
 
-import KFST.featureSelection.wrapper.PSO.PSOFitCalculator;
-
 import java.util.Random;
 
 /**
@@ -36,7 +34,6 @@ public class HPSOLSParticle {
         int ones = numOfOnes();
 
         if (ones > numSelectedFeatures) {
-
 
             int temp = ones;
             while (temp != numSelectedFeatures) {
