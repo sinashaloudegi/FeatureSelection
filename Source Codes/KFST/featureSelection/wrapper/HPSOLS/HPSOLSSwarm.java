@@ -1,8 +1,6 @@
 package KFST.featureSelection.wrapper.HPSOLS;
 
 import KFST.featureSelection.wrapper.HGAFS.LocalSearchOperation;
-import KFST.featureSelection.wrapper.PSO.PSOFitCalculator;
-import KFST.featureSelection.wrapper.PSO.Particle;
 
 import java.util.Random;
 
@@ -17,8 +15,10 @@ public class HPSOLSSwarm {
     int numFeatures;
     HPSOLSFitCalculator hpsolsPsoFitCalculator;
     int numSelectedFeatures;
+    LocalSearchOperation localSearchOperation;
 
-    public HPSOLSSwarm(int numFeatures, int numSwarmPopultion, HPSOLSFitCalculator hpsolsFitCalculator, int numSelectedFeatures) {
+    public HPSOLSSwarm(int numFeatures, int numSwarmPopultion, HPSOLSFitCalculator hpsolsFitCalculator, int numSelectedFeatures, LocalSearchOperation localSearchOperation) {
+        this.localSearchOperation = localSearchOperation;
         this.numSwarmPopultion = numSwarmPopultion;
         this.numFeatures = numFeatures;
         this.hpsolsPsoFitCalculator = hpsolsFitCalculator;
@@ -29,7 +29,7 @@ public class HPSOLSSwarm {
 
     public void initialize() {
         for (int i = 0; i < numSwarmPopultion; i++) {
-            particles[i] = new HPSOLSParticle(numFeatures, hpsolsPsoFitCalculator);
+            particles[i] = new HPSOLSParticle(numFeatures, hpsolsPsoFitCalculator,localSearchOperation);
 
             for (int j = 0; j < numFeatures; j++) {
                 Random rand = new Random();
@@ -75,7 +75,7 @@ public class HPSOLSSwarm {
                 particles[i].x[j] = S(particles[i].v[j]);
 
             }
-            particles[i].refine(numSelectedFeatures,numFeatures);
+            particles[i].refine(numSelectedFeatures, numFeatures);
             particles[i].fit();
             if (particles[i].fitness > fit(particles[i].pBest)) {
                 particles[i].pBest = particles[i].x;
@@ -89,7 +89,7 @@ public class HPSOLSSwarm {
     }
 
     private double fit(int[] pBest) throws Exception {
-        HPSOLSParticle temp = new HPSOLSParticle(numFeatures, hpsolsPsoFitCalculator);
+        HPSOLSParticle temp = new HPSOLSParticle(numFeatures, hpsolsPsoFitCalculator,localSearchOperation);
         String s = temp.toString(pBest);
         return hpsolsPsoFitCalculator.remove(s);
     }

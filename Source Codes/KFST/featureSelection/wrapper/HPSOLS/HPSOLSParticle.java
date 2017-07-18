@@ -1,6 +1,6 @@
 package KFST.featureSelection.wrapper.HPSOLS;
 
-import java.util.Random;
+import KFST.featureSelection.wrapper.HGAFS.LocalSearchOperation;
 
 /**
  * Created by sina on 7/11/2017.
@@ -11,10 +11,11 @@ public class HPSOLSParticle {
     int pBest[];
     int x[];
     double v[];
-
+    LocalSearchOperation localSearchOperation;
     HPSOLSFitCalculator hpsolsPsoFitCalculator;
 
-    public HPSOLSParticle(int numFeatures, HPSOLSFitCalculator hpsolsPsoFitCalculator) {
+    public HPSOLSParticle(int numFeatures, HPSOLSFitCalculator hpsolsPsoFitCalculator, LocalSearchOperation localSearchOperation) {
+        this.localSearchOperation = localSearchOperation;
         v = new double[numFeatures];
         x = new int[numFeatures];
         pBest = new int[numFeatures];
@@ -31,7 +32,9 @@ public class HPSOLSParticle {
     }
 
     public void refine(int numSelectedFeatures, int numFeatures) {
-        int ones = numOfOnes();
+        localSearchOperation.lso(x);
+      /*  int ones = numOfOnes();
+
 
         if (ones > numSelectedFeatures) {
 
@@ -57,7 +60,7 @@ public class HPSOLSParticle {
                 }
 
             }
-        }
+        }*/
     }
 
     private int numOfOnes() {

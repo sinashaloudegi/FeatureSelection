@@ -45,10 +45,10 @@ public class HPSOLSMain implements WrapperApproach {
     private void init() throws IOException {
         hpsolsFitCalculator = new HPSOLSFitCalculator(pathData, pathTestData);
         data = hpsolsFitCalculator.getTrain();
+        localSearchOperation=new LocalSearchOperation(data,0.6,numSelectedFeatures);
 
-        hpsolsswarm = new HPSOLSSwarm(numFeatures, numSwarmPopulation, hpsolsFitCalculator,numSelectedFeatures);
+        hpsolsswarm = new HPSOLSSwarm(numFeatures, numSwarmPopulation, hpsolsFitCalculator,numSelectedFeatures,localSearchOperation);
         hpsolsswarm.initialize();
-         localSearchOperation=new LocalSearchOperation(data,0.6,numSelectedFeatures);
 
     }
 
