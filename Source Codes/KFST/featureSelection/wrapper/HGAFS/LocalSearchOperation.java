@@ -24,14 +24,19 @@ public class LocalSearchOperation {
 
     double alpha;
     static int numAttributes;
+    int numSelectedFeatures;
 
+    public int getNumSelectedFeatures() {
+        return numSelectedFeatures;
+    }
 
     public LocalSearchOperation(Instances data, double miu, int numSelectedFeature) {
+        this.numSelectedFeatures = numSelectedFeature;
+
         this.data = data;
         this.miu = miu;
         delta = rond(miu * numSelectedFeature);
         zi = rond((1 - miu) * numSelectedFeature);
-
         numAttributes = data.numAttributes() - 1;
         convertToArray();
         means = new double[numAttributes];
@@ -141,6 +146,7 @@ public class LocalSearchOperation {
         HPSOLSMain h = new HPSOLSMain();
 
         int[] X = h.toIntArray(x);
+
         ArrayList<Integer> Xd = new ArrayList<Integer>();
         for (int i = 0; i < D.length; i++) {
             for (int j = 0; j < X.length; j++) {
@@ -208,8 +214,10 @@ public class LocalSearchOperation {
                 Xs.remove(j);
             }
         }
-
-
+        System.out.println("================");
+        System.out.println(zi);
+        System.out.println(delta);
+        System.out.println("================");
         for (int i = 0; i < x.length; i++) {
             x[i] = 0;
         }
@@ -222,6 +230,18 @@ public class LocalSearchOperation {
 
         return x;
 
+    }
+
+    private int numOfOnes(int[] x) {
+
+        int counter = 0;
+        for (int i = 0; i < x.length; i++) {
+            if (x[i] == 1) {
+                counter++;
+            }
+
+        }
+        return counter;
     }
 
     public void computeCorrelation() {
@@ -249,12 +269,13 @@ public class LocalSearchOperation {
             S[k] = (int) (Cor[i][1]);
             k++;
         }
+        System.out.println("S :");
 
         for (int i = 0; i < S.length; i++) {
             System.out.print(S[i] + ",");
         }
         System.out.println();
-        System.out.println("d");
+        System.out.println("D : ");
         for (int i = 0; i < D.length; i++) {
             System.out.print(D[i] + ",");
         }
