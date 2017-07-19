@@ -170,7 +170,9 @@ public class LocalSearchOperation {
             }
         }
         int XdSize = Xd.size(), XsSize = Xs.size();
-        System.out.println(zi + " - " + delta);
+        System.out.println();
+        System.out.println("///////////////////////////////");
+        System.out.println("delta: "+delta + "    xd: " + Xd.size());
         if (delta > Xd.size()) {
             for (int i = 0, j = 0; j < delta - XdSize & i < D.length; i++) {
                 //addToXd
@@ -184,18 +186,23 @@ public class LocalSearchOperation {
                 if (!exist) {
                     Xd.add(D[i]);
                     j++;
+                    System.out.print(" + ");
                 }
 
             }
         }
 
         if (delta < Xd.size()) {
-            for (int i = 0, j = XdSize - 1; j > 0 & i < XdSize - delta; j--, i++) {
+            for (int i = 0, j = XdSize - 1; j >= 0 & i < XdSize - delta; j--, i++) {
                 //delFromXd
                 Xd.remove(j);
+                System.out.print(" - ");
             }
         }
 
+        System.out.println();
+        System.out.println("///////////////////////////////");
+        System.out.println("zi: "+zi + "    xs: " + Xs.size());
         if (zi > Xs.size()) {
             for (int i = 0, j = 0; j < zi - XsSize & i < S.length; i++) {
                 //addToXs
@@ -209,18 +216,25 @@ public class LocalSearchOperation {
                 if (!exist) {
                     Xs.add(S[i]);
                     j++;
+                    System.out.print(" + ");
                 }
 
             }
         }
 
         if (zi < Xs.size()) {
-            for (int i = 0, j = XsSize - 1; j > 0 & i < XsSize - zi; j--, i++) {
+            for (int i = 0, j = XsSize - 1; j >=0 & i < XsSize - zi; j--, i++) {
                 //delFromXs
                 Xs.remove(j);
+                System.out.print(" - ");
+
             }
         }
-
+        System.out.println();
+        System.out.println("----------------------------------------------------");
+        System.out.println("delta: "+delta + "    xd: " + Xd.size());
+        System.out.println("zi: "+zi + "    xs: " + Xs.size());
+        System.out.println("----------------------------------------------------");
         for (int i = 0; i < x.length; i++) {
             x[i] = 0;
         }
