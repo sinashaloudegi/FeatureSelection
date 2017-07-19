@@ -76,8 +76,9 @@ public class LocalSearchOperation {
             }
         }
 
+        int XdSize=Xd.size(),XsSize=Xs.size();
         if (delta > Xd.size()) {
-            for (int i = 0, j = 0; j < delta - Xd.size() & i < D.length; i++) {
+            for (int i = 0, j = 0; j < delta - XdSize & i < D.length; i++) {
                 //addToXd
                 Boolean exist = false;
                 for (int k = 0; k < Xd.size(); k++) {
@@ -95,14 +96,14 @@ public class LocalSearchOperation {
         }
 
         if (delta < Xd.size()) {
-            for (int i = 0, j = Xd.size() - 1; j > 0 & i < Xd.size() - delta; j--, i++) {
+            for (int i = 0, j = XdSize - 1; j > 0 & i < XdSize - delta; j--, i++) {
                 //delFromXd
                 Xd.remove(j);
             }
         }
 
         if (zi > Xs.size()) {
-            for (int i = 0, j = 0; j < zi - Xs.size() & i < S.length; i++) {
+            for (int i = 0, j = 0; j < zi - XsSize & i < S.length; i++) {
                 //addToXs
                 Boolean exist = false;
                 for (int k = 0; k < Xs.size(); k++) {
@@ -120,11 +121,12 @@ public class LocalSearchOperation {
         }
 
         if (zi < Xs.size()) {
-            for (int i = 0, j = Xs.size() - 1; j > 0 & i < Xs.size() - zi; j--, i++) {
+            for (int i = 0, j = XsSize - 1; j > 0 & i < XsSize - zi; j--, i++) {
                 //delFromXs
                 Xs.remove(j);
             }
         }
+
 
         byte[] b = new byte[offSpring.gene.length];
         for (int i = 0; i < b.length; i++) {
@@ -164,9 +166,9 @@ public class LocalSearchOperation {
                 }
             }
         }
-
+int XdSize=Xd.size(),XsSize=Xs.size();
         if (delta > Xd.size()) {
-            for (int i = 0, j = 0; j < delta - Xd.size() & i < D.length; i++) {
+            for (int i = 0, j = 0; j < delta - XdSize & i < D.length; i++) {
                 //addToXd
                 Boolean exist = false;
                 for (int k = 0; k < Xd.size(); k++) {
@@ -184,14 +186,14 @@ public class LocalSearchOperation {
         }
 
         if (delta < Xd.size()) {
-            for (int i = 0, j = Xd.size() - 1; j > 0 & i < Xd.size() - delta; j--, i++) {
+            for (int i = 0, j = XdSize - 1; j > 0 & i < XdSize - delta; j--, i++) {
                 //delFromXd
                 Xd.remove(j);
             }
         }
 
         if (zi > Xs.size()) {
-            for (int i = 0, j = 0; j < zi - Xs.size() & i < S.length; i++) {
+            for (int i = 0, j = 0; j < zi - XsSize & i < S.length; i++) {
                 //addToXs
                 Boolean exist = false;
                 for (int k = 0; k < Xs.size(); k++) {
@@ -209,7 +211,7 @@ public class LocalSearchOperation {
         }
 
         if (zi < Xs.size()) {
-            for (int i = 0, j = Xs.size() - 1; j > 0 & i < Xs.size() - zi; j--, i++) {
+            for (int i = 0, j = XsSize - 1; j > 0 & i < XsSize - zi; j--, i++) {
                 //delFromXs
                 Xs.remove(j);
             }
