@@ -27,10 +27,10 @@ public class HPSOLSMain implements WrapperApproach {
 
     }
 
-    public HPSOLSMain(int numSelectedFeatures, int numItertion, int numSwarmPopulation ) {
+    public HPSOLSMain(int numSelectedFeatures, int numItertion, int numSwarmPopulation) {
         this.numIterates = numItertion;
         this.numSwarmPopulation = numSwarmPopulation;
-        this.numSelectedFeatures=numSelectedFeatures;
+        this.numSelectedFeatures = numSelectedFeatures;
     }
 
     private void run() throws Exception {
@@ -45,10 +45,9 @@ public class HPSOLSMain implements WrapperApproach {
     private void init() throws IOException {
         hpsolsFitCalculator = new HPSOLSFitCalculator(pathData, pathTestData);
         data = hpsolsFitCalculator.getTrain();
-        localSearchOperation=new LocalSearchOperation(data,0.6,numSelectedFeatures);
+        localSearchOperation = new LocalSearchOperation(data, 0.6, numSelectedFeatures);
         localSearchOperation.computeCorrelation();
-
-        hpsolsswarm = new HPSOLSSwarm(numFeatures, numSwarmPopulation, hpsolsFitCalculator,numSelectedFeatures,localSearchOperation);
+        hpsolsswarm = new HPSOLSSwarm(numFeatures, numSwarmPopulation, hpsolsFitCalculator, numSelectedFeatures, localSearchOperation);
         hpsolsswarm.initialize();
 
     }

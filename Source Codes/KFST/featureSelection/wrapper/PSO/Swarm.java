@@ -61,17 +61,19 @@ public class Swarm {
     }
 
     public void update() throws Exception {
+        Random rnd1 = new Random();
+        Random rnd2 = new Random();
+        double r1,r2;
+
         for (int i = 0; i < numSwarmPopultion; i++) {
             for (int j = 0; j < numFeatures; j++) {
-                Random rnd1 = new Random();
-                Random rnd2 = new Random();
-                double r1 = rnd1.nextDouble();
-                double r2 = rnd2.nextDouble();
-                particles[i].v[j] = particles[i].v[j] + r1 * 2 * (particles[i].x[j] - particles[i].pBest[j]) + r2 * 2 * (particles[i].x[j] - gb[j]);
+                r1 = rnd1.nextDouble();
+                r2 = rnd2.nextDouble();
+                particles[i].v[j] = particles[i].v[j] + r1 * 2 * (particles[i].pBest[j] - particles[i].x[j]) + r2 * 2 * (gb[j] - particles[i].x[j]);
                 particles[i].x[j] = S(particles[i].v[j]);
 
             }
-            particles[i].refine(numSelectedFeatures,numFeatures);
+            particles[i].refine(numSelectedFeatures, numFeatures);
             particles[i].fit();
             if (particles[i].fitness > fit(particles[i].pBest)) {
                 particles[i].pBest = particles[i].x;
