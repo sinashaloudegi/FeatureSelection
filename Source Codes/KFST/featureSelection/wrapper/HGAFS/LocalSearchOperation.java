@@ -35,10 +35,11 @@ public class LocalSearchOperation {
 
         this.data = data;
         this.miu = miu;
+
+
         delta = rond(miu * numSelectedFeature);
-        zi = numSelectedFeature - delta;
-        System.out.println("---NumSelectedFeatures = " + numSelectedFeature);
-        System.out.println(zi + " - " + delta);
+        zi = rond((1 - miu) * numSelectedFeature);
+
         numAttributes = data.numAttributes() - 1;
         convertToArray();
         means = new double[numAttributes];
@@ -169,6 +170,7 @@ public class LocalSearchOperation {
             }
         }
         int XdSize = Xd.size(), XsSize = Xs.size();
+        System.out.println(zi + " - " + delta);
         if (delta > Xd.size()) {
             for (int i = 0, j = 0; j < delta - XdSize & i < D.length; i++) {
                 //addToXd
@@ -228,7 +230,7 @@ public class LocalSearchOperation {
         for (int i = 0; i < Xs.size(); i++) {
             x[Xs.get(i)] = 1;
         }
-
+        System.out.println("num of ones : "+numOfOnes(x));
         return x;
 
     }
