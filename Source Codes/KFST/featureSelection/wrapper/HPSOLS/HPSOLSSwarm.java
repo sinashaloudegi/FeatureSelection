@@ -28,19 +28,20 @@ public class HPSOLSSwarm {
     }
 
     public void initialize() {
+        Random rand = new Random();
+        double r;
         for (int i = 0; i < numSwarmPopultion; i++) {
-            particles[i] = new HPSOLSParticle(numFeatures, hpsolsPsoFitCalculator,localSearchOperation);
+            particles[i] = new HPSOLSParticle(numFeatures, hpsolsPsoFitCalculator, localSearchOperation);
 
             for (int j = 0; j < numFeatures; j++) {
-                Random rand = new Random();
-                double r = rand.nextDouble();
+                r = rand.nextDouble();
 
                 particles[i].v[j] = r;
                 particles[i].x[j] = S(r);
 
             }
 
-            particles[i].refine(numSelectedFeatures, numFeatures);
+            particles[i].refine();
             particles[i].pBest = particles[i].x;
 
         }
@@ -71,11 +72,11 @@ public class HPSOLSSwarm {
                 Random rnd2 = new Random();
                 double r1 = rnd1.nextDouble();
                 double r2 = rnd2.nextDouble();
-                particles[i].v[j] = particles[i].v[j] + r1 * 2 * (particles[i].x[j] - particles[i].pBest[j]) + r2 * 2 * (particles[i].x[j] - gb[j]);
+                particles[i].v[j] = particles[i].v[j] + r1 * 2 * (particles[i].pBest[j] - particles[i].x[j]) + r2 * 2 * (gb[j] - particles[i].x[j]);
                 particles[i].x[j] = S(particles[i].v[j]);
 
             }
-            particles[i].refine(numSelectedFeatures, numFeatures);
+            particles[i].refine();
             particles[i].fit();
             if (particles[i].fitness > fit(particles[i].pBest)) {
                 particles[i].pBest = particles[i].x;
@@ -89,7 +90,7 @@ public class HPSOLSSwarm {
     }
 
     private double fit(int[] pBest) throws Exception {
-        HPSOLSParticle temp = new HPSOLSParticle(numFeatures, hpsolsPsoFitCalculator,localSearchOperation);
+        HPSOLSParticle temp = new HPSOLSParticle(numFeatures, hpsolsPsoFitCalculator, localSearchOperation);
         String s = temp.toString(pBest);
         return hpsolsPsoFitCalculator.remove(s);
     }

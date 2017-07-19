@@ -31,36 +31,9 @@ public class HPSOLSParticle {
 
     }
 
-    public void refine(int numSelectedFeatures, int numFeatures) {
+    public void refine() {
         localSearchOperation.lso(x);
-      /*  int ones = numOfOnes();
 
-
-        if (ones > numSelectedFeatures) {
-
-            int temp = ones;
-            while (temp != numSelectedFeatures) {
-                Random rand = new Random();
-                int rnd = rand.nextInt(numFeatures);
-                if (this.x[rnd] == 1) {
-                    this.x[rnd] = 0;
-                    temp--;
-                }
-
-            }
-
-        } else if (ones < numSelectedFeatures) {
-            int temp = numSelectedFeatures;
-            while (temp != ones) {
-                Random rand = new Random();
-                int rnd = rand.nextInt(numFeatures);
-                if (this.x[rnd] == 0) {
-                    this.x[rnd] = 1;
-                    temp--;
-                }
-
-            }
-        }*/
     }
 
     private int numOfOnes() {
