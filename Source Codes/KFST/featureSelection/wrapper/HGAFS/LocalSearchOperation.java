@@ -62,10 +62,10 @@ public class LocalSearchOperation {
     public Strings lso(Strings offSpring) {
 
 
-        System.out.println(delta + "    "+D.length);
+        System.out.println(delta + "    " + D.length);
 
-        if(delta > D.length){
-            zi += delta - D.length ;
+        if (delta > D.length) {
+            zi += delta - D.length;
             delta = D.length;
 
         }
@@ -159,10 +159,10 @@ public class LocalSearchOperation {
 
     public int[] lso(int[] x) {
 
-        System.out.println(delta + "    "+D.length);
+        System.out.println(delta + "    " + D.length);
 
-        if(delta > D.length){
-            zi += delta - D.length ;
+        if (delta > D.length) {
+            zi += delta - D.length;
             delta = D.length;
 
         }
@@ -192,7 +192,7 @@ public class LocalSearchOperation {
         int XdSize = Xd.size(), XsSize = Xs.size();
         System.out.println();
         System.out.println("///////////////////////////////");
-        System.out.println("delta: "+delta + "    xd: " + Xd.size());
+        System.out.println("delta: " + delta + "    xd: " + Xd.size());
         if (delta > Xd.size()) {
             for (int i = 0, j = 0; j < delta - XdSize & i < D.length; i++) {
                 //addToXd
@@ -222,7 +222,7 @@ public class LocalSearchOperation {
 
         System.out.println();
         System.out.println("///////////////////////////////");
-        System.out.println("zi: "+zi + "    xs: " + Xs.size());
+        System.out.println("zi: " + zi + "    xs: " + Xs.size());
         if (zi > Xs.size()) {
             for (int i = 0, j = 0; j < zi - XsSize & i < S.length; i++) {
                 //addToXs
@@ -243,7 +243,7 @@ public class LocalSearchOperation {
         }
 
         if (zi < Xs.size()) {
-            for (int i = 0, j = XsSize - 1; j >=0 & i < XsSize - zi; j--, i++) {
+            for (int i = 0, j = XsSize - 1; j >= 0 & i < XsSize - zi; j--, i++) {
                 //delFromXs
                 Xs.remove(j);
                 System.out.print(" - ");
@@ -252,8 +252,8 @@ public class LocalSearchOperation {
         }
         System.out.println();
         System.out.println("----------------------------------------------------");
-        System.out.println("delta: "+delta + "    xd: " + Xd.size());
-        System.out.println("zi: "+zi + "    xs: " + Xs.size());
+        System.out.println("delta: " + delta + "    xd: " + Xd.size());
+        System.out.println("zi: " + zi + "    xs: " + Xs.size());
         System.out.println("----------------------------------------------------");
         for (int i = 0; i < x.length; i++) {
             x[i] = 0;
@@ -264,7 +264,7 @@ public class LocalSearchOperation {
         for (int i = 0; i < Xs.size(); i++) {
             x[Xs.get(i)] = 1;
         }
-        System.out.println("num of ones : "+numOfOnes(x));
+        System.out.println("num of ones : " + numOfOnes(x));
         return x;
 
     }
@@ -295,14 +295,15 @@ public class LocalSearchOperation {
 
 
         Arrays.sort(Cor, (double[] a, double[] b) -> Double.compare(a[0], b[0]));
-
-        D = new int[numAttributes / 2];
-        S = new int[numAttributes / 2];
-        for (int i = 0; i < numAttributes / 2; i++) {
+        int dSize = numAttributes / 2;
+        int sSize = numAttributes - dSize;
+        D = new int[dSize];
+        S = new int[sSize];
+        for (int i = 0; i < dSize; i++) {
             D[i] = (int) Cor[i][1];
         }
         int k = 0;
-        for (int i = (numAttributes + 1) / 2; i < numAttributes; i++) {
+        for (int i = dSize; i < numAttributes; i++) {
             S[k] = (int) (Cor[i][1]);
             k++;
         }
