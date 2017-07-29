@@ -40,6 +40,7 @@ public class LocalSearchOperation {
         delta = rond(miu * numSelectedFeature);
         zi = rond((1 - miu) * numSelectedFeature);
 
+
         numAttributes = data.numAttributes() - 1;
         convertToArray();
         means = new double[numAttributes];
@@ -59,6 +60,15 @@ public class LocalSearchOperation {
     }
 
     public Strings lso(Strings offSpring) {
+
+
+        System.out.println(delta + "    "+D.length);
+
+        if(delta > D.length){
+            zi += delta - D.length ;
+            delta = D.length;
+
+        }
 
         int[] X = offSpring.getOnes();
         ArrayList<Integer> Xd = new ArrayList<Integer>();
@@ -148,6 +158,16 @@ public class LocalSearchOperation {
     }
 
     public int[] lso(int[] x) {
+
+        System.out.println(delta + "    "+D.length);
+
+        if(delta > D.length){
+            zi += delta - D.length ;
+            delta = D.length;
+
+        }
+
+
         HPSOLSMain h = new HPSOLSMain();
 
         int[] X = h.toIntArray(x);
