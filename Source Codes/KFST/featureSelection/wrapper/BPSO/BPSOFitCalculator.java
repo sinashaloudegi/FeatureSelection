@@ -72,7 +72,7 @@ public class BPSOFitCalculator {
     private double buildAndEval(Instances train) throws Exception {
         Random rand = new Random(1);
         IBk knn = new IBk();
-        knn.setKNN(3);
+        knn.setKNN(1);
         knn.buildClassifier(train);
         Evaluation eval = new Evaluation(train);
         eval.crossValidateModel(knn, train, 10, rand);
