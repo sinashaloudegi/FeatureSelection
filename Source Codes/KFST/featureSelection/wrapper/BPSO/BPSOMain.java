@@ -84,6 +84,7 @@ public class BPSOMain  implements WrapperApproach {
                 gbint[i] = 0;
             }
         }
+        refine(gbint);
         int numOfOnes = numOfOnes(gbint);
         int temp[] = new int[numOfOnes];
         int counter = 0;
@@ -95,6 +96,37 @@ public class BPSOMain  implements WrapperApproach {
 
         }
         return temp;
+    }
+    private int[] refine(int[] x) {
+        int ones = numOfOnes(x);
+
+        if (ones > numSelectedFeatures) {
+
+
+            int temp = ones;
+            while (temp != numSelectedFeatures) {
+                Random rand = new Random();
+                int rnd = rand.nextInt(numFeatures);
+                if (x[rnd] == 1) {
+                    x[rnd] = 0;
+                    temp--;
+                }
+
+            }
+
+        } else if (ones < numSelectedFeatures) {
+            int temp = numSelectedFeatures;
+            while (temp != ones) {
+                Random rand = new Random();
+                int rnd = rand.nextInt(numFeatures);
+                if (x[rnd] == 0) {
+                    x[rnd] = 1;
+                    temp--;
+                }
+
+            }
+        }
+        return x;
     }
     private int numOfOnes(int[] gb) {
         int counter = 0;
