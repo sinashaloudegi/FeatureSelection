@@ -52,19 +52,23 @@ public class BPSOSwarm {
 
     public void update() throws Exception {
         for (int i = 0; i < numSwarmPopultion; i++) {
-            if(fit(particles[i].pBest)< fit(particles[i].x)){
-                for (int j = 0; j < numFeatures; j++) {
-                    particles[i].pBest[j] = 0.5 * (particles[i].x[j] + particles[i].z[j] );
-                }
-            }
-            if(fit(particles[i].pBest)== fit(particles[i].x) & numOfOne(particles[i].pBest , particles[i].z)){
-                for (int j = 0; j < numFeatures; j++) {
-                    particles[i].pBest[j] = 0.5 * (particles[i].x[j] + particles[i].z[j] );
-                }
-            }
+            updatePbest(particles[i]);
 
         }
 
+    }
+
+    private void updatePbest(BPSOParticle particle) throws Exception {
+        if(fit(particle.pBest)< fit(particle.x)){
+            for (int j = 0; j < numFeatures; j++) {
+                particle.pBest[j] = 0.5 * (particle.x[j] + particle.z[j] );
+            }
+        }
+        if(fit(particle.pBest)== fit(particle.x) & numOfOne(particle.pBest , particle.z)){
+            for (int j = 0; j < numFeatures; j++) {
+                particle.pBest[j] = 0.5 * (particle.x[j] + particle.z[j] );
+            }
+        }
     }
 
     private boolean numOfOne(double[] pBest , int[] z) throws Exception {
