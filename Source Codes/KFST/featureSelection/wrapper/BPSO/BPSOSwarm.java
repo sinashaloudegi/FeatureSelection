@@ -7,7 +7,7 @@ import java.util.Random;
  */
 public class BPSOSwarm {
     BPSOParticle[] particles;
-    int gb[];
+    double gb[];
     int numSwarmPopultion;
     int numFeatures;
     BPSOFitCalculator bpsoFitCalculator;
@@ -19,7 +19,7 @@ public class BPSOSwarm {
         this.bpsoFitCalculator = bpsoFitCalculator;
         this.numSelectedFeatures = numSelectedFeatures;
         particles = new BPSOParticle[numSwarmPopultion];
-        gb = new int[numFeatures];
+        gb = new double[numFeatures];
     }
 
     public void initialize() {
@@ -53,7 +53,9 @@ public class BPSOSwarm {
     public void update() throws Exception {
         for (int i = 0; i < numSwarmPopultion; i++) {
             updatePbest(particles[i]);
-
+            if (particles[i].fitness > fit(gb)) {
+                gb = particles[i].x;
+            }
         }
 
     }
