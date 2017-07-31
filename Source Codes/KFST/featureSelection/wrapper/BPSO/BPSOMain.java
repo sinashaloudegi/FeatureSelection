@@ -2,7 +2,6 @@ package KFST.featureSelection.wrapper.BPSO;
 
 import KFST.dataset.DatasetInfo;
 import KFST.featureSelection.wrapper.WrapperApproach;
-import com.sun.scenario.effect.impl.sw.sse.SSEBlend_SRC_OUTPeer;
 
 import java.io.IOException;
 
@@ -26,7 +25,11 @@ public class BPSOMain  implements WrapperApproach {
     }
 
     private void run() throws Exception {
+        for (int i = 0; i < numIterates; i++) {
+            swarm.calculateFitness();
+            swarm.update();
 
+        }
     }
 
     private void init() throws IOException {

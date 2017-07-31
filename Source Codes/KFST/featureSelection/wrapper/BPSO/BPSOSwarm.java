@@ -30,6 +30,7 @@ public class BPSOSwarm {
                 Random rand = new Random();
                 double r = rand.nextDouble();
                 double r2 = rand.nextDouble();
+
                 particles[i].x[j] = r;
                 particles[i].pBest[j] = r;
                 if(r >= r2){
@@ -45,7 +46,7 @@ public class BPSOSwarm {
 
     public void calculateFitness() throws Exception {
         for (int i = 0; i < numSwarmPopultion; i++) {
-            //
+            particles[i].fit();
         }
     }
 
