@@ -51,11 +51,66 @@ public class BPSOSwarm {
     }
 
     public void update() throws Exception {
+        for (int i = 0; i < numSwarmPopultion; i++) {
+            if(fit(particles[i].pBest)< fit(particles[i].x)){
+                for (int j = 0; j < numFeatures; j++) {
+                    particles[i].pBest[j] = 0.5 * (particles[i].x[j] + particles[i].z[j] );
+                }
+            }
+            if(fit(particles[i].pBest)== fit(particles[i].x) & numOfOne(particles[i].pBest , particles[i].z)){
+                for (int j = 0; j < numFeatures; j++) {
+                    particles[i].pBest[j] = 0.5 * (particles[i].x[j] + particles[i].z[j] );
+                }
+            }
+
+        }
 
     }
 
-    private double fit(int[] pBest) throws Exception {
-        double x=0;
-       return x;
+    private boolean numOfOne(double[] pBest , int[] z) throws Exception {
+        int[] temp=new int[numFeatures];
+        Random rand = new Random();
+        for (int i=0;i<numFeatures;i++) {
+            double r = rand.nextDouble();
+
+            if (pBest[i] >= r) {
+                temp[i] = 1;
+            } else {
+                temp[i] = 0;
+            }
+        }
+        if(numOfOnes(temp) >= numOfOnes(z)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+    private int numOfOnes(int[] z) {
+
+        int counter = 0;
+        for (int i = 0; i < z.length; i++) {
+            if (z[i] == 1) {
+                counter++;
+            }
+
+        }
+        return counter;
+    }
+
+    private double fit(double[] pBest) throws Exception {
+        BPSOParticle temp = new BPSOParticle(numFeatures, bpsoFitCalculator);
+        int[] z=new int[numFeatures];
+        Random rand = new Random();
+        for (int i=0;i<numFeatures;i++) {
+            double r = rand.nextDouble();
+
+            if (pBest[i] >= r) {
+                z[i] = 1;
+            } else {
+                z[i] = 0;
+            }
+        }
+        String s = temp.toString(z);
+        return bpsoFitCalculator.remove(s);
     }
 }
