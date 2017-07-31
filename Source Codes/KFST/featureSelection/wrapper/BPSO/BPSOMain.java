@@ -4,6 +4,7 @@ import KFST.dataset.DatasetInfo;
 import KFST.featureSelection.wrapper.WrapperApproach;
 
 import java.io.IOException;
+import java.util.Random;
 
 /**
  * Created by sina on 7/30/2017.
@@ -67,7 +68,42 @@ public class BPSOMain  implements WrapperApproach {
 
     @Override
     public int[] getSelectedFeatureSubset() {
-        return new int[0];
+        return  toIntArray(swarm.gb);
+    }
+
+    private int[] toIntArray(double[] gb) {
+        int[] gbint = new int[numFeatures];
+        Random rand = new Random();
+        for (int i=0;i<numFeatures;i++) {
+            double r = rand.nextDouble();
+
+            if (gb[i] >= r) {
+                gbint[i] = 1;
+            } else {
+                gbint[i] = 0;
+            }
+        }
+        int numOfOnes = numOfOnes(gbint);
+        int temp[] = new int[numOfOnes];
+        int counter = 0;
+        for (int i = 0; i < gb.length; i++) {
+            if (gb[i] == 1) {
+                temp[counter] = i;
+                counter++;
+            }
+
+        }
+        return temp;
+    }
+    private int numOfOnes(int[] gb) {
+        int counter = 0;
+        for (int i = 0; i < gb.length; i++) {
+            if (gb[i] == 1) {
+                counter++;
+            }
+
+        }
+        return counter;
     }
 
     @Override
