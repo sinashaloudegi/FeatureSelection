@@ -50,14 +50,29 @@ public class BPSOSwarm {
         }
     }
 
-    public void update() throws Exception {
+    public boolean update() throws Exception {
+        boolean gBestImproved=false;
         for (int i = 0; i < numSwarmPopultion; i++) {
             updatePbest(particles[i]);
             if (particles[i].fitness > fit(gb)) {
                 gb = particles[i].x;
+                gBestImproved=true;
+            }
+            Random rand = new Random();
+            for (int j = 0; j < numFeatures; j++) {
+                double r = rand.nextDouble();
+                if(r < 0.5){
+                    particles[i].x[j]=N((particles[i].pBest[j] + gb[j])/2,Math.abs(particles[i].pBest[j] - gb[j]));
+                }else{
+                    particles[i].x[j]=particles[i].pBest[j];
+                }
             }
         }
+ return gBestImproved;
+    }
 
+    private double N(double mean, double variance){
+        return mean + new Random().nextGaussian() * variance;
     }
 
     private void updatePbest(BPSOParticle particle) throws Exception {
@@ -118,5 +133,29 @@ public class BPSOSwarm {
         }
         String s = temp.toString(z);
         return bpsoFitCalculator.remove(s);
+    }
+
+    public void uniformCombination(int num){
+        double Pc= 0.2 / (1 + Math.pow(Math.E,5- num));
+        Random rand = new Random();
+        for (int i = 0; i < numSwarmPopultion; i++) {
+            double r = rand.nextDouble();
+            if(Pc>r){
+                int k=i;
+                while (i!=k){
+                    k = (int) (rand.nextDouble()*(numSwarmPopultion-1));
+                }
+                 int Un = (int) (Pc * numFeatures);
+                if(Pc!=1){
+                    Un++;
+                }
+
+                for (int j=0;j<Un;j++){
+                   int l = (int) (rand.nextDouble()*(numFeatures-1));
+                    double r2 = rand.nextDouble();
+                    particles[i].x[l]= particles[k].pBest[l] + r2 ;
+                }
+            }
+        }
     }
 }

@@ -17,17 +17,26 @@ public class BPSOMain  implements WrapperApproach {
     String pathData;
     String pathTestData;
     BPSOFitCalculator bpsoFitCalculator;
+    int num=0;
 
     public BPSOMain(int numSelectedFeatures, int numItertion, int numSwarmPopulation) {
         this.numIterates = numItertion;
         this.numSwarmPopulation = numSwarmPopulation;
         this.numSelectedFeatures = numSelectedFeatures;
+
     }
 
     private void run() throws Exception {
         for (int i = 0; i < numIterates; i++) {
             swarm.calculateFitness();
-            swarm.update();
+
+            if(swarm.update()){
+                num=0;
+            }else {
+               num++;
+            }
+
+            swarm.uniformCombination(num);
 
         }
     }
