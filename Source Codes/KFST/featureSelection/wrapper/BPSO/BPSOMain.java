@@ -39,6 +39,7 @@ public class BPSOMain  implements WrapperApproach {
 
             swarm.uniformCombination(num);
 
+
         }
     }
 

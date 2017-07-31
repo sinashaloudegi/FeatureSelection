@@ -3537,7 +3537,6 @@ public class MainPanel extends JPanel {
                     times[i][j] = (endTime - startTime) / 1000.0;
 
                     int[] subset = method.getSelectedFeatureSubset();
-
                     System.out.println();
                     //shows new results in the panel of results
                     resPanel.setMessage(addTextToPanel(subset));
