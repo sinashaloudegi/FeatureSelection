@@ -29,7 +29,9 @@ public class BPSOMain  implements WrapperApproach {
     }
 
     private void init() throws IOException {
-
+        bpsoFitCalculator = new BPSOFitCalculator(pathData, pathTestData);
+        swarm = new BPSOSwarm(numFeatures, numSwarmPopulation, bpsoFitCalculator, numSelectedFeatures);
+        swarm.initialize();
     }
 
     @Override

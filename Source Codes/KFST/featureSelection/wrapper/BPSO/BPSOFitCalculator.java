@@ -81,7 +81,7 @@ public class BPSOFitCalculator {
 
     private double buildAndEval(Instances train, Instances test) throws Exception {
         IBk knn = new IBk();
-        knn.setKNN(3);
+        knn.setKNN(1);
         knn.buildClassifier(train);
         Evaluation eval = new Evaluation(train);
         eval.evaluateModel(knn, test);

@@ -1,5 +1,7 @@
 package KFST.featureSelection.wrapper.BPSO;
 
+import java.util.Random;
+
 /**
  * Created by sina on 7/30/2017.
  */
@@ -21,6 +23,23 @@ public class BPSOSwarm {
     }
 
     public void initialize() {
+        for (int i = 0; i < numSwarmPopultion; i++) {
+            particles[i] = new BPSOParticle(numFeatures, bpsoFitCalculator);
+
+            for (int j = 0; j < numFeatures; j++) {
+                Random rand = new Random();
+                double r = rand.nextDouble();
+                double r2 = rand.nextDouble();
+                particles[i].x[j] = r;
+                particles[i].pBest[j] = r;
+                if(r >= r2){
+                    particles[i].z[j] = 1;
+                }else {
+                    particles[i].z[j] = 0;
+                }
+
+            }
+        }
 
     }
 
