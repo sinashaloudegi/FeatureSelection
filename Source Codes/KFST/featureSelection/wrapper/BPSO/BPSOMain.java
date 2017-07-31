@@ -86,8 +86,8 @@ public class BPSOMain  implements WrapperApproach {
         int numOfOnes = numOfOnes(gbint);
         int temp[] = new int[numOfOnes];
         int counter = 0;
-        for (int i = 0; i < gb.length; i++) {
-            if (gb[i] == 1) {
+        for (int i = 0; i < gbint.length; i++) {
+            if (gbint[i] == 1) {
                 temp[counter] = i;
                 counter++;
             }
