@@ -19,11 +19,11 @@ public class PSOMain implements WrapperApproach {
     String pathTestData;
     PSOFitCalculator psoFitCalculator;
 
-        public PSOMain(int numSelectedFeatures, int numItertion, int numSwarmPopulation) {
-            this.numIterates = numItertion;
-            this.numSwarmPopulation = numSwarmPopulation;
-            this.numSelectedFeatures = numSelectedFeatures;
-        }
+    public PSOMain(int numSelectedFeatures, int numItertion, int numSwarmPopulation) {
+        this.numIterates = numItertion;
+        this.numSwarmPopulation = numSwarmPopulation;
+        this.numSelectedFeatures = numSelectedFeatures;
+    }
 
     private void run() throws Exception {
         for (int i = 0; i < numIterates; i++) {

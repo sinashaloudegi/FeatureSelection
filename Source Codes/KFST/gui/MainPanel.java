@@ -3435,7 +3435,7 @@ public class MainPanel extends JPanel {
 
     private void PSOPerform() throws Exception {
         if (numSwarmPopulation == 0) {
-            JOptionPane.showMessageDialog(null, "num Swarm Populationn in PSO Can't be 0", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "num PSO4_2Swarm Populationn in PSO Can't be 0", "Error", JOptionPane.ERROR_MESSAGE);
 
         } else {
 
@@ -3521,7 +3521,7 @@ public class MainPanel extends JPanel {
 
     private void BPSOPerform() throws Exception {
         if (numSwarmPopulation == 0) {
-            JOptionPane.showMessageDialog(null, "num Swarm Populationn in PSO Can't be 0", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "num PSO4_2Swarm Populationn in PSO Can't be 0", "Error", JOptionPane.ERROR_MESSAGE);
 
         } else {
 
@@ -3607,7 +3607,7 @@ public class MainPanel extends JPanel {
 
     private void HPSOLSPerform() throws Exception {
         if (numSwarmPopulation == 0) {
-            JOptionPane.showMessageDialog(null, "num Swarm Populationn in HPSO-LS Can't be 0", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "num PSO4_2Swarm Populationn in HPSO-LS Can't be 0", "Error", JOptionPane.ERROR_MESSAGE);
 
         } else {
 
@@ -3691,7 +3691,7 @@ public class MainPanel extends JPanel {
 
     private void PSO4_2Perform() throws Exception {
         if (numSwarmPopulation == 0) {
-            JOptionPane.showMessageDialog(null, "num Swarm Populationn in HPSO-LS Can't be 0", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "num PSO4_2Swarm Populationn in HPSO-LS Can't be 0", "Error", JOptionPane.ERROR_MESSAGE);
 
         } else {
 
@@ -3776,7 +3776,7 @@ public class MainPanel extends JPanel {
 
     private void GWOPerform() throws Exception {
         if (numSwarmPopulation == 0) {
-            JOptionPane.showMessageDialog(null, "num Swarm Populationn in HPSO-LS Can't be 0", "Error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, "num PSO4_2Swarm Populationn in HPSO-LS Can't be 0", "Error", JOptionPane.ERROR_MESSAGE);
 
         } else {
 

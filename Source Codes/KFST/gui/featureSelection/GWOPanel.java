@@ -44,7 +44,7 @@ public class GWOPanel  extends JDialog
         panel_about.add(lbl_about);
 
 
-        lbl_numSwarmPopulation = new JLabel("Swarm Size:");
+        lbl_numSwarmPopulation = new JLabel("PSO4_2Swarm Size:");
         lbl_numSwarmPopulation.setBounds(50, 135, 170, 22);
         txt_numSwarmPopulation = new JTextField(String.valueOf(defnumSwarmPopulation));
         txt_numSwarmPopulation.setBounds(170, 135, 120, 21);
@@ -299,7 +299,7 @@ public class GWOPanel  extends JDialog
     /**
      * sets the last values of the HPSOLS parameters entered by user
      *
-     * @param numSwarmPopulation the initial Swarm size
+     * @param numSwarmPopulation the initial PSO4_2Swarm size
      * @param numIterates  the  number of iterations
      */
     public void setUserValue(int numSwarmPopulation, int numIterates) {
