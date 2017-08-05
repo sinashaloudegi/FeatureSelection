@@ -38,9 +38,9 @@ public class ForwardFeatureSelection {
         }
         Random rand=new Random();
         while (counter!=numFeatures){
-            System.out.println("c: "+counter);
+
           int r=(int) (rand.nextDouble()*(numFeatures));
-            System.out.println("r: "+r);
+
             if(r==numFeatures){
                 r=numFeatures-1;
             }

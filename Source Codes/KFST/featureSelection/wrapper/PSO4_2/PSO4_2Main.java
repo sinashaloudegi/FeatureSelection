@@ -4,6 +4,7 @@ import KFST.dataset.DatasetInfo;
 import KFST.featureSelection.wrapper.WrapperApproach;
 
 import java.io.IOException;
+import java.util.Random;
 
 /**
  * Created by sina on 8/2/2017.
@@ -63,8 +64,40 @@ public class PSO4_2Main implements WrapperApproach {
         return toIntArray(swarm.gb);
     }
 
+    private int[] refine(int[] x) {
+        int ones = numOfOnes(x);
+
+        if (ones > numSelectedFeatures) {
+
+
+            int temp = ones;
+            while (temp != numSelectedFeatures) {
+                Random rand = new Random();
+                int rnd = rand.nextInt(numFeatures);
+                if (x[rnd] == 1) {
+                    x[rnd] = 0;
+                    temp--;
+                }
+
+            }
+
+        } else if (ones < numSelectedFeatures) {
+            int temp = numSelectedFeatures;
+            while (temp != ones) {
+                Random rand = new Random();
+                int rnd = rand.nextInt(numFeatures);
+                if (x[rnd] == 0) {
+                    x[rnd] = 1;
+                    temp--;
+                }
+
+            }
+        }
+        return x;
+    }
 
     private int[] toIntArray(int[] gb) {
+        refine(gb);
         int numOfOnes = numOfOnes(gb);
         int temp[] = new int[numOfOnes];
         int counter = 0;
