@@ -56,17 +56,17 @@ public class PSO4_2Swarm {
     private int[] mixedInit(int i) {
 
         int threshold = (int) (0.6 * numSwarmPopultion);
-        int[] x = new int[numFeatures];
-        BackwardFeatureSelection backwardFeatureSelection = new BackwardFeatureSelection(pso42FitCalculator);
-        ForwardFeatureSelection forwardFeatureSelection = new ForwardFeatureSelection(pso42FitCalculator);
+        int[] selectedFeatures = new int[numFeatures];
+        BackwardFeatureSelection backwardFeatureSelection = new BackwardFeatureSelection(pso42FitCalculator,numFeatures);
+        ForwardFeatureSelection forwardFeatureSelection = new ForwardFeatureSelection(pso42FitCalculator,numFeatures);
         if (i < threshold) {
             //small
-            x = forwardFeatureSelection.getSelectedFeatures();
+            selectedFeatures = forwardFeatureSelection.getSelectedFeatures();
         } else {
             //large
-            x = backwardFeatureSelection.getSelectedFeatures();
+            selectedFeatures = backwardFeatureSelection.getSelectedFeatures();
         }
-        return x;
+        return selectedFeatures;
     }
 
     private int S(double r) {

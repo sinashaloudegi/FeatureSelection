@@ -8,13 +8,48 @@ import KFST.featureSelection.wrapper.PSO4_2.PSO4_2FitCalculator;
 public class ForwardFeatureSelection {
     int[] selectedFeatures;
     PSO4_2FitCalculator pso42FitCalculator;
+    int numFeatures;
 
-    public ForwardFeatureSelection(PSO4_2FitCalculator pso42FitCalculator) {
+    public ForwardFeatureSelection(PSO4_2FitCalculator pso42FitCalculator, int numFeatures) {
         this.pso42FitCalculator = pso42FitCalculator;
+        this.numFeatures = numFeatures;
     }
 
+    private boolean compare(int[] current, int index) throws Exception {
+        int[] newSubset = current;
+        current[index] = 1;
+        if (fit(current) < fit(newSubset)) {
+            return true;
+        } else {
+            return false;
+        }
+
+    }
+
+    public double fit(int[] x) throws Exception {
+        String s = toString(x);
+
+        return pso42FitCalculator.remove(s);
+
+
+    }
+
+    public String toString(int[] particle) {
+        String s = "";
+        for (int i = 0; i < particle.length; i++) {
+            if (particle[i] == 0) {
+                s += (i + 1) + ",";
+            }
+        }
+        if (s.length() != 0) {
+            s = s.substring(0, s.length() - 1);
+        }
+        return s;
+    }
 
     public int[] getSelectedFeatures() {
         return selectedFeatures;
     }
+
+
 }
