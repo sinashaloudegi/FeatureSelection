@@ -2,6 +2,8 @@ package KFST.featureSelection.wrapper.SequentialFeaatureSelection;
 
 import KFST.featureSelection.wrapper.PSO4_2.PSO4_2FitCalculator;
 
+import java.util.Random;
+
 /**
  * Created by sina on 8/5/2017.
  */
@@ -17,13 +19,33 @@ public class BackwardFeatureSelection {
 
     private int[] selectBetterSubset(int[] current, int index) throws Exception {
         int[] newSubset = current;
-        newSubset[index] = 1;
+        newSubset[index] = 0;
         if (fit(current) < fit(newSubset)) {
             return newSubset;
         } else {
             return current;
         }
 
+    }
+
+    public void selectSubset() throws Exception {
+        int counter=0;
+        selectedFeatures= new int[numFeatures];
+        int[] check=new int[numFeatures];
+        for (int i=0;i<check.length;i++){
+            check[i]=0;
+            selectedFeatures[i]=1;
+        }
+        Random rand=new Random();
+        while (counter!=numFeatures){
+            int r=(int) (rand.nextDouble()*(numFeatures-1));
+            if(check[r]==0){
+                counter++;
+                check[r]=1;
+                selectedFeatures=selectBetterSubset(selectedFeatures,r);
+
+            }
+        }
     }
 
     public double fit(int[] x) throws Exception {
