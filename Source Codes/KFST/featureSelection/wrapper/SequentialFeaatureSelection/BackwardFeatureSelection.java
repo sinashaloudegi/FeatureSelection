@@ -15,13 +15,13 @@ public class BackwardFeatureSelection {
         this.numFeatures = numFeatures;
     }
 
-    private boolean compare(int[] current, int index) throws Exception {
+    private int[] selectBetterSubset(int[] current, int index) throws Exception {
         int[] newSubset = current;
-        current[index] = 1;
+        newSubset[index] = 1;
         if (fit(current) < fit(newSubset)) {
-            return true;
+            return newSubset;
         } else {
-            return false;
+            return current;
         }
 
     }
