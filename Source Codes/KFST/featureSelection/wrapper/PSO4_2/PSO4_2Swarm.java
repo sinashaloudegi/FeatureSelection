@@ -88,7 +88,7 @@ public class PSO4_2Swarm {
             } else if (fit(particles[i].pBest) == fit(gb) && numOfOnes(particles[i].pBest) < numOfOnes(gb)) {
                 gb = particles[i].pBest;
 
-            }
+            } 
             for (int j = 0; j < numFeatures; j++) {
                 r1 = rnd1.nextDouble();
                 r2 = rnd2.nextDouble();
