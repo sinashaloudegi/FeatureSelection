@@ -70,6 +70,11 @@ public class ForwardFeatureSelection {
     }
 
     public int[] getSelectedFeatures() {
+        try {
+            selectSubset();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         return selectedFeatures;
     }
 

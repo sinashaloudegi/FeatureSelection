@@ -60,10 +60,9 @@ public class PSO4_2Swarm {
         BackwardFeatureSelection backwardFeatureSelection = new BackwardFeatureSelection(pso42FitCalculator,numFeatures);
         ForwardFeatureSelection forwardFeatureSelection = new ForwardFeatureSelection(pso42FitCalculator,numFeatures);
         if (i < threshold) {
-            //small
             selectedFeatures = forwardFeatureSelection.getSelectedFeatures();
         } else {
-            //large
+
             selectedFeatures = backwardFeatureSelection.getSelectedFeatures();
         }
         return selectedFeatures;
