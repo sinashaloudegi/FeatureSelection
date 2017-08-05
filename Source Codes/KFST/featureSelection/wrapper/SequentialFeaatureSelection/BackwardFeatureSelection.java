@@ -38,7 +38,10 @@ public class BackwardFeatureSelection {
         }
         Random rand=new Random();
         while (counter!=numFeatures){
-            int r=(int) (rand.nextDouble()*(numFeatures-1));
+            int r=(int) (rand.nextDouble()*(numFeatures));
+            if(r==numFeatures){
+                r=numFeatures-1;
+            }
             if(check[r]==0){
                 counter++;
                 check[r]=1;
