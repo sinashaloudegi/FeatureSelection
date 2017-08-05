@@ -16,6 +16,8 @@ public class PSO4_2Swarm {
     int numFeatures;
     PSO4_2FitCalculator pso42FitCalculator;
     int numSelectedFeatures;
+    PSO4_2FitCalculator psoFitCalculator;
+
 
     public PSO4_2Swarm(int numFeatures, int numSwarmPopultion, PSO4_2FitCalculator pso42FitCalculator, int numSelectedFeatures) {
         this.numSwarmPopultion = numSwarmPopultion;
@@ -55,8 +57,8 @@ public class PSO4_2Swarm {
 
         int threshold = (int) (0.6 * numSwarmPopultion);
         int[] x = new int[numFeatures];
-        BackwardFeatureSelection backwardFeatureSelection = new BackwardFeatureSelection();
-        ForwardFeatureSelection forwardFeatureSelection = new ForwardFeatureSelection();
+        BackwardFeatureSelection backwardFeatureSelection = new BackwardFeatureSelection(pso42FitCalculator);
+        ForwardFeatureSelection forwardFeatureSelection = new ForwardFeatureSelection(pso42FitCalculator);
         if (i < threshold) {
             //small
             x = forwardFeatureSelection.getSelectedFeatures();
