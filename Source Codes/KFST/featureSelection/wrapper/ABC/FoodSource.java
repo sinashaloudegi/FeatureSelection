@@ -3,16 +3,32 @@ package KFST.featureSelection.wrapper.ABC;
 /**
  * Created by sina on 8/7/2017.
  */
-public class ABCFoodSource {
+public class FoodSource {
     int[] x;
     int limit;
     double fitness;
     int p;
     ABCFitCalculator abcFitCalculator;
+    int numFeatures;
 
     public void calculateFitness() throws Exception {
         String s = toString(x);
         this.fitness = abcFitCalculator.remove(s);
+    }
+
+    public void FoodSource(int numFeatures){
+        this.numFeatures=numFeatures;
+    }
+
+    public void initialize(int i){
+        x=new int[numFeatures];
+        for (int j=0;i<numFeatures;j++){
+            if(i==j){
+              x[j]=1;
+            }else{
+              x[j]=0;
+            }
+        }
     }
 
     public int[] getX() {

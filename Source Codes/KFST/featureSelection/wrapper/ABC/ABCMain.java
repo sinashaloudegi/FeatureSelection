@@ -3,6 +3,9 @@ package KFST.featureSelection.wrapper.ABC;
 import KFST.dataset.DatasetInfo;
 import KFST.featureSelection.wrapper.WrapperApproach;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by sina on 8/7/2017.
  */
@@ -17,12 +20,22 @@ public class ABCMain implements WrapperApproach {
     int numIteration;
     String pathData;
     String pathTestData;
+    List<FoodSource> foodSources ;
 
     public ABCMain(int numSelectedFeatures, int maxLimit, double MR, int numIteration) {
         this.maxLimit = maxLimit;
         this.MR = MR;
         this.numIteration = numIteration;
         this.numSelectedFeatures = numSelectedFeatures;
+    }
+    private void init(){
+        foodSources=new ArrayList<FoodSource>();
+        for (int i=0;i<numFeatures;i++){
+            FoodSource x=new FoodSource();
+            x.initialize(i);
+            foodSources.add(x);
+
+        }
     }
 
     @Override
@@ -40,7 +53,8 @@ public class ABCMain implements WrapperApproach {
 
     @Override
     public void evaluateFeatures() throws Exception {
-        //TODO abc algorihm
+
+       init();
     }
 
     @Override
