@@ -38,16 +38,16 @@ public class BPSOParticle {
     }
 
 
-    public String toString(int[] particle) {
-        String s = "";
-        for (int i = 0; i < particle.length; i++) {
-            if (particle[i] == 0) {
-                s += (i + 1) + ",";
-            }
+public String toString(int[] particle) {
+    String s = "";
+    for (int i = 0; i < particle.length; i++) {
+        if (particle[i] == 0) {
+            s += (i + 1) + ",";
         }
-        if (s.length() != 0) {
-            s = s.substring(0, s.length() - 1);
-        }
-        return s;
     }
+    if (s.length() != 0) {
+        s = s.substring(0, s.length() - 1);
+    }
+    return s;
+}
 }

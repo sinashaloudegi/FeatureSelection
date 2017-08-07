@@ -30,6 +30,7 @@ import KFST.featureSelection.filter.supervised.*;
 import KFST.featureSelection.filter.supervised.LaplacianScore;
 import KFST.featureSelection.filter.supervised.RRFS;
 import KFST.featureSelection.filter.unsupervised.*;
+import KFST.featureSelection.wrapper.ABC.ABCMain;
 import KFST.featureSelection.wrapper.BPSO.BPSOMain;
 import KFST.featureSelection.wrapper.GWO.GWOMain;
 import KFST.featureSelection.wrapper.GeneticAlgorithm.GeneticAlgorithmMain;
@@ -122,6 +123,10 @@ public class MainPanel extends JPanel {
     private int numPopulation, numGeneration; //GA_based methods
 
     private int numSwarmPopulation, numIterates; //PSO_based methods
+
+    private int numIterations, maxLimit; //ABC_based methods
+    private double MR;  //ABC_based methods
+
 
     DatasetInfo data;
     WekaFileFormat arff;
@@ -321,6 +326,7 @@ public class MainPanel extends JPanel {
                 "HPSO-LS",
                 "BPSO",
                 "PSO4_2",
+                "ABC",
                 "GWO"}));
         cb_wrapper.setBounds(90, 35, 280, 22);
         cb_wrapper.addItemListener(eh);
@@ -1010,7 +1016,7 @@ public class MainPanel extends JPanel {
             numIterates = gwoPanel.getNumIterates();
         } else if (cb_wrapper.getSelectedItem().equals("BPSO")) {
             BPSOPanel bpsoPanel = new BPSOPanel();
-            Dialog psoDialog = new Dialog(bpsoPanel);
+            Dialog bpsoDialog = new Dialog(bpsoPanel);
             bpsoPanel.setUserValue(numSwarmPopulation, numIterates);
             bpsoPanel.setVisible(true);
             numSwarmPopulation = bpsoPanel.getNumSwarmPopulation();
@@ -1022,6 +1028,14 @@ public class MainPanel extends JPanel {
             pso4_2Panel.setVisible(true);
             numSwarmPopulation = pso4_2Panel.getNumSwarmPopulation();
             numIterates = pso4_2Panel.getNumIterates();
+        } else if (cb_wrapper.getSelectedItem().equals("ABC")) {
+            ABCPanel abcPanel = new ABCPanel();
+            Dialog abcDialog = new Dialog(abcPanel);
+            abcPanel.setUserValue(maxLimit, numIterations, MR);
+            abcPanel.setVisible(true);
+            maxLimit = abcPanel.getMaxLimit();
+            numIterations = abcPanel.getNumIteration();
+            MR = abcPanel.getMR();
         }
         System.out.println("More option Wrapper");
     }
@@ -1431,6 +1445,14 @@ public class MainPanel extends JPanel {
                 pso4_2Panel.setDefaultValue();
                 numSwarmPopulation = pso4_2Panel.getNumSwarmPopulation();
                 numIterates = pso4_2Panel.getNumIterates();
+
+                btn_moreOpWrapper.setEnabled(true);
+            } else if (cb_wrapper.getSelectedItem().equals("ABC")) {
+                ABCPanel abcPanel = new ABCPanel();
+                abcPanel.setDefaultValue();
+                numIterations = abcPanel.getNumIteration();
+                maxLimit = abcPanel.getMaxLimit();
+                MR = abcPanel.getMR();
 
                 btn_moreOpWrapper.setEnabled(true);
             } else {
@@ -3254,93 +3276,89 @@ public class MainPanel extends JPanel {
      * @see KFST.featureSelection.wrapper.GeneticAlgorithm
      */
     private void geneticAlgorithmPerform() throws Exception {
-        if (numPopulation == 0) {
-            JOptionPane.showMessageDialog(null, "Number Of Population in Genetic Algorithm Can't be 0", "Error", JOptionPane.ERROR_MESSAGE);
 
-        } else {
-
-            progressValue = 1;
-            repaint();
-            ResultPanel resPanel = new ResultPanel(pathProject);
-            //save initial information of the dataset
-            resPanel.setMessage(addTextToPanel());
-            int numRuns = Integer.parseInt(cb_start.getSelectedItem().toString());
-            accuracies = new double[numRuns][numSelectedSubsets.length];
-            times = new double[numRuns][numSelectedSubsets.length];
-            String[][] Results = new String[numRuns][numSelectedSubsets.length];
-            double totalValuesProgress = numRuns * numSelectedSubsets.length;
-            for (int i = 0; i < numRuns; i++) {
-                resPanel.setMessage("  Iteration (" + (i + 1) + "):\n");
-                for (int j = 0; j < numSelectedSubsets.length; j++) {
-                    resPanel.setMessage("    " + numSelectedSubsets[j] + " feature selected:\n");
-                    long startTime = System.currentTimeMillis();
+        progressValue = 1;
+        repaint();
+        ResultPanel resPanel = new ResultPanel(pathProject);
+        //save initial information of the dataset
+        resPanel.setMessage(addTextToPanel());
+        int numRuns = Integer.parseInt(cb_start.getSelectedItem().toString());
+        accuracies = new double[numRuns][numSelectedSubsets.length];
+        times = new double[numRuns][numSelectedSubsets.length];
+        String[][] Results = new String[numRuns][numSelectedSubsets.length];
+        double totalValuesProgress = numRuns * numSelectedSubsets.length;
+        for (int i = 0; i < numRuns; i++) {
+            resPanel.setMessage("  Iteration (" + (i + 1) + "):\n");
+            for (int j = 0; j < numSelectedSubsets.length; j++) {
+                resPanel.setMessage("    " + numSelectedSubsets[j] + " feature selected:\n");
+                long startTime = System.currentTimeMillis();
 
 
-                    GeneticAlgorithmMain method = new GeneticAlgorithmMain(numSelectedSubsets[j], numPopulation, numGeneration, pCrossover, pMutation, cb_classifier.getSelectedItem().toString());
+                GeneticAlgorithmMain method = new GeneticAlgorithmMain(numSelectedSubsets[j], numPopulation, numGeneration, pCrossover, pMutation, cb_classifier.getSelectedItem().toString());
                   /*  System.out.println("GeneticAlgorithm...   numPopulation = " + numPopulation
                             + "   numGeneration = " + numGeneration
                             + "   pCrossover = " + pCrossover
                             + "   pMutation = " + pMutation);*/
-                    method.loadDataSet(data);
+                method.loadDataSet(data);
 
-                    method.evaluateFeatures();
-
-
-                    long endTime = System.currentTimeMillis();
-                    times[i][j] = (endTime - startTime) / 1000.0;
-
-                    int[] subset = method.getSelectedFeatureSubset();
+                method.evaluateFeatures();
 
 
-                    //shows new results in the panel of results
-                    resPanel.setMessage(addTextToPanel(subset));
+                long endTime = System.currentTimeMillis();
+                times[i][j] = (endTime - startTime) / 1000.0;
 
-                    Results[i][j] = data.createFeatNames(subset);
+                int[] subset = method.getSelectedFeatureSubset();
 
-                    String nameTrainDataCSV = pathDataCSV + "trainSet[" + (i + 1) + "-" + numSelectedSubsets[j] + "].csv";
-                    String nameTrainDataARFF = pathDataARFF + "trainSet[" + (i + 1) + "-" + numSelectedSubsets[j] + "].arff";
-                    String nameTestDataCSV = pathDataCSV + "testSet[" + (i + 1) + "-" + numSelectedSubsets[j] + "].csv";
-                    String nameTestDataARFF = pathDataARFF + "testSet[" + (i + 1) + "-" + numSelectedSubsets[j] + "].arff";
 
-                    data.createCSVFile(data.getTrainSet(), subset, nameTrainDataCSV);
+                //shows new results in the panel of results
+                resPanel.setMessage(addTextToPanel(subset));
 
-                    data.createCSVFile(data.getTestSet(), subset, nameTestDataCSV);
+                Results[i][j] = data.createFeatNames(subset);
 
-                    arff.convertCSVtoARFF(nameTrainDataCSV, nameTrainDataARFF, pathProject, subset.length, data);
-                    arff.convertCSVtoARFF(nameTestDataCSV, nameTestDataARFF, pathProject, subset.length, data);
-                    if (cb_classifier.getSelectedItem().equals("Support Vector Machine (SVM)")) {
-                        accuracies[i][j] = WekaClassifier.SVM(nameTrainDataARFF, nameTestDataARFF, typeKernel);
-                    } else if (cb_classifier.getSelectedItem().equals("Naive Bayes (NB)")) {
-                        accuracies[i][j] = WekaClassifier.naiveBayes(nameTrainDataARFF, nameTestDataARFF);
-                    } else if (cb_classifier.getSelectedItem().equals("Decision Tree (C4.5)")) {
-                        accuracies[i][j] = WekaClassifier.dTree(nameTrainDataARFF, nameTestDataARFF, confidence, minNum);
-                    }
+                String nameTrainDataCSV = pathDataCSV + "trainSet[" + (i + 1) + "-" + numSelectedSubsets[j] + "].csv";
+                String nameTrainDataARFF = pathDataARFF + "trainSet[" + (i + 1) + "-" + numSelectedSubsets[j] + "].arff";
+                String nameTestDataCSV = pathDataCSV + "testSet[" + (i + 1) + "-" + numSelectedSubsets[j] + "].csv";
+                String nameTestDataARFF = pathDataARFF + "testSet[" + (i + 1) + "-" + numSelectedSubsets[j] + "].arff";
 
-                    //updates the value of progress bar
-                    progressValue = (int) ((upProgValue(numSelectedSubsets.length, i, j) / totalValuesProgress) * 100);
-                    repaint();
+                data.createCSVFile(data.getTrainSet(), subset, nameTrainDataCSV);
+
+                data.createCSVFile(data.getTestSet(), subset, nameTestDataCSV);
+
+                arff.convertCSVtoARFF(nameTrainDataCSV, nameTrainDataARFF, pathProject, subset.length, data);
+                arff.convertCSVtoARFF(nameTestDataCSV, nameTestDataARFF, pathProject, subset.length, data);
+                if (cb_classifier.getSelectedItem().equals("Support Vector Machine (SVM)")) {
+                    accuracies[i][j] = WekaClassifier.SVM(nameTrainDataARFF, nameTestDataARFF, typeKernel);
+                } else if (cb_classifier.getSelectedItem().equals("Naive Bayes (NB)")) {
+                    accuracies[i][j] = WekaClassifier.naiveBayes(nameTrainDataARFF, nameTestDataARFF);
+                } else if (cb_classifier.getSelectedItem().equals("Decision Tree (C4.5)")) {
+                    accuracies[i][j] = WekaClassifier.dTree(nameTrainDataARFF, nameTestDataARFF, confidence, minNum);
                 }
-                if (rd_randSet.isSelected()) {
-                    data.preProcessing(txt_inputdst.getText(), txt_classLbl.getText());
-                }
+
+                //updates the value of progress bar
+                progressValue = (int) ((upProgValue(numSelectedSubsets.length, i, j) / totalValuesProgress) * 100);
+                repaint();
             }
-            createFeatureFiles(Results, pathProject);
-            errorRates = MathFunc.computeErrorRate(accuracies);
-            averageAccuracies = MathFunc.computeAverageArray(accuracies);
-            averageErrorRates = MathFunc.computeErrorRate(averageAccuracies);
-            averageTimes = MathFunc.computeAverageArray(times);
-
-            //show the result values in the panel of result
-            resPanel.setMessage(addTextToPanel(Results, "Subsets of selected features in each iteration"));
-            resPanel.setMessage(addTextToPanel(accuracies, "Classification accuracies"));
-            resPanel.setMessage(addTextToPanel(averageAccuracies, "Average classification accuracies", true));
-            resPanel.setMessage(addTextToPanel(times, "Execution times"));
-            resPanel.setMessage(addTextToPanel(averageTimes, "Average execution times", true));
-            resPanel.setEnabledButton();
-            setEnabledItem();
-
+            if (rd_randSet.isSelected()) {
+                data.preProcessing(txt_inputdst.getText(), txt_classLbl.getText());
+            }
         }
+        createFeatureFiles(Results, pathProject);
+        errorRates = MathFunc.computeErrorRate(accuracies);
+        averageAccuracies = MathFunc.computeAverageArray(accuracies);
+        averageErrorRates = MathFunc.computeErrorRate(averageAccuracies);
+        averageTimes = MathFunc.computeAverageArray(times);
+
+        //show the result values in the panel of result
+        resPanel.setMessage(addTextToPanel(Results, "Subsets of selected features in each iteration"));
+        resPanel.setMessage(addTextToPanel(accuracies, "Classification accuracies"));
+        resPanel.setMessage(addTextToPanel(averageAccuracies, "Average classification accuracies", true));
+        resPanel.setMessage(addTextToPanel(times, "Execution times"));
+        resPanel.setMessage(addTextToPanel(averageTimes, "Average execution times", true));
+        resPanel.setEnabledButton();
+        setEnabledItem();
+
     }
+
 
     private void HGAFSPerform() throws Exception {
         if (numPopulation == 0) {
@@ -3860,6 +3878,87 @@ public class MainPanel extends JPanel {
         }
     }
 
+    private void ABCPerform() throws Exception {
+
+        progressValue = 1;
+        repaint();
+        ResultPanel resPanel = new ResultPanel(pathProject);
+        //save initial information of the dataset
+        resPanel.setMessage(addTextToPanel());
+        int numRuns = Integer.parseInt(cb_start.getSelectedItem().toString());
+        accuracies = new double[numRuns][numSelectedSubsets.length];
+        times = new double[numRuns][numSelectedSubsets.length];
+        String[][] Results = new String[numRuns][numSelectedSubsets.length];
+        double totalValuesProgress = numRuns * numSelectedSubsets.length;
+        for (int i = 0; i < numRuns; i++) {
+            resPanel.setMessage("  Iteration (" + (i + 1) + "):\n");
+            for (int j = 0; j < numSelectedSubsets.length; j++) {
+                resPanel.setMessage("    " + numSelectedSubsets[j] + " feature selected:\n");
+                long startTime = System.currentTimeMillis();
+
+
+                ABCMain method = new ABCMain(numSelectedSubsets[j], maxLimit, MR, numIterations);
+
+                method.loadDataSet(data);
+
+                method.evaluateFeatures();
+
+
+                long endTime = System.currentTimeMillis();
+                times[i][j] = (endTime - startTime) / 1000.0;
+
+                int[] subset = method.getSelectedFeatureSubset();
+
+
+                //shows new results in the panel of results
+                resPanel.setMessage(addTextToPanel(subset));
+
+                Results[i][j] = data.createFeatNames(subset);
+
+                String nameTrainDataCSV = pathDataCSV + "trainSet[" + (i + 1) + "-" + numSelectedSubsets[j] + "].csv";
+                String nameTrainDataARFF = pathDataARFF + "trainSet[" + (i + 1) + "-" + numSelectedSubsets[j] + "].arff";
+                String nameTestDataCSV = pathDataCSV + "testSet[" + (i + 1) + "-" + numSelectedSubsets[j] + "].csv";
+                String nameTestDataARFF = pathDataARFF + "testSet[" + (i + 1) + "-" + numSelectedSubsets[j] + "].arff";
+
+                data.createCSVFile(data.getTrainSet(), subset, nameTrainDataCSV);
+
+                data.createCSVFile(data.getTestSet(), subset, nameTestDataCSV);
+
+                arff.convertCSVtoARFF(nameTrainDataCSV, nameTrainDataARFF, pathProject, subset.length, data);
+                arff.convertCSVtoARFF(nameTestDataCSV, nameTestDataARFF, pathProject, subset.length, data);
+                if (cb_classifier.getSelectedItem().equals("Support Vector Machine (SVM)")) {
+                    accuracies[i][j] = WekaClassifier.SVM(nameTrainDataARFF, nameTestDataARFF, typeKernel);
+                } else if (cb_classifier.getSelectedItem().equals("Naive Bayes (NB)")) {
+                    accuracies[i][j] = WekaClassifier.naiveBayes(nameTrainDataARFF, nameTestDataARFF);
+                } else if (cb_classifier.getSelectedItem().equals("Decision Tree (C4.5)")) {
+                    accuracies[i][j] = WekaClassifier.dTree(nameTrainDataARFF, nameTestDataARFF, confidence, minNum);
+                }
+
+                //updates the value of progress bar
+                progressValue = (int) ((upProgValue(numSelectedSubsets.length, i, j) / totalValuesProgress) * 100);
+                repaint();
+            }
+            if (rd_randSet.isSelected()) {
+                data.preProcessing(txt_inputdst.getText(), txt_classLbl.getText());
+            }
+        }
+        createFeatureFiles(Results, pathProject);
+        errorRates = MathFunc.computeErrorRate(accuracies);
+        averageAccuracies = MathFunc.computeAverageArray(accuracies);
+        averageErrorRates = MathFunc.computeErrorRate(averageAccuracies);
+        averageTimes = MathFunc.computeAverageArray(times);
+
+        //show the result values in the panel of result
+        resPanel.setMessage(addTextToPanel(Results, "Subsets of selected features in each iteration"));
+        resPanel.setMessage(addTextToPanel(accuracies, "Classification accuracies"));
+        resPanel.setMessage(addTextToPanel(averageAccuracies, "Average classification accuracies", true));
+        resPanel.setMessage(addTextToPanel(times, "Execution times"));
+        resPanel.setMessage(addTextToPanel(averageTimes, "Average execution times", true));
+        resPanel.setEnabledButton();
+        setEnabledItem();
+
+    }
+
     /**
      * enables the status of diagrams menu item
      */
@@ -4240,6 +4339,13 @@ public class MainPanel extends JPanel {
                 } else if (cb_wrapper.getSelectedItem().equals("PSO4_2")) {
                     try {
                         PSO4_2Perform();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+
+                } else if (cb_wrapper.getSelectedItem().equals("ABC")) {
+                    try {
+                        ABCPerform();
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
