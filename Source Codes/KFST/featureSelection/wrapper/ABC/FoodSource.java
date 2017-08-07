@@ -7,7 +7,7 @@ public class FoodSource {
     int[] x;
     int limit;
     double fitness;
-    int p;
+    double p;
     ABCFitCalculator abcFitCalculator;
     int numFeatures;
 
@@ -56,11 +56,11 @@ public class FoodSource {
         this.fitness = fitness;
     }
 
-    public int getP() {
+    public double getP() {
         return p;
     }
 
-    public void setP(int p) {
+    public void setP(double p) {
         this.p = p;
     }
 

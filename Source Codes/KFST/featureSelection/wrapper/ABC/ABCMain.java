@@ -65,13 +65,60 @@ public class ABCMain implements WrapperApproach {
                 foodSources.get(i).limit++;
                 if(foodSources.get(i).getLimit()>maxLimit){
                     abandoned.add(foodSources.get(i));
+                    foodSources.remove(i);
                     i--;
                     listSize--;
-                    foodSources.remove(i);
                 }
             }
 
         }
+    }
+
+    private boolean employed(FoodSource foodSource) throws Exception {
+        boolean checkRemove = false;
+        FoodSource neighbor = new FoodSource(numFeatures);
+        neighbor.initialize(-1);
+        for (int j = 0; j < numFeatures; j++) {
+            Random r = new Random();
+            double rand = r.nextDouble();
+            if (rand < MR) {
+                neighbor.x[j] = 1;
+            } else {
+                neighbor.x[j] = foodSource.x[j];
+            }
+        }
+        neighbor.calculateFitness();
+        if (neighbor.getFitness() > foodSource.getFitness()) {
+            foodSources.add(neighbor);
+        } else {
+            foodSource.limit++;
+            if (foodSource.getLimit() > maxLimit) {
+                abandoned.add(foodSource);
+                checkRemove = true;
+            }
+        }
+        return checkRemove;
+    }
+
+    private void onlooker() {
+        double sumFitness = 0;
+        for (int i = 0; i < foodSources.size(); i++) {
+            sumFitness += foodSources.get(i).getFitness();
+        }
+        for (int i = 0; i < foodSources.size(); i++) {
+            foodSources.get(i).setP(foodSources.get(i).getFitness() / sumFitness);
+        }
+
+        double[] roulette = new double[foodSources.size()];
+        for (int i = 0; i < foodSources.size(); i++) {
+            if (i == 0) {
+                roulette[i] = (foodSources.get(i).getP());
+            } else {
+                roulette[i] = (foodSources.get(i).getP()) + roulette[i - 1];
+            }
+        }
+
+
     }
     @Override
     public void loadDataSet(DatasetInfo ob) {
@@ -92,6 +139,7 @@ public class ABCMain implements WrapperApproach {
         init();
         for (int i=0;i<numIteration;i++){
             employed();
+            onlooker();
 
         }
     }
