@@ -18,6 +18,7 @@ public class FoodSource {
 
     public  FoodSource(int numFeatures){
         this.numFeatures=numFeatures;
+        limit=0;
     }
 
     public void initialize(int i){

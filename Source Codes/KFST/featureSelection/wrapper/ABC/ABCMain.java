@@ -5,6 +5,7 @@ import KFST.featureSelection.wrapper.WrapperApproach;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by sina on 8/7/2017.
@@ -21,6 +22,7 @@ public class ABCMain implements WrapperApproach {
     String pathData;
     String pathTestData;
     List<FoodSource> foodSources;
+    List<FoodSource> abandoned;
 
     public ABCMain(int numSelectedFeatures, int maxLimit, double MR, int numIteration) {
         this.maxLimit = maxLimit;
@@ -31,6 +33,7 @@ public class ABCMain implements WrapperApproach {
 
     private void init() throws Exception {
         foodSources = new ArrayList<FoodSource>();
+        abandoned = new ArrayList<FoodSource>();
         for (int i = 0; i < numFeatures; i++) {
             FoodSource foodSource = new FoodSource(numFeatures);
             foodSource.initialize(i);
@@ -40,6 +43,36 @@ public class ABCMain implements WrapperApproach {
         }
     }
 
+    private void employed() throws Exception {
+
+        int listSize=foodSources.size();
+        for (int i=0;i<listSize;i++){
+            FoodSource neighbor = new FoodSource(numFeatures);
+            neighbor.initialize(-1);
+            for (int j=0;j<numFeatures;j++){
+                Random r=new Random();
+                double rand=r.nextDouble();
+                if(rand < MR){
+                    neighbor.x[j]=1;
+                }else{
+                    neighbor.x[j]=foodSources.get(i).x[j];
+                }
+            }
+            neighbor.calculateFitness();
+            if(neighbor.getFitness()>foodSources.get(i).getFitness()){
+                foodSources.add(neighbor);
+            }else{
+                foodSources.get(i).limit++;
+                if(foodSources.get(i).getLimit()>maxLimit){
+                    abandoned.add(foodSources.get(i));
+                    i--;
+                    listSize--;
+                    foodSources.remove(i);
+                }
+            }
+
+        }
+    }
     @Override
     public void loadDataSet(DatasetInfo ob) {
         numFeatures = ob.getNumFeature();
@@ -57,13 +90,9 @@ public class ABCMain implements WrapperApproach {
     public void evaluateFeatures() throws Exception {
 
         init();
+        for (int i=0;i<numIteration;i++){
+            employed();
 
-        for (int i = 0; i < numFeatures; i++) {
-            for (int j = 0; j < numFeatures; j++) {
-                System.out.print(foodSources.get(i).x[j] + ",");
-
-            }
-            System.out.println("________");
         }
     }
 
