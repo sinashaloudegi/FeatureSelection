@@ -23,6 +23,7 @@ public class ABCMain implements WrapperApproach {
     String pathTestData;
     List<FoodSource> foodSources;
     List<FoodSource> abandoned;
+    List<FoodSource> onlookers;
 
     public ABCMain(int numSelectedFeatures, int maxLimit, double MR, int numIteration) {
         this.maxLimit = maxLimit;
@@ -34,6 +35,7 @@ public class ABCMain implements WrapperApproach {
     private void init() throws Exception {
         foodSources = new ArrayList<FoodSource>();
         abandoned = new ArrayList<FoodSource>();
+        onlookers = new ArrayList<FoodSource>();
         for (int i = 0; i < numFeatures; i++) {
             FoodSource foodSource = new FoodSource(numFeatures);
             foodSource.initialize(i);
@@ -89,7 +91,7 @@ public class ABCMain implements WrapperApproach {
         }
         neighbor.calculateFitness();
         if (neighbor.getFitness() > foodSource.getFitness()) {
-            foodSources.add(neighbor);
+            onlookers.add(neighbor);
         } else {
             foodSource.limit++;
             if (foodSource.getLimit() > maxLimit) {
@@ -100,7 +102,7 @@ public class ABCMain implements WrapperApproach {
         return checkRemove;
     }
 
-    private void onlooker() {
+    private void onlooker() throws Exception {
         double sumFitness = 0;
         for (int i = 0; i < foodSources.size(); i++) {
             sumFitness += foodSources.get(i).getFitness();
@@ -117,7 +119,28 @@ public class ABCMain implements WrapperApproach {
                 roulette[i] = (foodSources.get(i).getP()) + roulette[i - 1];
             }
         }
+        Random r = new Random();
 
+        for (int i = 0; i < numFeatures; i++) {
+            int selected = 0;
+            double rand = r.nextDouble();
+            for (int j = 0; j < roulette.length; j++) {
+                if (rand < roulette[j]) {
+                    selected = j;
+                    break;
+                }
+            }
+            FoodSource newEmployee = foodSources.get(selected);
+
+            onlookers.add(newEmployee);
+            if (employed(newEmployee)) {
+                onlookers.remove(i);
+            }
+
+        }
+
+        foodSources.addAll(onlookers);
+        onlookers.clear();
 
     }
     @Override
