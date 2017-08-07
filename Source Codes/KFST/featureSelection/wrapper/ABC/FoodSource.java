@@ -16,13 +16,13 @@ public class FoodSource {
         this.fitness = abcFitCalculator.remove(s);
     }
 
-    public void FoodSource(int numFeatures){
+    public  FoodSource(int numFeatures){
         this.numFeatures=numFeatures;
     }
 
     public void initialize(int i){
         x=new int[numFeatures];
-        for (int j=0;i<numFeatures;j++){
+        for (int j=0;j<numFeatures;j++){
             if(i==j){
               x[j]=1;
             }else{

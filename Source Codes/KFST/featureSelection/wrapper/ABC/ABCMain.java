@@ -20,7 +20,7 @@ public class ABCMain implements WrapperApproach {
     int numIteration;
     String pathData;
     String pathTestData;
-    List<FoodSource> foodSources ;
+    List<FoodSource> foodSources;
 
     public ABCMain(int numSelectedFeatures, int maxLimit, double MR, int numIteration) {
         this.maxLimit = maxLimit;
@@ -28,12 +28,13 @@ public class ABCMain implements WrapperApproach {
         this.numIteration = numIteration;
         this.numSelectedFeatures = numSelectedFeatures;
     }
-    private void init(){
-        foodSources=new ArrayList<FoodSource>();
-        for (int i=0;i<numFeatures;i++){
-            FoodSource x=new FoodSource();
-            x.initialize(i);
-            foodSources.add(x);
+
+    private void init() {
+        foodSources = new ArrayList<FoodSource>();
+        for (int i = 0; i < numFeatures; i++) {
+            FoodSource foodSource = new FoodSource(numFeatures);
+            foodSource.initialize(i);
+            foodSources.add(foodSource);
 
         }
     }
@@ -54,7 +55,15 @@ public class ABCMain implements WrapperApproach {
     @Override
     public void evaluateFeatures() throws Exception {
 
-       init();
+        init();
+
+        for (int i = 0; i < numFeatures; i++) {
+            for (int j = 0; j < numFeatures; j++) {
+                System.out.print(foodSources.get(i).x[j] + ",");
+
+            }
+            System.out.println("________");
+        }
     }
 
     @Override
