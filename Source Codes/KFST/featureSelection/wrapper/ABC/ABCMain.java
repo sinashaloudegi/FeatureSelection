@@ -29,11 +29,12 @@ public class ABCMain implements WrapperApproach {
         this.numSelectedFeatures = numSelectedFeatures;
     }
 
-    private void init() {
+    private void init() throws Exception {
         foodSources = new ArrayList<FoodSource>();
         for (int i = 0; i < numFeatures; i++) {
             FoodSource foodSource = new FoodSource(numFeatures);
             foodSource.initialize(i);
+            foodSource.calculateFitness();
             foodSources.add(foodSource);
 
         }
