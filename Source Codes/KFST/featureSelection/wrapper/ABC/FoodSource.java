@@ -18,18 +18,19 @@ public class FoodSource {
         this.fitness = abcFitCalculator.remove(s);
     }
 
-    public  FoodSource(int numFeatures){
-        this.numFeatures=numFeatures;
-        limit=0;
+    public FoodSource(int numFeatures, ABCFitCalculator abcFitCalculator) {
+        this.numFeatures = numFeatures;
+        this.abcFitCalculator = abcFitCalculator;
+        limit = 0;
     }
 
-    public void initialize(int i){
-        x=new int[numFeatures];
-        for (int j=0;j<numFeatures;j++){
-            if(i==j){
-              x[j]=1;
-            }else{
-              x[j]=0;
+    public void initialize(int i) {
+        x = new int[numFeatures];
+        for (int j = 0; j < numFeatures; j++) {
+            if (i == j) {
+                x[j] = 1;
+            } else {
+                x[j] = 0;
             }
         }
     }
