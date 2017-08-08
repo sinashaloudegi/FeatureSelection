@@ -42,7 +42,7 @@ public class ABCMain implements WrapperApproach {
         abandoned = new ArrayList<FoodSource>();
         onlookers = new ArrayList<FoodSource>();
         for (int i = 0; i < numFeatures; i++) {
-            FoodSource foodSource = new FoodSource(numFeatures,abcFitCalculator);
+            FoodSource foodSource = new FoodSource(numFeatures, abcFitCalculator);
             foodSource.initialize(i);
             foodSource.calculateFitness();
             foodSources.add(foodSource);
@@ -54,7 +54,7 @@ public class ABCMain implements WrapperApproach {
 
         int listSize = foodSources.size();
         for (int i = 0; i < listSize; i++) {
-            FoodSource neighbor = new FoodSource(numFeatures,abcFitCalculator);
+            FoodSource neighbor = new FoodSource(numFeatures, abcFitCalculator);
             neighbor.initialize(-1);
             for (int j = 0; j < numFeatures; j++) {
                 Random r = new Random();
@@ -83,7 +83,7 @@ public class ABCMain implements WrapperApproach {
 
     private boolean employed(FoodSource foodSource, List<FoodSource> listAdd, List<FoodSource> listAbandoned) throws Exception {
         boolean checkRemove = false;
-        FoodSource neighbor = new FoodSource(numFeatures,abcFitCalculator);
+        FoodSource neighbor = new FoodSource(numFeatures, abcFitCalculator);
         neighbor.initialize(-1);
         for (int j = 0; j < numFeatures; j++) {
             Random r = new Random();
@@ -171,7 +171,7 @@ public class ABCMain implements WrapperApproach {
         List<FoodSource> listAbandoned = new ArrayList<FoodSource>();
         List<Integer> listDel = new ArrayList<Integer>();
         for (int i = 0; i < abandonedSize; i++) {
-            FoodSource foodSource = new FoodSource(numFeatures,abcFitCalculator);
+            FoodSource foodSource = new FoodSource(numFeatures, abcFitCalculator);
             foodSource.initializeRandom();
             foodSource.calculateFitness();
             abandoned.set(i, foodSource);
@@ -195,6 +195,7 @@ public class ABCMain implements WrapperApproach {
         abandoned.addAll(listAbandoned);
 
     }
+
     @Override
     public void loadDataSet(DatasetInfo ob) {
         numFeatures = ob.getNumFeature();
@@ -202,7 +203,7 @@ public class ABCMain implements WrapperApproach {
         pathData = ob.getPathData();
         pathTestData = ob.getPathTestSet();
         try {
-            abcFitCalculator=new ABCFitCalculator(pathData,pathTestData);
+            abcFitCalculator = new ABCFitCalculator(pathData, pathTestData);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -235,7 +236,33 @@ public class ABCMain implements WrapperApproach {
 
     @Override
     public int[] getSelectedFeatureSubset() {
-        return bestFoodSource.getX();
+        selecteFeatureSubset = bestFoodSource.getX();
+        return toIntArray(selecteFeatureSubset);
+    }
+
+    private int[] toIntArray(int[] gb) {
+        int numOfOnes = numOfOnes(gb);
+        int temp[] = new int[numOfOnes];
+        int counter = 0;
+        for (int i = 0; i < gb.length; i++) {
+            if (gb[i] == 1) {
+                temp[counter] = i;
+                counter++;
+            }
+
+        }
+        return temp;
+    }
+
+    private int numOfOnes(int[] gb) {
+        int counter = 0;
+        for (int i = 0; i < gb.length; i++) {
+            if (gb[i] == 1) {
+                counter++;
+            }
+
+        }
+        return counter;
     }
 
     @Override
