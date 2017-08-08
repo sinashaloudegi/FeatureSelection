@@ -24,6 +24,7 @@ public class ABCMain implements WrapperApproach {
     List<FoodSource> foodSources;
     List<FoodSource> abandoned;
     List<FoodSource> onlookers;
+    FoodSource bestFoodSource;
 
     public ABCMain(int numSelectedFeatures, int maxLimit, double MR, int numIteration) {
         this.maxLimit = maxLimit;
@@ -76,7 +77,7 @@ public class ABCMain implements WrapperApproach {
         }
     }
 
-    private boolean employed(FoodSource foodSource) throws Exception {
+    private boolean employed(FoodSource foodSource, List<FoodSource> listAdd, List<FoodSource> listAbandoned) throws Exception {
         boolean checkRemove = false;
         FoodSource neighbor = new FoodSource(numFeatures);
         neighbor.initialize(-1);
@@ -91,11 +92,11 @@ public class ABCMain implements WrapperApproach {
         }
         neighbor.calculateFitness();
         if (neighbor.getFitness() > foodSource.getFitness()) {
-            onlookers.add(neighbor);
+            listAdd.add(neighbor);
         } else {
             foodSource.limit++;
             if (foodSource.getLimit() > maxLimit) {
-                abandoned.add(foodSource);
+                listAbandoned.add(foodSource);
                 checkRemove = true;
             }
         }
@@ -120,7 +121,7 @@ public class ABCMain implements WrapperApproach {
             }
         }
         Random r = new Random();
-
+        List<FoodSource> listAbandoned = new ArrayList<FoodSource>();
         for (int i = 0; i < numFeatures; i++) {
             int selected = 0;
             double rand = r.nextDouble();
@@ -133,14 +134,56 @@ public class ABCMain implements WrapperApproach {
             FoodSource newEmployee = foodSources.get(selected);
 
             onlookers.add(newEmployee);
-            if (employed(newEmployee)) {
+            if (employed(newEmployee, onlookers, listAbandoned)) {
                 onlookers.remove(i);
             }
 
         }
-
+        abandoned.addAll(listAbandoned);
         foodSources.addAll(onlookers);
         onlookers.clear();
+
+    }
+
+    private void calculateBestFoodSource() {
+        double maxFit = 0;
+        int jMaxFit = 0;
+        for (int j = 0; j < foodSources.size(); j++) {
+            if (foodSources.get(j).getFitness() > maxFit) {
+                maxFit = foodSources.get(j).getFitness();
+                jMaxFit = j;
+            }
+        }
+        bestFoodSource = foodSources.get(jMaxFit);
+    }
+
+    private void scout() throws Exception {
+        int abandonedSize = abandoned.size();
+        List<FoodSource> listAbandoned = new ArrayList<FoodSource>();
+        List<Integer> listDel = new ArrayList<Integer>();
+        for (int i = 0; i < abandonedSize; i++) {
+            FoodSource foodSource = new FoodSource(numFeatures);
+            foodSource.initializeRandom();
+            foodSource.calculateFitness();
+            abandoned.set(i, foodSource);
+            if (employed(abandoned.get(i), abandoned, listAbandoned)) {
+                listDel.add(i);
+            }
+        }
+        for (int i = 0; i < abandoned.size(); i++) {
+            boolean checkDel = false;
+            for (int j = 0; j < listDel.size(); j++) {
+                if (i == listDel.get(j)) {
+                    checkDel = true;
+                    break;
+                }
+            }
+            if (!checkDel) {
+                foodSources.add(abandoned.get(i));
+            }
+        }
+        abandoned.clear();
+        abandoned.addAll(listAbandoned);
 
     }
     @Override
@@ -163,9 +206,12 @@ public class ABCMain implements WrapperApproach {
         for (int i = 0; i < numIteration; i++) {
             employed();
             onlooker();
+            calculateBestFoodSource();
+            scout();
 
         }
     }
+
 
     @Override
     public int[] getSelectedFeatureSubset() {

@@ -1,5 +1,7 @@
 package KFST.featureSelection.wrapper.ABC;
 
+import java.util.Random;
+
 /**
  * Created by sina on 8/7/2017.
  */
@@ -28,6 +30,20 @@ public class FoodSource {
               x[j]=1;
             }else{
               x[j]=0;
+            }
+        }
+    }
+
+    public void initializeRandom() {
+        x = new int[numFeatures];
+        Random r = new Random();
+
+        for (int j = 0; j < numFeatures; j++) {
+            double rand = r.nextDouble();
+            if (rand > 0.5) {
+                x[j] = 1;
+            } else {
+                x[j] = 0;
             }
         }
     }
