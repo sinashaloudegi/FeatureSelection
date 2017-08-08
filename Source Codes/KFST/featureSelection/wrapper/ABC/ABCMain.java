@@ -27,6 +27,7 @@ public class ABCMain implements WrapperApproach {
     List<FoodSource> onlookers;
     FoodSource bestFoodSource;
     ABCFitCalculator abcFitCalculator;
+    int onlookersPoint;
 
     public ABCMain(int numSelectedFeatures, int maxLimit, double MR, int numIteration) {
         this.maxLimit = maxLimit;
@@ -96,6 +97,7 @@ public class ABCMain implements WrapperApproach {
         neighbor.calculateFitness();
         if (neighbor.getFitness() > foodSource.getFitness()) {
             listAdd.add(neighbor);
+            onlookersPoint++;
         } else {
             foodSource.limit++;
             if (foodSource.getLimit() > maxLimit) {
@@ -108,6 +110,7 @@ public class ABCMain implements WrapperApproach {
 
     private void onlooker() throws Exception {
         double sumFitness = 0;
+        onlookersPoint = 0;
         for (int i = 0; i < foodSources.size(); i++) {
             sumFitness += foodSources.get(i).getFitness();
         }
@@ -137,8 +140,11 @@ public class ABCMain implements WrapperApproach {
             FoodSource newEmployee = foodSources.get(selected);
 
             onlookers.add(newEmployee);
+            onlookersPoint++;
             if (employed(newEmployee, onlookers, listAbandoned)) {
-                onlookers.remove(i);
+                onlookersPoint--;
+                onlookers.remove(onlookersPoint);
+
             }
 
         }
@@ -209,13 +215,19 @@ public class ABCMain implements WrapperApproach {
 
     @Override
     public void evaluateFeatures() throws Exception {
+        System.out.println("start");
 
         init();
+        System.out.println("init");
         for (int i = 0; i < numIteration; i++) {
             employed();
+            System.out.println(i + " : em");
             onlooker();
+            System.out.println(i + " : on");
             calculateBestFoodSource();
+            System.out.println(i + " : ca");
             scout();
+            System.out.println(i + " : sc");
 
         }
     }
