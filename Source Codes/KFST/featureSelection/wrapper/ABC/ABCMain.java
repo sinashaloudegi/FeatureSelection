@@ -215,7 +215,7 @@ public class ABCMain implements WrapperApproach {
 
     @Override
     public int[] getSelectedFeatureSubset() {
-        return selecteFeatureSubset;
+        return bestFoodSource.getX();
     }
 
     @Override
