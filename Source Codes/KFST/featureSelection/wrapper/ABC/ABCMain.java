@@ -216,19 +216,13 @@ public class ABCMain implements WrapperApproach {
 
     @Override
     public void evaluateFeatures() throws Exception {
-        System.out.println("start");
 
         init();
-        System.out.println("init");
         for (int i = 0; i < numIteration; i++) {
             employed();
-            System.out.println(i + " : em");
             onlooker();
-            System.out.println(i + " : on");
             calculateBestFoodSource();
-            System.out.println(i + " : ca");
             scout();
-            System.out.println(i + " : sc");
 
         }
     }
