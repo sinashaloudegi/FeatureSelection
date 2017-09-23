@@ -68,6 +68,9 @@ public class ABCMain implements WrapperApproach {
             neighbor.calculateFitness();
             if (neighbor.getFitness() > foodSources.get(i).getFitness()) {
                 foodSources.add(neighbor);
+                foodSources.remove(i);
+                i--;
+                listSize--;
             } else {
                 foodSources.get(i).limit++;
                 if (foodSources.get(i).getLimit() > maxLimit) {
@@ -97,6 +100,7 @@ public class ABCMain implements WrapperApproach {
         neighbor.calculateFitness();
         if (neighbor.getFitness() > foodSource.getFitness()) {
             listAdd.add(neighbor);
+            checkRemove = true;
             onlookersPoint++;
         } else {
             foodSource.limit++;
@@ -223,6 +227,8 @@ public class ABCMain implements WrapperApproach {
             onlooker();
             calculateBestFoodSource();
             scout();
+            System.out.println(i + " : sc");
+            System.out.println(foodSources.size() + " " + abandoned.size() + " " + onlookers.size());
 
         }
     }
