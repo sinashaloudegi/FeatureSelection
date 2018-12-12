@@ -4,3 +4,4 @@ This software developed in Data Science Lab Department of Computer Engineering U
 
 A number of well-known feature selection algorithms have been implemented in this software.
 
+University of Kurdistan, Data Science Lab. http://dsl.uok.ac.ir/
